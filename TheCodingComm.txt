@@ -1,0 +1,9 @@
+The coding community makes it easier for the 
+coders around us easy to communicate, where u get
+have interface to post update delete coding stuff
+You can chat with others.
+You have a level which makes u reputed.
+Visit the leaderboard everyday.
+Some static information pages.
+
+Try to do the backend in 1 week and then frontend
