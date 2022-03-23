@@ -30,7 +30,7 @@ const moreDataSchema = Schema({
         type: String,
         required: true,
     },
-    githubUrl: {
+    github: {
         type: String,
     },
     linkedInUrl: {

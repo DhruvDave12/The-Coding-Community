@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose')
@@ -9,6 +11,8 @@ const PORT = process.env.PORT || 8080;
 
 const authRoutes = require('./routes/auth.routes');
 const extraRoutes = require('./routes/userextra.routes');
+const projectRoutes = require('./routes/project.routes');
+
 configDB();
 
 app.use(express.json());
@@ -22,6 +26,7 @@ require('./config/passport')
 // using routes
 app.use('/', authRoutes);
 app.use('/', extraRoutes);
+app.use('/',projectRoutes);
 
 app.get('/', (req,res) => {
     res.send("Connected to backend");
