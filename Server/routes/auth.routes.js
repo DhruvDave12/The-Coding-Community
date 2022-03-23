@@ -14,10 +14,10 @@ router.post('/register', regUser);
 // @path "/login"
 router.post('/login', authUser);
 
-// @desc Shows the homepage
+// @desc Shows the profile page
 // @route GET
-// @path "/homepage"
-router.get('/homepage', passport.authenticate('jwt', {session: false}), getHome);
+// @path "/profile"
+router.get('/profile', passport.authenticate('jwt', {session: false}), getHome);
 
 // @desc posts more data
 // @route POST
@@ -28,5 +28,6 @@ router.post('/tell-us-more', passport.authenticate('jwt', {session: false}), pos
 // @route GET
 // @path "/tell-us-more"
 router.get('/tell-us-more', passport.authenticate('jwt', {session: false}), getMoreData);
+
 
 module.exports = router;

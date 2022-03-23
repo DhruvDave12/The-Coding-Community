@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 const authRoutes = require('./routes/auth.routes');
-
+const extraRoutes = require('./routes/userextra.routes');
 configDB();
 
 app.use(express.json());
@@ -21,6 +21,7 @@ require('./config/passport')
 
 // using routes
 app.use('/', authRoutes);
+app.use('/', extraRoutes);
 
 app.get('/', (req,res) => {
     res.send("Connected to backend");
