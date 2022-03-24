@@ -1,23 +1,26 @@
 const moreData = require('../models/moreUserData.models')
+const GitData = require('../models/userGithubData.models');
+
 const axios = require('axios');
 
 module.exports.getUserGitData = async (req,res) => {
-    // const data = await axios.get('https://api.github.com/users/DhruvDave12')
     const {id} = req.params;
     const userData = await moreData.find({owner: id});
 
-    // this is for users privateRepos
-    const token = `Token ${process.env.GIT_PERSONAL_ACCESS_TOKEN}`
-    axios.get(`https://api.github.com/users/DhruvDave12`,{
-        headers: {
-            "Authorization": token
-        }
-    }
-    )
-    .then(resp => {
+    axios.get(`https://api.github.com/users/${userData.github}`)
+    .then(async (resp) => {
+        const data = new GitData({
+            username: resp.data.login,
+            followers: resp.data.followers,
+            following: resp.data.following,
+            totalPublicRepos: resp.data.public_repos,
+            profilePic: resp.data.avatar_url,
+        })
+
+        await data.save();
         res.status(200).send({
             success: true,
-            data: JSON.parse(JSON.stringify(resp.data))
+            data
         })
     })
     .catch(err => {
@@ -27,3 +30,4 @@ module.exports.getUserGitData = async (req,res) => {
         })
     })
 }   
+

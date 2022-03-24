@@ -12,6 +12,8 @@ const PORT = process.env.PORT || 8080;
 const authRoutes = require('./routes/auth.routes');
 const extraRoutes = require('./routes/userextra.routes');
 const projectRoutes = require('./routes/project.routes');
+const postRoutes = require('./routes/post.routes');
+const quesansRoutes = require('./routes/askQuestion.routes');
 
 configDB();
 
@@ -27,6 +29,8 @@ require('./config/passport')
 app.use('/', authRoutes);
 app.use('/', extraRoutes);
 app.use('/',projectRoutes);
+app.use('/',postRoutes);
+app.use('/', quesansRoutes);
 
 app.get('/', (req,res) => {
     res.send("Connected to backend");
