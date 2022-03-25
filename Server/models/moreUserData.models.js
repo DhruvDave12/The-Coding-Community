@@ -2,6 +2,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const moreDataSchema = Schema({
+    followers: {
+        type: Number,
+        // required: true,
+        default: 0,
+    },
+    following: {
+        type: Number,
+        // required: true,
+        default: 0,
+    },
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'User'

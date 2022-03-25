@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const MoreData = require('../models/moreUserData.models')
 const UserLevel = require('../models/userLevel.model');
 
 module.exports.getLeaderboard = async (req,res) => {
@@ -37,4 +38,32 @@ module.exports.getUserData = async (req,res) => {
         success: true,
         user
     })
+}
+
+module.exports.updateFoll = async (req,res) => {
+    if(!req.user){
+        res.status(403).send({
+            success: false,
+            msg: 'Please login to follow'
+        })
+    }
+
+    const { otherID } = req.params;
+
+    // remember that user 1 is the current active user
+    const user1 = await MoreData.findOne({owner: req.user._id});
+    const user2 = await MoreData.findOne({owner: otherID});
+    // console.log(user1)
+    // console.log(user2)
+    user1.following ++;
+    user2.followers ++;
+
+    await user1.save();
+    await user2.save();
+
+    // returning the current user as user1
+    res.status(200).send({
+        success: true,
+        user1
+    });
 }

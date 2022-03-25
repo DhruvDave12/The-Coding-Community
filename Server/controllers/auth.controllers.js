@@ -41,7 +41,7 @@ module.exports.regUser = async (req,res) => {
 
 module.exports.authUser = async (req,res) => {
     const user = await User.findOne({email: req.body.email})
-    console.log(user)
+    // console.log(user)
     if (!user) {
         return res.status(401).send({
             success: false,
@@ -62,7 +62,7 @@ module.exports.authUser = async (req,res) => {
          username: user.username,
          id: user._id
      }
- 
+     
      const token = jwt.sign(payload, "RandomSecretKey", { expiresIn: "1d"});
      return res.status(200).send({
          success: true,
@@ -73,9 +73,21 @@ module.exports.authUser = async (req,res) => {
 }
 
 module.exports.getHome = (req,res) => {
+    if(!req.user){
+        res.status(403).send({
+            success: false,
+            data: {
+                isLoggedIn: false,
+                user: null
+            }
+        })
+    }
     res.status(200).send({
         success: true,
-        user: req.user
+        data: {
+            isLoggedIn: true,
+            user: req.user
+        }
     })
 }
 
