@@ -115,24 +115,8 @@ module.exports.postMoreData = async (req,res) => {
 
 module.exports.getMoreData = async (req,res) => {
     const data = await MoreData.findOne({owner: req.user._id});
-
-    if(data.followers >= 1000) {
-        data.level = data.level + 100;
-        await data.save();
-    } else if(data.followers >= 500){
-        data.level = data.level + 50;
-        await data.save();
-    } else if(data.followers >= 100){
-        data.level = data.level + 10;
-        await data.save();
-    } else if(data.followers >= 50){
-        data.level = data.level + 5;
-        await data.save();
-    } else if(data.followers >= 10){
-        data.level = data.level + 1;
-        await data.save();
-    }
-    res.status(200).send({
+   
+     res.status(200).send({
         success: true,
         data
     })
