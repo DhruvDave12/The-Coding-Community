@@ -28,7 +28,7 @@ module.exports.regUser = async (req,res) => {
         })
     })
 
-    const userLength = await User.find({});
+    var userLength = await User.find({});
     userLength = userLength.length;
     const userLevelInst = new userLevel({
         owner: user._id,
