@@ -63,7 +63,7 @@ module.exports.authUser = async (req,res) => {
          id: user._id
      }
      
-     const token = jwt.sign(payload, "RandomSecretKey", { expiresIn: "1d"});
+     const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "1d"});
      return res.status(200).send({
          success: true,
          msg: 'Logged In Successfully',
