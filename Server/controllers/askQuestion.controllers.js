@@ -58,6 +58,6 @@ module.exports.postAnswerToQuestion = async(req,res) => {
 
     res.status(200).send({
         success: true,
-        ques
+        data: ques
     })
 }

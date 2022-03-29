@@ -20,6 +20,10 @@ const courseSchema = new Schema({
         type: Number,
         required: true,
     },
+    allTotalRating: {
+        type: Number,
+        default: 0,
+    },
     rating: {
         type: Number,
         default: 0,

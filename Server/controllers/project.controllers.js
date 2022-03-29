@@ -20,7 +20,7 @@ module.exports.getUserGitData = async (req,res) => {
         await data.save();
         res.status(200).send({
             success: true,
-            data
+            data: data
         })
     })
     .catch(err => {

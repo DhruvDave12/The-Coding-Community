@@ -23,7 +23,7 @@ module.exports.postPost = async (req,res) => {
 
     res.status(200).send({
         success: true,
-        newPost
+        data: newPost
     })
 }
 
@@ -54,6 +54,6 @@ module.exports.postComments = async(req,res) => {
 
     res.status(200).send({
         success: true,
-        post
+        data: post
     })
 }

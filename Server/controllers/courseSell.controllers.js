@@ -20,7 +20,7 @@ module.exports.postVideo = async (req,res) => {
     await newCourse.save();
     res.status(200).send({
         success: true,
-        newCourse
+        data: newCourse
     })
 }
 
@@ -39,15 +39,42 @@ module.exports.rateCourse = async (req,res) => {
 
   courseToRate.listOfUsersRated.push(currUser._id);
 
-  // improve the current condition for rating....
-  const totalRating = ((courseToRate.rating) + rating) / (courseToRate.listOfUsersRated.length);
+  let totalRating = (parseFloat(courseToRate.allTotalRating) + parseFloat(rating)) / parseFloat(courseToRate.listOfUsersRated.length);
 
-  courseToRate.rating = totalRating;
+  courseToRate.rating = parseFloat(totalRating);
+  courseToRate.allTotalRating = parseFloat(courseToRate.allTotalRating) + parseFloat(rating);
   await courseToRate.save();
 
 
   res.status(200).send({
     success: true,
-    courseToRate
+    data: courseToRate
+  })
+}
+
+module.exports.getAllCourses = async(req,res) => {
+    const allCourses = await Course.find({});
+
+    res.status(200).send({
+      success: true,
+      data: allCourses
+    })
+}
+
+module.exports.getCourse = async(req,res) => {
+  if(!req.user){
+    res.status(403).send({
+      success: false,
+      msg: "Please log in to check out the course"
+    })
+  }
+
+  const { id } = req.params;
+
+  const course =  await Course.findById(id);
+
+  res.status(200).send({
+    success: true,
+    data: course
   })
 }

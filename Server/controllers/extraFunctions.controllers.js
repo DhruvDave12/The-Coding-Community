@@ -36,7 +36,7 @@ module.exports.getUserData = async (req,res) => {
 
     res.status(200).send({
         success: true,
-        user
+        data: user
     })
 }
 
@@ -62,6 +62,6 @@ module.exports.updateFoll = async (req,res) => {
     // returning the current user as user1
     res.status(200).send({
         success: true,
-        user1
+        data: user1
     });
 }
