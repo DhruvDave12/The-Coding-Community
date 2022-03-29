@@ -17,4 +17,5 @@ router.post('/course/rate/:id', passport.authenticate('jwt', {session: false}), 
 router.get('/courses/all', CourseRoutes.getAllCourses);
 
 router.get('/course/:id',passport.authenticate('jwt', {session: false}),CourseRoutes.getCourse )
+
 module.exports = router;
