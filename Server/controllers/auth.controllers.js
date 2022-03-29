@@ -92,7 +92,7 @@ module.exports.getHome = (req,res) => {
 }
 
 module.exports.postMoreData = async (req,res) => {
-    const {firstName, lastName, education, country, codeChefRating, codeforcesRating, github, linkedInUrl} = req.body;
+    const { firstName, lastName, education, country, codeChefRating, codeforcesRating, github, linkedInUrl, bio } = req.body;
 
     const moreData = new MoreData({
         firstName,
@@ -102,8 +102,10 @@ module.exports.postMoreData = async (req,res) => {
         codeChefRating,
         codeforcesRating,
         github,
-        linkedInUrl
+        linkedInUrl,
+        bio
     })
+
     moreData.owner = req.user._id;
     await moreData.save();
     

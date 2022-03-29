@@ -13,6 +13,7 @@ const extraRoutes = require('./routes/userextra.routes');
 const projectRoutes = require('./routes/project.routes');
 const postRoutes = require('./routes/post.routes');
 const quesansRoutes = require('./routes/askQuestion.routes');
+const courseRoutes = require('./routes/courseSell.route');
 
 const MoreData = require('./models/moreUserData.models');
 configDB();
@@ -30,6 +31,7 @@ app.use('/', extraRoutes);
 app.use('/',projectRoutes);
 app.use('/',postRoutes);
 app.use('/', quesansRoutes);
+app.use('/', courseRoutes);
 
 app.get('/', (req,res) => {
     res.send("Connected to backend");

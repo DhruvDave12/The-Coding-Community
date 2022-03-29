@@ -14,12 +14,14 @@ const storage = new CloudinaryStorage({
     // folder in cloudinary where we need to store images
     params: {
         folder: 'TheCodingCommunity',
-        allowedFormats: ['jpeg', 'png', 'jpg', 'jfif']
+        allowedFormats: ['jpeg', 'png', 'jpg', 'jfif', 'mp4', 'mkv'],
+        resource_type: 'auto'
     }
     
 });
 
+
 module.exports = {
     cloudinary,
-    storage
+    storage,
 }

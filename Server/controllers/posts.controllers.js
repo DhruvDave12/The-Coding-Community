@@ -12,6 +12,7 @@ module.exports.postPost = async (req,res) => {
     }
 
     const { captions } = req.body;
+
     const newPost = new Posts({
         caption: captions,
         owner: req.user._id

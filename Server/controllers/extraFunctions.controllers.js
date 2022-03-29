@@ -4,7 +4,7 @@ const UserLevel = require('../models/userLevel.model');
 
 module.exports.getLeaderboard = async (req,res) => {
     const users = await User.find({});
-    const userLevel = await UserLevel.find({}).sort({level: -1})
+    const userLevel = await UserLevel.find({}).sort({level: -1});
 
     let allUsers = []
     for(let level in userLevel){
@@ -53,8 +53,6 @@ module.exports.updateFoll = async (req,res) => {
     // remember that user 1 is the current active user
     const user1 = await MoreData.findOne({owner: req.user._id});
     const user2 = await MoreData.findOne({owner: otherID});
-    // console.log(user1)
-    // console.log(user2)
     user1.following ++;
     user2.followers ++;
 
