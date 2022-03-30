@@ -11,7 +11,7 @@ module.exports.regUser = async (req,res) => {
         username: req.body.username,
         password: hashSync(req.body.password, 10),
         email: req.body.email,
-        contactNumber: req.body.contactNumber
+        contactNumber: req.body.contactNumber,
     })
     user.save()
     .then(user => {
@@ -67,7 +67,8 @@ module.exports.authUser = async (req,res) => {
      return res.status(200).send({
          success: true,
          msg: 'Logged In Successfully',
-         token: "Bearer " + token
+         token: "Bearer " + token,
+         user: user
      })
  
 }
@@ -108,6 +109,10 @@ module.exports.postMoreData = async (req,res) => {
 
     moreData.owner = req.user._id;
     await moreData.save();
+    
+    const user = await User.findById(req.user._id);
+    user.moreDataPosted = true;
+    await user.save();
     
     res.status(200).send({
         success: true,

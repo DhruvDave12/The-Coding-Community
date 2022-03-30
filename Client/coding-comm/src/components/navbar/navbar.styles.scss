@@ -1,0 +1,30 @@
+.navbar{
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid black;
+
+    .logo{
+        width: 40%;
+    }
+    .other-fields{
+        width: 40%;
+        ul{
+            li{
+                cursor: pointer;
+            }
+            .field{
+                text-decoration: none;
+                list-style: none;
+            }
+            display: flex;
+            justify-content: space-evenly;
+            .auth{
+                width: 30%;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }
+}

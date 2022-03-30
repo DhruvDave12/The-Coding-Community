@@ -20,6 +20,11 @@ const userSchema = new Schema({
     contactNumber: {
         type: String,
         required: true,
+    },
+    moreDataPosted: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 })
 

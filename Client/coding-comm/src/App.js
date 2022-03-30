@@ -1,24 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
 
+import SignUp from './pages/authentication/sign-up/sign-up.component';
+import SignIn from './pages/authentication/sign-in/sign-in.component';
+import Home from './pages/home/home.component';
+import TellUsMoreForm from './pages/tell-us-more/tell-us-more.component';
+
+import NavBar from './components/navbar/navbar.component';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavBar />
+      <Routes>
+        <Route path='/register' element={<SignUp />} />
+        <Route path='/login' element={<SignIn />} />
+        <Route path='/profile' element={<Home />} />
+        <Route path='/tell-us-more' element={<TellUsMoreForm />}/>
+      </Routes>
+    </>
   );
 }
 
