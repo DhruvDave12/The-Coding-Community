@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import { useContext } from "react";
 import { myContext } from '../../../context/context';
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -36,7 +37,7 @@ const SignIn = () => {
                     <label htmlFor="password" className="lab">Password</label>
                     <input type="password" id="password" onChange={e => setPassword(e.target.value)} placeholder="Password"/>
                 </div>
-
+                <p>Dont have an account? <Link to='/register'>Register</Link></p>
                 <button>Login</button>
             </form>
         </div>

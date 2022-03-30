@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './sign-up.styles.scss';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
     let navigate = useNavigate();
@@ -44,7 +45,7 @@ const SignUp = () => {
                     <label htmlFor="password" className="lab">Password</label>
                     <input type="password" id="password" onChange={e => setPassword(e.target.value)} placeholder="Password"/>
                 </div>
-
+                <p>Already have an account? <Link to='/login'>Sign In</Link></p>
                 <button>Register</button>
             </form>
         </div>

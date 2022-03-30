@@ -19,13 +19,13 @@ const NavBar = () => {
 
     const logOut = () => {
         localStorage.removeItem('token');
-        navigate('/home');
+        navigate('/');
         setUser(null);
     }
     return (
         <div className="navbar">
             <div className="logo">
-                <p className="title">The Coding Community</p>
+                <p className="title" onClick={() => {navigate('/')}} >The Coding Community</p>
             </div>
             <div className="other-fields">
                 <ul>
