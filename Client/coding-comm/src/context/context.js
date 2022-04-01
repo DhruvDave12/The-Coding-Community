@@ -1,11 +1,12 @@
-import React, {createContext, useEffect, useState} from 'react'
+import React, {createContext, useEffect, useState, useReducer} from 'react'
 import axios from "axios";
 
-   export const myContext = createContext({});
+export const myContext = createContext({});
 
     const Context = (props) => {
 
     const [user, setUser] = useState();
+    const [userData, setUserData] = useState();
 
     useEffect(() => {
         const getCurrUser = async () => {
@@ -16,12 +17,28 @@ import axios from "axios";
             })
             setUser(currUser.data.data.user);
         }
-     getCurrUser();
+        getCurrUser();
     }, [])
   
-  
+    useEffect(() => {
+        const getCurrData = async () => {
+            const response = await axios.get('https://the-coding-community.herokuapp.com/tell-us-more', {
+                headers:{
+                    Authorization: localStorage.getItem('token')
+                }
+            })
+            
+            if(response.data.data){
+                setUserData(response.data.data);
+            }
+        }
+        getCurrData();
+
+    }, [])
+
+
   return (
-      <myContext.Provider value={[user,setUser]}>{props.children}</myContext.Provider>
+      <myContext.Provider value={{ user: [user, setUser], data: [userData, setUserData] }}>{props.children}</myContext.Provider>
   )
 }
 

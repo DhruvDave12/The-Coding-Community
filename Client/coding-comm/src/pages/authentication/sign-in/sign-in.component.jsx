@@ -9,8 +9,10 @@ const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const userState = useContext(myContext);
-    const [user, setUser] = userState;
+    const {user} = useContext(myContext);
+
+    const [userValue, setUserValue] = user;
+    // const [dataValue, setDataValue] = data;
 
     let navigate = useNavigate();
     const handleSubmit = async (event) => {
@@ -19,9 +21,8 @@ const SignIn = () => {
             password: password,
             email: email,
         });
-        console.log(response);
         localStorage.setItem('token', response.data.token);
-        setUser(response.data.user);
+        setUserValue(response.data.user);
         navigate('/profile');
     } 
 

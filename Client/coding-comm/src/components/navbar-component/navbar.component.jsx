@@ -6,13 +6,13 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 
 const NavBar = () => {
-    const userState = useContext(myContext);
-    const [user, setUser] = userState;
+    const {user} = useContext(myContext);
+
+    const [userValue, setUserValue] = user;
 
     var currUser;
-    if(user){
-        console.log(user);
-        currUser = user;
+    if(userValue){
+        currUser = userValue;
     }
 
     let navigate = useNavigate();
@@ -20,7 +20,7 @@ const NavBar = () => {
     const logOut = () => {
         localStorage.removeItem('token');
         navigate('/');
-        setUser(null);
+        setUserValue(null);
     }
     return (
         <div className="navbar">
