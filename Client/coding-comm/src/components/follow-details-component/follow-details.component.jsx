@@ -1,7 +1,7 @@
 import React from "react";
 import './follow-details.styles.scss';
 
-const FollowDetails = ({currData}) => {
+const FollowDetails = ({currData, toKeep}) => {
     return (
         <div className="follow-details">
             <div className="follow-data">
@@ -20,7 +20,12 @@ const FollowDetails = ({currData}) => {
             </div>
 
             <div className="buttons">
-                <a href="/edit" className="edit">EDIT</a>
+                {
+                    toKeep ? 
+                    <a href="/follow" className="follow">FOLLOW</a>
+                    :
+                    <a href="/edit" className="edit">EDIT</a>
+                }               
             </div>
             <p className="bio">{currData.bio}</p>
         </div>

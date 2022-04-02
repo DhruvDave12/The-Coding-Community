@@ -7,6 +7,8 @@ import SignIn from './pages/authentication/sign-in/sign-in.component';
 import Edit from './pages/edit/edit.component';
 import TellUsMoreForm from './pages/tell-us-more/tell-us-more.component';
 import Profile from './pages/Profile/profile.component';
+import Feed from './pages/Feed/feed.component';
+import Comments from './pages/comments/comments.component';
 
 import NavBar from './components/navbar/navbar.component';
 function App() {
@@ -20,6 +22,8 @@ function App() {
         <Route path='/edit' element={<Edit />} />
         <Route path='/tell-us-more' element={<TellUsMoreForm />}/>
         <Route path='/profile' element={<Profile />}/>
+        <Route path='/feed' element={<Feed />}/>
+        <Route path='/comments/:id' element={<Comments />}/>
       </Routes>
     </>
   );

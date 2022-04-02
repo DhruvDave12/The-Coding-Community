@@ -30,6 +30,8 @@ const NavBar = () => {
             <div className="other-fields">
                 <ul>
                     <Link className="field" to={currUser ? '/profile' : '/home'}>Home</Link>
+                    <Link className="field" to={'/feed'}>Feed</Link>
+                    <Link className="field" to={'/courses'}>Our Courses</Link>
                     <Link className="field" to={'/about'}>About</Link>
                     {
                         currUser ? 

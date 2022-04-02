@@ -29,7 +29,7 @@ const Profile = () => {
                     <div className="profile-container">
                         <div className="section">
                             <ProfileData currData={currData} currUser={currUser}/>
-                            <FollowDetails currData={currData}/>
+                            <FollowDetails currData={currData} toKeep={false}/>
                         </div>
                         <TechStack />
                         <YourPosts />

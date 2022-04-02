@@ -6,7 +6,7 @@ const multer = require('multer');
 const {storage} = require('../cloudinary/index.js');
 const upload = multer({storage});
 
-const { postPost, postComments } = require('../controllers/posts.controllers')
+const { postPost, postComments, getPosts, getComments } = require('../controllers/posts.controllers')
 
 // @desc POST a new post on website
 // @route POST
@@ -17,4 +17,15 @@ router.post('/new/post', passport.authenticate('jwt', {session: false}), upload.
 // @route POST
 // @path /new/comment/:postID
 router.post('/new/comment/:postID',passport.authenticate('jwt', {session: false}), postComments)
+
+// @desc GET all posts
+// @route GET
+// @path /post/all
+router.get('/post/all', passport.authenticate('jwt', {session: false}), getPosts);
+
+// @desc GET particular post comments
+// @route GET
+// @path /post/all
+router.get('/post/comments/:id', passport.authenticate('jwt', {session: false}), getComments)
+
 module.exports = router;

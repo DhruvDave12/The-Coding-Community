@@ -11,8 +11,8 @@ module.exports.postPost = async (req,res) => {
         })
     }
 
-    const { captions } = req.body;
-
+    // const { captions } = req.body;
+    var captions = "Into the blues";
     const newPost = new Posts({
         caption: captions,
         owner: req.user._id
@@ -55,5 +55,40 @@ module.exports.postComments = async(req,res) => {
     res.status(200).send({
         success: true,
         data: post
+    })
+}
+
+module.exports.getPosts = async (req,res) => {
+    if(!req.user){
+        res.status(403).send({
+            success: false,
+            msg: "Please login or signup"
+        })
+    }
+
+    const posts = await Posts.find({}).populate('owner');
+   
+    res.status(200).send({
+        success: true,
+        data: posts
+    })
+}
+
+module.exports.getComments = async(req,res) => {
+    if(!req.user){
+        res.status(403).send({
+            success: false,
+            msg: "Please login or signup"
+        })
+    }
+
+    const { id } = req.params;
+    const post = await Posts.findById(id).populate('comments');
+
+    await post.save();
+
+    res.status(200).send({
+        success: true,
+        data: post.comments
     })
 }
