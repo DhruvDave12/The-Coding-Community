@@ -10,11 +10,21 @@ const FollowDetails = ({currData, toKeep}) => {
                     <p className="title">POSTS</p>
                 </div>
                 <div className="followers">
-                    <p className="quantity">{currData.followers}</p>
+                    {
+                        currData ? 
+                        <p className="quantity">{currData.followers}</p>
+                        :
+                        <div className="quantity">X</div>
+                    }
                     <p className="title">FOLLOWERS</p>
                 </div>
                 <div className="following">
-                    <p className="quantity">{currData.following}</p>
+                    {
+                        currData ? 
+                        <p className="quantity">{currData.following}</p>
+                        :
+                        <p className="quantity">X</p>
+                    }
                     <p className="title">FOLLOWING</p>
                 </div>
             </div>
@@ -27,7 +37,12 @@ const FollowDetails = ({currData, toKeep}) => {
                     <a href="/edit" className="edit">EDIT</a>
                 }               
             </div>
-            <p className="bio">{currData.bio}</p>
+            {
+                currData ? 
+                <p className="bio">{currData.bio}</p>
+                :
+                <p className="bio">Start by posting more data....</p>
+            }
         </div>
     )
 }

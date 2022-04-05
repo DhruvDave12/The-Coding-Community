@@ -9,6 +9,8 @@ import TellUsMoreForm from './pages/tell-us-more/tell-us-more.component';
 import Profile from './pages/Profile/profile.component';
 import Feed from './pages/Feed/feed.component';
 import Comments from './pages/comments/comments.component';
+import NewPost from './pages/new-post/new-post.compoent';
+import OtherProfile from './pages/others-profile/others-profile.component';
 
 import NavBar from './components/navbar/navbar.component';
 function App() {
@@ -24,6 +26,8 @@ function App() {
         <Route path='/profile' element={<Profile />}/>
         <Route path='/feed' element={<Feed />}/>
         <Route path='/comments/:id' element={<Comments />}/>
+        <Route path='/new/post' element={<NewPost />}/>
+        <Route path='/profile/:id' element={<OtherProfile />}/>
       </Routes>
     </>
   );

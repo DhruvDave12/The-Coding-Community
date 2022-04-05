@@ -26,6 +26,7 @@ const Feed = () => {
                     <h1>LOADING....</h1>
                     :
                     <div className="final-feed">
+                        <Link to={'/new/post'}>New Post</Link>
                         {
                             post.map(item => (
                                 <div className="particular-post">

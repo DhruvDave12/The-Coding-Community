@@ -8,6 +8,7 @@ export const myContext = createContext({});
     const [user, setUser] = useState();
     const [userData, setUserData] = useState();
 
+
     useEffect(() => {
         const getCurrUser = async () => {
             const currUser = await axios.get('https://the-coding-community.herokuapp.com/profile', {
@@ -15,6 +16,7 @@ export const myContext = createContext({});
                     Authorization: localStorage.getItem('token')
                 }
             })
+            // console.log("Current User Fetched through token: ", currUser.data.data.user);
             setUser(currUser.data.data.user);
         }
         getCurrUser();
@@ -27,14 +29,17 @@ export const myContext = createContext({});
                     Authorization: localStorage.getItem('token')
                 }
             })
-            
+        //    console.log(response.data.data);
             if(response.data.data){
                 setUserData(response.data.data);
             }
         }
         getCurrData();
+        
 
-    }, [])
+    }, [user])
+
+    
 
 
   return (

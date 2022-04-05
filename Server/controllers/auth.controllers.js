@@ -41,7 +41,6 @@ module.exports.regUser = async (req,res) => {
 
 module.exports.authUser = async (req,res) => {
     const user = await User.findOne({email: req.body.email})
-    // console.log(user)
     if (!user) {
         return res.status(401).send({
             success: false,
@@ -63,7 +62,8 @@ module.exports.authUser = async (req,res) => {
          id: user._id
      }
      
-     const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "1d"});
+    //  req.user = user;
+     const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "1h"});
      return res.status(200).send({
          success: true,
          msg: 'Logged In Successfully',
@@ -83,6 +83,7 @@ module.exports.getHome = (req,res) => {
             }
         })
     }
+    // console.log("REQ.USER: ", req.user);
     res.status(200).send({
         success: true,
         data: {
@@ -128,3 +129,42 @@ module.exports.getMoreData = async (req,res) => {
         data: data
     })
 }
+
+module.exports.getUser = async (req,res) => {
+    if(!req.user){
+        res.status(403).send({
+            success: false,
+            data: {
+                isLoggedIn: false,
+                user: null
+            }
+        })
+    }
+
+    const { id } = req.params;
+    const user = await MoreData.find({owner: id}).populate('owner');
+    console.log(user);
+
+    res.status(200).send({
+        success: true,
+        data: user
+    })
+
+}
+
+// module.exports.logout = async (req,res) => {
+//     const authHeader = req.headers["Authorization"];
+//     jwt.sign(authHeader, "", { expiresIn: 1 } , (logout, err) => {
+//         if (logout) {
+//             res.status(200).send({
+//                 success: true,
+//                 msg: "Successfully Logged Out!"
+//             })
+//         } else {
+//             res.status(404).send({
+//                 success: false,
+//                 msg: "Error logging out"
+//             })
+//         }
+//     });
+// }

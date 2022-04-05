@@ -35,6 +35,7 @@ const TellUsMoreForm = () => {
             });
 
         navigate('/profile');
+        window.location.reload(false);
     }
     return (
         <div className="tell-us-more">

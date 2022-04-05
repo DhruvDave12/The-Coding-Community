@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import './navbar.styles.scss';
 import { useContext } from "react";
 import { myContext } from '../../context/context';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 const NavBar = () => {
     const {user} = useContext(myContext);
@@ -15,12 +16,17 @@ const NavBar = () => {
         currUser = userValue;
     }
 
+    // console.log(userValue);
     let navigate = useNavigate();
 
-    const logOut = () => {
+    const logOut = async () => {
+        // console.log("Hello World");
+        // localStorage.removeItem('token');
         localStorage.removeItem('token');
-        navigate('/');
         setUserValue(null);
+        // console.log(user, res);
+        navigate('/login');
+        window.location.reload(false);
     }
     return (
         <div className="navbar">

@@ -11,8 +11,8 @@ module.exports.postPost = async (req,res) => {
         })
     }
 
-    // const { captions } = req.body;
-    var captions = "Into the blues";
+    const { captions } = req.body;
+    
     const newPost = new Posts({
         caption: captions,
         owner: req.user._id
@@ -90,5 +90,23 @@ module.exports.getComments = async(req,res) => {
     res.status(200).send({
         success: true,
         data: post.comments
+    })
+}
+
+module.exports.getPostOfUser = async (req,res) => {
+    if(!req.user){
+        res.status(403).send({
+            success: false,
+            msg: "Please login or signup"
+        })
+    }
+
+    const { id } = req.params;
+
+    const post = await Posts.find({owner: id}).populate('comments');
+
+    res.status(200).send({
+        success: true,
+        data: post
     })
 }

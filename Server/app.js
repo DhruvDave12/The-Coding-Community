@@ -37,33 +37,6 @@ app.get('/', (req,res) => {
     res.send("Connected to backend");
 })
 
-// app.use(async (req,res,next) => {
-
-//     if(!req.user){
-//         next()
-//     }
-//     const data = await MoreData.findOne({owner: req.user._id});
-//     if(data.followers >= 1000) {
-//         data.level = data.level + 100;
-//         await data.save();
-//     } else if(data.followers >= 500){
-//         data.level = data.level + 50;
-//         await data.save();
-//     } else if(data.followers >= 100){
-//         data.level = data.level + 10;
-//         await data.save();
-//     } else if(data.followers >= 50){
-//         data.level = data.level + 5;
-//         await data.save();
-//     } else if(data.followers >= 10){
-//         data.level = data.level + 1;
-//         await data.save();
-//     }
-
-//     next();
-// })
-
-
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
