@@ -9,7 +9,7 @@ const TellUsMoreForm = () => {
     const [country, setCountry] = useState('');
     const [codeChefRating, setCodeChef] = useState('');
     const [codeForcesRating, setCodeForcesRating] = useState('');
-    const [gitHub, setGithub] = useState('');
+    const [github, setGithub] = useState('');
     const [linkedIn, setLinkedIn] = useState('');
     const [aboutYou, setAboutYou] = useState('');
 
@@ -24,7 +24,7 @@ const TellUsMoreForm = () => {
                 country,
                 codeChefRating,
                 codeforcesRating: codeForcesRating,
-                gitHub,
+                github,
                 linkedInUrl: linkedIn,
                 bio: aboutYou,
             },

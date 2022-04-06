@@ -24,7 +24,7 @@ const NewPost = () => {
             }
         };
         
-        await axios.post('http://localhost:8080/new/post', formData, config)
+        await axios.post('https://the-coding-community.herokuapp.com/new/post', formData, config)
         navigate('/feed');
         window.location.reload(false);
     }

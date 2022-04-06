@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { myContext } from '../../context/context';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
-import axios from "axios";
+import SearchBar from "../search/search.component";
 
 const NavBar = () => {
     const {user} = useContext(myContext);
@@ -32,6 +32,11 @@ const NavBar = () => {
         <div className="navbar">
             <div className="logo">
                 <p className="title" onClick={() => {navigate('/')}} >The Coding Community</p>
+                {
+                    currUser  ?
+                    <SearchBar />
+                    : null
+                }
             </div>
             <div className="other-fields">
                 <ul>

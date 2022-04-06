@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-const {regUser, authUser, getHome, postMoreData, getMoreData, getUser } = require('../controllers/auth.controllers');
+const {regUser, authUser, getHome, postMoreData, getMoreData, getUser, getAllUsers} = require('../controllers/auth.controllers');
 // const { route } = require('./post.routes');
 
 // @desc Registers the user
@@ -29,6 +29,8 @@ router.post('/tell-us-more', passport.authenticate('jwt', {session: false}), pos
 // @route GET
 // @path "/tell-us-more"
 router.get('/tell-us-more', passport.authenticate('jwt', {session: false}), getMoreData);
+
+router.get('/user/all', passport.authenticate('jwt', {session: false}), getAllUsers);
 
 router.get('/user/:id', passport.authenticate('jwt', {session: false}), getUser);
 

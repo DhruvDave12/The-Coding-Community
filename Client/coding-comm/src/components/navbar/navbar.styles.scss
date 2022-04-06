@@ -1,14 +1,17 @@
 .navbar{
+    overflow-x: clip;
     width: 100vw;
     height: 10vh;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid black;
 
     .logo{
         cursor: pointer;
-        width: 40%;
+        width: 30%;
+        display: flex;
+        justify-content: space-evenly;
     }
     .other-fields{
         width: 40%;
@@ -23,7 +26,7 @@
             display: flex;
             justify-content: space-evenly;
             .auth{
-                width: 30%;
+                width: 20%;
                 display: flex;
                 justify-content: space-between;
             }

@@ -143,7 +143,6 @@ module.exports.getUser = async (req,res) => {
 
     const { id } = req.params;
     const user = await MoreData.find({owner: id}).populate('owner');
-    console.log(user);
 
     res.status(200).send({
         success: true,
@@ -152,19 +151,10 @@ module.exports.getUser = async (req,res) => {
 
 }
 
-// module.exports.logout = async (req,res) => {
-//     const authHeader = req.headers["Authorization"];
-//     jwt.sign(authHeader, "", { expiresIn: 1 } , (logout, err) => {
-//         if (logout) {
-//             res.status(200).send({
-//                 success: true,
-//                 msg: "Successfully Logged Out!"
-//             })
-//         } else {
-//             res.status(404).send({
-//                 success: false,
-//                 msg: "Error logging out"
-//             })
-//         }
-//     });
-// }
+module.exports.getAllUsers = async(req,res) =>{
+    const users = await User.find({});
+    res.status(200).send({
+        success: true,
+        data: users
+    })
+}
