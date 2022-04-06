@@ -23,23 +23,6 @@ module.exports.getLeaderboard = async (req,res) => {
     
 }
 
-module.exports.getUserData = async (req,res) => {
-    const {id} = req.params;
-    const user = await User.findById(id);
-
-    if(!user){
-        res.status(404).send({
-            success: false,
-            msg: "No User Found :("
-        })
-    }
-
-    res.status(200).send({
-        success: true,
-        data: user
-    })
-}
-
 module.exports.updateFoll = async (req,res) => {
     if(!req.user){
         res.status(403).send({

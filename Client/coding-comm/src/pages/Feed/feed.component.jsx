@@ -3,9 +3,18 @@ import axios from "axios";
 
 import "./feed.styles.scss";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const Feed = () => {
   const [post, setPost] = useState([]);
+
+  const navigate = useNavigate();
+
+  const handleClick = async (id) => {
+    navigate(`/profile/${id}`);
+    window.location.reload(false);
+  }
+
 
   useEffect(() => {
     const getPosts = async () => {
@@ -36,7 +45,7 @@ const Feed = () => {
             <div className="particular-post">
               <div className="user">
                 {" "}
-                <p className="username">{item.owner.username}</p>
+                <p className="username" style={{cursor: "pointer"}} onClick={() => {handleClick(item.owner._id)}}> {item.owner.username} </p>
               </div>
               <div className="post-image">
                 <img

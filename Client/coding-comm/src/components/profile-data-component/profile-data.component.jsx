@@ -1,6 +1,8 @@
 import React from "react";
 import "./profile-data.styles.scss";
 
+import { Link } from "react-router-dom";
+
 const ProfileData = ({ currUser, currData }) => {
   return (
     <div className="profile-data">
@@ -18,7 +20,7 @@ const ProfileData = ({ currUser, currData }) => {
         </div>
         :
         <div className="logos">
-            <p>Start by posting more data</p>
+            <Link to={'/tell-us-more'}>Start by posting more data</Link>
         </div> 
 
       }

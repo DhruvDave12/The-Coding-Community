@@ -1,6 +1,8 @@
 import React from "react";
 import './follow-details.styles.scss';
 
+import { Link } from "react-router-dom";
+
 const FollowDetails = ({currData, toKeep}) => {
     return (
         <div className="follow-details">
@@ -41,7 +43,8 @@ const FollowDetails = ({currData, toKeep}) => {
                 currData ? 
                 <p className="bio">{currData.bio}</p>
                 :
-                <p className="bio">Start by posting more data....</p>
+                <p className="bio"><Link to={'/tell-us-more'}>Start by posting more data</Link></p>
+                
             }
         </div>
     )
