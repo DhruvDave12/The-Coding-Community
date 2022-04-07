@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-const {getLeaderboard, updateFoll, getMoreData} = require('../controllers/extraFunctions.controllers')
+const {getLeaderboard, updateFoll, unfollowMech} = require('../controllers/extraFunctions.controllers')
 
 // @desc GET LeaderBoard
 // @route GET
@@ -10,10 +10,14 @@ const {getLeaderboard, updateFoll, getMoreData} = require('../controllers/extraF
 router.get('/leaderboard', getLeaderboard);
 
 // @desc Update followers and following of a person
-// @route POST
+// @route GET
 // @path /user/update/:otherID
-router.post('/user/update/:otherID', passport.authenticate('jwt', {session: false}), updateFoll)
+router.get('/user/update/:otherID', passport.authenticate('jwt', {session: false}), updateFoll)
 
+// @desc Unfollow a user
+// @route GET
+// @path /user/unfollow/:otherID
+router.get('/user/unfollow/:otherID', passport.authenticate('jwt', {session: false}), unfollowMech)
 
 
 module.exports = router;

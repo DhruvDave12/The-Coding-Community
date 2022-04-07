@@ -39,12 +39,48 @@ module.exports.updateFoll = async (req,res) => {
     user1.following ++;
     user2.followers ++;
 
+    user1.allFollowing.push(otherID);
+    user2.allFollowers.push(req.user._id);
+
     await user1.save();
     await user2.save();
 
+    console.log(user1, user2);
     // returning the current user as user1
     res.status(200).send({
         success: true,
-        data: user1
+        data: [user1, user2]
     });
+}
+
+module.exports.unfollowMech = async (req,res) => {
+    const { otherID } = req.params;
+
+    const otherUserData = await MoreData.findOne({owner: otherID}).populate('allFollowers allFollowing owner');
+    const currUserData = await MoreData.findOne({owner: req.user._id}).populate('allFollowers allFollowing owner');
+
+    currUserData.following--;
+    otherUserData.followers--;
+
+    for(let i=0; i<otherUserData.allFollowers.length; i++){
+        if(otherUserData.allFollowers[i].username === currUserData.owner.username){
+            otherUserData.allFollowers.splice(i, 1);
+            break;
+        }
+    }
+
+    for(let i=0; i<currUserData.allFollowing.length; i++){
+        if(currUserData.allFollowing[i].username === otherUserData.owner.username){
+            currUserData.allFollowing.splice(i, 1);
+            break;
+        }
+    }
+
+    await otherUserData.save();
+    await currUserData.save();
+
+    res.status(200).send({
+        success: true,
+        data: [currUserData, otherUserData]
+    })
 }

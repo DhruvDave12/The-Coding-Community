@@ -31,6 +31,7 @@ const Feed = () => {
     getPosts();
   }, []);
 
+  console.log(post);
   return (
     <div className="feed">
       {post.length === 0 ? (

@@ -34,7 +34,7 @@ app.use('/', quesansRoutes);
 app.use('/', courseRoutes);
 
 app.get('/', (req,res) => {
-    res.send("Connected to backend");
+    res.send("Welcome to The Coding Community Backend :)");
 })
 
 

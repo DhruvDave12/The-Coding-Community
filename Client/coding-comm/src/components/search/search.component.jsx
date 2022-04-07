@@ -25,7 +25,6 @@ const SearchBar = () => {
     
     useEffect(() => {
         const dataOfUsers = [];
-        // console.log("SEARCH: ", search);
         if(search.length === 0){
             setArray([]);
             return;

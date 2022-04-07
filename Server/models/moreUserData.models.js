@@ -45,7 +45,19 @@ const moreDataSchema = Schema({
     },
     linkedInUrl: {
         type: String,
-    }
+    },
+    allFollowing: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
+    allFollowers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 })
 
 

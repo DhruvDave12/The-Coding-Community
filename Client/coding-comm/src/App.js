@@ -11,6 +11,7 @@ import Feed from './pages/Feed/feed.component';
 import Comments from './pages/comments/comments.component';
 import NewPost from './pages/new-post/new-post.compoent';
 import OtherProfile from './pages/others-profile/others-profile.component';
+import ListOfFollows from './components/listoffollows/list-of-follows.component';
 
 import NavBar from './components/navbar/navbar.component';
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path='/edit' element={<Edit />} />
         <Route path='/tell-us-more' element={<TellUsMoreForm />}/>
         <Route path='/profile' element={<Profile />}/>
+        <Route path='/social/:id' element={<ListOfFollows />}/>
         <Route path='/feed' element={<Feed />}/>
         <Route path='/comments/:id' element={<Comments />}/>
         <Route path='/new/post' element={<NewPost />}/>
