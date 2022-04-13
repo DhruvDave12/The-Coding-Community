@@ -8,6 +8,9 @@ const videoSchema = new Schema({
 
 const courseSchema = new Schema({
     videos: [videoSchema],
+    thumbnail: {
+        type: String,
+    },
     upload: {
         type: String,
         required: true,

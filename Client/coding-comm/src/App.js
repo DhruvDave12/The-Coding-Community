@@ -12,6 +12,10 @@ import Comments from './pages/comments/comments.component';
 import NewPost from './pages/new-post/new-post.compoent';
 import OtherProfile from './pages/others-profile/others-profile.component';
 import ListOfFollows from './components/listoffollows/list-of-follows.component';
+import Course from './pages/course/course.component';
+import SellCourse from './pages/course/sellCourse/sellCourse.component';
+import BuyCourse from './pages/course/buyCourse/buyCourse.component';
+import ParticularCourse from './pages/particular-course/particular-course.component';
 
 import NavBar from './components/navbar/navbar.component';
 function App() {
@@ -31,6 +35,10 @@ function App() {
         <Route path='/comments/:id' element={<Comments />}/>
         <Route path='/new/post' element={<NewPost />}/>
         <Route path='/profile/:id' element={<OtherProfile />}/>
+        <Route path='/course' element={<Course />} />
+        <Route path='/course/buy' element={<BuyCourse />}/>
+        <Route path='/course/sell' element={<SellCourse />}/>
+        <Route path='/course/:id' element={<ParticularCourse />}/>
       </Routes>
     </>
   );

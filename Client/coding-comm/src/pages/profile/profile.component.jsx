@@ -16,7 +16,6 @@ const Profile = () => {
 
   const [post, setPost] = useState();
 
-  // console.log(userValue);
   var currUser, currData;
   if (userValue) {
     currUser = userValue;
@@ -40,7 +39,6 @@ const Profile = () => {
     getPosts();
   }, [userValue]);
 
-  // console.log(post, currUser);
   return (
     <div className="profile">
       {currUser !== undefined &&
@@ -49,11 +47,12 @@ const Profile = () => {
         <div className="profile-container">
           <div className="section">
             <ProfileData currData={currData} currUser={currUser} />
-
             <FollowDetails currData={currData} toKeep={false} />
           </div>
+          
           <TechStack />
           <YourPosts post={post} />
+
         </div>
       ) : (
         <div className="profile-container">

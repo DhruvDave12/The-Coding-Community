@@ -11,23 +11,31 @@ module.exports.postVideo = async (req,res) => {
         })
     }
 
-    const { price } = req.body;
-
+    const { price, title } = req.body;
+    const date = new Date();
+    
     const newCourse = new Course({
-        upload: "28-03-2022",
+        upload: date.toLocaleString(),
         price,
+        title
     })
     newCourse.instructor = req.user._id;
     newCourse.videos = req.files.map(f => ({ url: f.path, fileName: f.filename }));
-
+    
+    for(let i=0; i<req.files.length; i++){
+      if(req.files[i].path.includes('video') === false){
+        newCourse.thumbnail = req.files[i].path;
+        break;
+      }
+    }
     await newCourse.save();
 
-    // User level increment logic
-    // if user is selling a course then he/she would get extra 100 points
+    // // User level increment logic
+    // // if user is selling a course then he/she would get extra 100 points
 
-    const userLevel = Level.find({owner: req.user._id});
-    userLevel.level  = parseInt(userLevel.level) + parseInt(100);
-    await userLevel.save();
+    // const userLevel = Level.find({owner: req.user._id});
+    // userLevel.level  = parseInt(userLevel.level) + parseInt(100);
+    // await userLevel.save();
 
     res.status(200).send({
         success: true,
@@ -64,7 +72,7 @@ module.exports.rateCourse = async (req,res) => {
 }
 
 module.exports.getAllCourses = async(req,res) => {
-    const allCourses = await Course.find({});
+    const allCourses = await Course.find({}).populate('instructor');
 
     res.status(200).send({
       success: true,
@@ -82,7 +90,7 @@ module.exports.getCourse = async(req,res) => {
 
   const { id } = req.params;
 
-  const course =  await Course.findById(id);
+  const course =  await Course.findById(id).populate('instructor');
 
   res.status(200).send({
     success: true,
