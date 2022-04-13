@@ -27,7 +27,7 @@ const SellCourse = () => {
                 'Authorization': localStorage.getItem('token')
             }
         };
-        await axios.post('http://localhost:8080/course/new', formData, config)
+        await axios.post('https://the-coding-community.herokuapp.com/course/new', formData, config)
         navigate('/course');
         window.location.reload(false);
     }

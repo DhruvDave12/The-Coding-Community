@@ -8,7 +8,7 @@ const BuyCourse = () => {
 
     useEffect(() => {
         const fetchAllCourses = async () => {
-            const res = await axios.get('http://localhost:8080/courses/all', {
+            const res = await axios.get('https://the-coding-community.herokuapp.com/courses/all', {
                 headers: {
                     Authorization: localStorage.getItem("token")
                 }

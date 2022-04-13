@@ -10,7 +10,7 @@ const ParticularCourse = () => {
 
     useEffect(() => {
         const fetchCourseWithID = async () => {
-            const res = await axios.get(`http://localhost:8080/course/${params.id}`, {
+            const res = await axios.get(`https://the-coding-community.herokuapp.com/course/${params.id}`, {
                 headers: {
                     Authorization: localStorage.getItem('token')
                 }
