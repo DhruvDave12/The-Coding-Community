@@ -5,7 +5,7 @@ import axios from "axios";
 import SearchList from "../search-drop-list/search-drop-list.component";
 import './search.styles.scss';
 
-const SearchBar = () => {
+const SearchBar = () => { 
     const [search, setSearch] = useState('');
     const [data, setData] = useState([]);
     const [sendArray, setArray] = useState([]);

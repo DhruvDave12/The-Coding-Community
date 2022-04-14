@@ -34,7 +34,7 @@ const NavBar = () => {
                 <p className="title" onClick={() => {navigate('/')}} >The Coding Community</p>
                 {
                     currUser  ?
-                    <SearchBar />
+                    <SearchBar/>
                     : null
                 }
             </div>

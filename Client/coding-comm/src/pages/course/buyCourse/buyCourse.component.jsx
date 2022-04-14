@@ -5,6 +5,8 @@ import './buyCourse.styles.scss';
 
 const BuyCourse = () => {
     const [allCourses, setallCourses] = useState([]);
+    const [searchRes, setSearchRes] = useState('');
+    const [searchResArr, setSearchResArr] = useState([]);
 
     useEffect(() => {
         const fetchAllCourses = async () => {
@@ -13,26 +15,50 @@ const BuyCourse = () => {
                     Authorization: localStorage.getItem("token")
                 }
             })
-            console.log(res.data.data);
             setallCourses(res.data.data);
         }
         fetchAllCourses();
     }, [])
     
-    const handleCourseSearch = (event) => {
-        event.preventDefault();
-        console.log("Hello");
-    }
+    useEffect(() => {
+        const dataOfCourses = [];
+        if(searchRes.length === 0){
+            setSearchResArr([]);
+            return;
+        }
+        const searchResults = () => {
+            for(let courses in allCourses){
+                let  course1 = allCourses[courses].title.toLowerCase();
+                let courseToSearch = searchRes.toLowerCase();
+                if(course1.includes(courseToSearch)){
+                    if(!searchResArr.includes(allCourses[courses])){
+                        dataOfCourses.push(allCourses[courses]);
+                    }
+                }
+            }
+            setSearchResArr(dataOfCourses);
+        }
+        searchResults();
+    }, [searchRes])
+
     return (
         <div className="buy-course">
-            <form onSubmit = {handleCourseSearch}>
-                <div className="field">
                     <label htmlFor="search">Search a course</label>
-                    <input type="text" id="search" placeholder="Search a course"/>
-                </div>
-                <button type="submit">Search</button>
-            </form>
-
+                    <input type="text" id="search" onChange={e => setSearchRes(e.target.value)} placeholder="Search a course"/>
+                <Link to={'/search/results'}>Search</Link>
+                {
+                    searchResArr.length === 0 ?
+                    null :
+                    <div className="searchRes">
+                        {
+                            searchResArr.map(res => (
+                                <div className="particular-course">
+                                    <Link to = {`/course/${res._id}`}>{res.title}</Link>
+                                </div>
+                            ))
+                        }
+                    </div>
+                }
             <h1>All available Courses</h1>
             {
                 // Make a component for it later.

@@ -36,7 +36,6 @@ function App() {
         <Route path='/new/post' element={<NewPost />}/>
         <Route path='/profile/:id' element={<OtherProfile />}/>
         <Route path='/course' element={<Course />} />
-        <Route path='/course/buy' element={<BuyCourse />}/>
         <Route path='/course/sell' element={<SellCourse />}/>
         <Route path='/course/:id' element={<ParticularCourse />}/>
       </Routes>
