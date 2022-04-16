@@ -28,6 +28,11 @@ router.get('/courses/all', CourseRoutes.getAllCourses);
 // @desc GET a particular course
 // @route GET
 // @path /course/:id
+router.post('/course/purchase',passport.authenticate('jwt', {session: false}),CourseRoutes.purchaseCourse )
+
 router.get('/course/:id',passport.authenticate('jwt', {session: false}),CourseRoutes.getCourse )
+
+// @desc securely check if the user has the course
+router.post('/course/check', passport.authenticate('jwt', {session: false}), CourseRoutes.checkCourse);
 
 module.exports = router;

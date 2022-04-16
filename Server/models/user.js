@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-// const bcrypt = require('bcrypt')
-
 
 const userSchema = new Schema({
     username: {
@@ -25,7 +23,12 @@ const userSchema = new Schema({
         type: Boolean,
         required: true,
         default: false
-    }
+    },
+    hashOfCourses: [
+        {
+            type: String,
+        }
+    ]
 })
 
 

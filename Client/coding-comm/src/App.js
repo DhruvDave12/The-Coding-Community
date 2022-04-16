@@ -14,7 +14,7 @@ import OtherProfile from './pages/others-profile/others-profile.component';
 import ListOfFollows from './components/listoffollows/list-of-follows.component';
 import Course from './pages/course/course.component';
 import SellCourse from './pages/course/sellCourse/sellCourse.component';
-import BuyCourse from './pages/course/buyCourse/buyCourse.component';
+import BoughtCourse from './pages/course/boughtCourse/boughtCourse.component';
 import ParticularCourse from './pages/particular-course/particular-course.component';
 
 import NavBar from './components/navbar/navbar.component';
@@ -38,6 +38,7 @@ function App() {
         <Route path='/course' element={<Course />} />
         <Route path='/course/sell' element={<SellCourse />}/>
         <Route path='/course/:id' element={<ParticularCourse />}/>
+        <Route path='/course/:id/bought' element={<BoughtCourse />}/>
       </Routes>
     </>
   );

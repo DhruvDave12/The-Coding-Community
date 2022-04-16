@@ -1,7 +1,8 @@
 const Course = require('../models/courseVideo.models');
 const Level = require('../models/userLevel.model');
-
-// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const User = require('../models/user');
+const stripe = require('stripe')('sk_test_51KgQFKSHxEryhSMENxZfhtR3tPxbZNEF8KEhVY5szfLTcWUBMaJOLQEr550fOGzFIs1G8ZlEL6dFYXVtPLmwhBdx00QVVK920K')
+const { v4: uuidv4 } = require('uuid');
 
 module.exports.postVideo = async (req,res) => {
     if(!req.user){
@@ -90,7 +91,7 @@ module.exports.getCourse = async(req,res) => {
 
   const { id } = req.params;
 
-  const course =  await Course.findById(id).populate('instructor');
+  const course =  await Course.findById(id).populate('instructor customersWhoBought');
 
   res.status(200).send({
     success: true,
@@ -98,6 +99,75 @@ module.exports.getCourse = async(req,res) => {
   })
 }
 
+module.exports.purchaseCourse = async (req,res) => {
+  const {course, token} = req.body;
+  // console.log(course,token);
+  const customer = await stripe.customers.create({
+    email: token.email,
+    source: token.id
+  })
+  const key = uuidv4();
+  
+  const charge = await stripe.paymentIntents.create({
+    amount: course.price * 100,
+    currency: "usd",
+    customer: customer.id,
+    receipt_email: token.email,
+    description: `Purchased the ${course.title}`,
+    shipping: {
+      name: token.card.name,
+      address: {
+        line1: token.card.address_line1,
+        city: token.card.address_city,
+        country: token.card.address_country,
+        postal_code: token.card.address_zip,
+      }
+    }
+  },{
+    idempotencyKey: key,
+  })
+
+  let uniqueKey = uuidv4();
+  var editedTitle = course.title.replace(/ /g, "");
+
+  let finalKey = editedTitle + " " + uniqueKey;
+  const user = await User.findById(req.user._id);
+  user.hashOfCourses.push(finalKey);
+  await user.save();
+
+  const courseToEdit = await Course.findById(course._id);
+  courseToEdit.customersWhoBought.push(user._id);
+  
+  await courseToEdit.save();
+
+  // we need to map this unique key to a user so that we know that user has bought this course.
+  res.status(200).send({
+    success: true,
+    data: {
+      courseData: courseToEdit,
+      hashKey: finalKey
+    }
+  })
+}
+
+module.exports.checkCourse = async (req,res) => {
+  const { key } = req.body;
+  const user = await User.findById(req.user._id);
+  let isThere = false;
+
+  // can use binary search here
+  for(let i=0; i<user.hashOfCourses.length; i++){
+    if(user.hashOfCourses[i] === key){
+        isThere = true;
+        break;
+    }
+  }
+
+  res.status(200).send({
+    success: true,
+    data: isThere
+  })
+}
 // module.exports.sendKey = async (req,res) => {
 //   if(!req.user) {
 //     res.status(403).send({

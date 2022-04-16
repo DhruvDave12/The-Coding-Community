@@ -23,7 +23,8 @@
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "socket.io": "^4.4.1",
-    "stripe": "^8.213.0"
+    "stripe": "^8.213.0",
+    "uuid": "^8.3.2"
   },
   "engines": {
     "node": "v14.17.6"
