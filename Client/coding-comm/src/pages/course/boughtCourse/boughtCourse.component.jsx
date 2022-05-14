@@ -11,8 +11,7 @@ const BoughtCourse = () => {
     const hashKey = searchParams.get('key');
     const [hasBought, setHasBought] = useState(false);
     
-    const course = location.state.courseData;
-
+    const course = location.state;
     useEffect(() => {
         const securelyCheck = async () => {
             const res = await axios.post('https://the-coding-community.herokuapp.com/course/check', {
@@ -35,7 +34,7 @@ const BoughtCourse = () => {
         <div className="bought__course">
             {
                 hasBought ? 
-                <h1>{course.title}</h1>
+                <iframe src={course.videos[1].url}></iframe>
                 :
                 <h1>You dont have the access to this course.</h1>
             }

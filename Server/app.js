@@ -14,7 +14,7 @@ const projectRoutes = require('./routes/project.routes');
 const postRoutes = require('./routes/post.routes');
 const quesansRoutes = require('./routes/askQuestion.routes');
 const courseRoutes = require('./routes/courseSell.route');
-
+const session = require('express-session')
 const MoreData = require('./models/moreUserData.models');
 configDB();
 
@@ -22,8 +22,16 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
 
+app.use(session({
+    secret: "secret",
+    resave: false ,
+    saveUninitialized: true ,
+}))
+
 app.use(passport.initialize());
+app.use(passport.session());
 require('./config/passport')
+require('./config/passport_google.js')
 
 // using routes
 app.use('/', authRoutes);

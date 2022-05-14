@@ -39,5 +39,13 @@ router.get('/user/all', passport.authenticate('jwt', {session: false}), getAllUs
 // @path "/user/:id"
 router.get('/user/:id', passport.authenticate('jwt', {session: false}), getUser);
 
+router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: 'https://www.reddit.com/' }), (req,res) => {
+    res.redirect('https://www.youtube.com/')
+})
+
+router.get('/get/user/google', passport.authenticate('google', { failureRedirect: 'https://www.reddit.com/' }), (req,res) => {
+    res.send(req.user);
+})
 module.exports = router;

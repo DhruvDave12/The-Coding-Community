@@ -47,9 +47,9 @@ const BuyCourse = () => {
   }, [searchRes]);
 
   const handleMore = (id) => {
-      navigate(`/course/${id}`);
-      window.location.reload(false);
-  }
+    navigate(`/course/${id}`);
+    window.location.reload(false);
+  };
 
   return (
     <div className="buy-course">
@@ -70,20 +70,35 @@ const BuyCourse = () => {
           ))}
         </div>
       )}
-      <h1>All available Courses</h1>
-      {
-        // Make a component for it later.
-        allCourses.map((course) => (
-          <div className="particular-course">
-            <img src={course.thumbnail} alt="course-thumbnail" />
-            <p className="title">{course.title}</p>
-            <p className="price">${course.price}</p>
-            <p className="rating">{course.rating}</p>
-            <p className="instructor">{course.instructor.username}</p>
-            <h2 onClick={() => {handleMore(course._id)}}>More Details</h2>
-          </div>
-        ))
-      }
+
+      {allCourses.length !== 0 ? (
+        <div className="course__available">
+          <h1>All available Courses</h1>
+          {
+            // Make a component for it later.
+            allCourses.map((course) => (
+              <div className="particular-course">
+                <img src={course.thumbnail} alt="course-thumbnail" />
+                <p className="title">{course.title}</p>
+                <p className="price">${course.price}</p>
+                <p className="rating">{course.rating}</p>
+                <p className="instructor">{course.instructor.username}</p>
+                <h2
+                  onClick={() => {
+                    handleMore(course._id);
+                  }}
+                >
+                  More Details
+                </h2>
+              </div>
+            ))
+          }
+        </div>
+      ) : (
+        <div className="course__available">
+          <h1>No Courses Available</h1>
+        </div>
+      )}
     </div>
   );
 };

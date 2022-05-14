@@ -28,7 +28,10 @@ const userSchema = new Schema({
         {
             type: String,
         }
-    ]
+    ],
+    googleId: {
+        type: String
+    }
 })
 
 

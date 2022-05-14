@@ -1,7 +1,7 @@
 const Course = require('../models/courseVideo.models');
 const Level = require('../models/userLevel.model');
 const User = require('../models/user');
-const stripe = require('stripe')('sk_test_51KgQFKSHxEryhSMENxZfhtR3tPxbZNEF8KEhVY5szfLTcWUBMaJOLQEr550fOGzFIs1G8ZlEL6dFYXVtPLmwhBdx00QVVK920K')
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const { v4: uuidv4 } = require('uuid');
 
 module.exports.postVideo = async (req,res) => {

@@ -19,6 +19,7 @@ const ParticularCourse = () => {
   const { user } = useContext(myContext);
   const [userValue, setUserValue] = user;
 
+  const [hasPurchased, setHasPurchased] = useState(false);
   const [course, setCourse] = useState(null);
   const [hash, setHash] = useState();
 
@@ -27,29 +28,31 @@ const ParticularCourse = () => {
 
   useEffect(() => {
     const fetchCourseWithID = async () => {
-      const res = await axios.get(`https://the-coding-community.herokuapp.com/course/${params.id}`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
+      const res = await axios.get(
+        `https://the-coding-community.herokuapp.com/course/${params.id}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
       setCourse(res.data.data);
     };
     fetchCourseWithID();
   }, []);
 
-  const memoizedVal = useMemo(() => {
-    if (course && userValue) {
-        for(let i=0; i<userValue.hashOfCourses.length; i++){
-            const arr = userValue.hashOfCourses[i].split(" ");
-            if(arr[0] === course.title.replace(/ /g, "")){
-                setHash(arr[0] + " " + arr[1]);
-                return true;
-            }
+  useEffect(() => {
+    if(userValue && course){
+      for (let i = 0; i < userValue.hashOfCourses.length; i++) {
+        const arr = userValue.hashOfCourses[i].split(" ");
+        if (arr[0] === course.title.replace(/ /g, "")) {
+          setHash(arr[0] + " " + arr[1]);
+          return setHasPurchased(true);
         }
-        return false;
+      }
+      return setHasPurchased(false);
     }
-  }, [userValue]);
-
+  }, [userValue, course]);
   const handleToken = async (token, addresses) => {
     const res = await axios.post(
       "https://the-coding-community.herokuapp.com/course/purchase",
@@ -65,13 +68,15 @@ const ParticularCourse = () => {
     );
     if (res.data.success) {
       const uniqueKey = res.data.data.hashKey;
-      navigate(`/course/${params.id}/bought?key=${uniqueKey}`);
+      navigate(`/course/${params.id}/bought?key=${uniqueKey}`, {
+        state: course,
+      });
       notify("Payment done successfully!");
     } else {
       notifyFalse("Payment Failed!");
     }
   };
-  
+
   return (
     <div className="particular-course">
       {course ? (
@@ -83,13 +88,16 @@ const ParticularCourse = () => {
           <Link to={`/profile/${course.instructor._id}`} className="instructor">
             {course.instructor.username}
           </Link>
-          {memoizedVal ? (
-            <Link to={`/course/${params.id}/bought/?key=${hash}`} state={{courseData: course}}>
+          {hasPurchased ? (
+            <Link
+              to={`/course/${params.id}/bought/?key=${hash}`}
+              state={course}
+            >
               Go to Course
             </Link>
           ) : (
             <StripeCheckout
-            // add this stripe key in a safe file.....
+              // add this stripe key in a safe file.....
               stripeKey="pk_test_51KgQFKSHxEryhSME1xSO8yyX0Hifnpd6GVjYz7yKoKY6NUsaRO9Y4DL0cb3qJ4xCOkFEqLTWitvoaTbwlDFNRdhX00Rc6SLN8g"
               token={handleToken}
               amount={course.price * 100}
