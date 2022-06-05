@@ -1,3 +1,4 @@
+import 'antd/dist/antd.css';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 
@@ -21,7 +22,7 @@ import NavBar from './components/navbar/navbar.component';
 function App() {
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/search' element={<Home />}/>
