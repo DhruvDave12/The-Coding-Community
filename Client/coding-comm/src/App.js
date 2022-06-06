@@ -22,7 +22,12 @@ import NavBar from './components/navbar/navbar.component';
 function App() {
   return (
     <>
-      {/* <NavBar /> */}
+    {
+      localStorage.getItem('token') ? 
+      <NavBar />
+      :
+      null
+    }
       <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/search' element={<Home />}/>
