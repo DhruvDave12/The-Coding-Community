@@ -11,7 +11,7 @@ ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
       <Context>
-        <App />
+          <App />
       </Context>
     </React.StrictMode>
   </BrowserRouter>

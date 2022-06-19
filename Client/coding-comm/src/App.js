@@ -19,6 +19,7 @@ import BoughtCourse from './pages/course/boughtCourse/boughtCourse.component';
 import ParticularCourse from './pages/particular-course/particular-course.component';
 
 import NavBar from './components/navbar/navbar.component';
+import ChatPage from './pages/chatting/chatting.component';
 function App() {
   return (
     <>
@@ -45,6 +46,7 @@ function App() {
         <Route path='/course/sell' element={<SellCourse />}/>
         <Route path='/course/:id' element={<ParticularCourse />}/>
         <Route path='/course/:id/bought' element={<BoughtCourse />}/>
+        <Route path='/chat' element={<ChatPage />}/>
       </Routes>
     </>
   );
