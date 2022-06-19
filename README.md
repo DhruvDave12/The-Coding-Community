@@ -3,6 +3,40 @@
 The coding community is my personal full stack web project where i will be building a social platform where coders can chat and post and comment, 
 sell or buy courses and interact with each other with amazing experience and learning
 
+## How to start the project
+1. Open terminal
+2. Install nodemon if not installed using npm (Ignore if already installed)
+ ```sh
+  npm install nodemon
+  ```
+3. Open two terminals one for the backend and other for the frontend
+ ### Backend Terminal
+ ```sh
+  cd Server
+  ```
+  Install all the dependencies
+  ```sh
+  npm install
+  ``` 
+  Start the server using nodemon
+  ```sh
+  nodemon app.js
+  ```
+  ### Frontend Terminal
+  Go to the directory
+  ```sh
+  cd .\Client\coding-comm\
+  ``` 
+  Install all the dependencies
+  ```sh
+  npm install
+  ``` 
+  Start the react server
+  ```sh
+  npm start
+  ```
+ 4. Now go to http://localhost:3000/ to view the project
+
 ## Tech Stack :computer:
 1. MongoDB
 2. NodeJS
