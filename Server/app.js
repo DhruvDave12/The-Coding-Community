@@ -1,11 +1,12 @@
 require('dotenv').config()
 
 const express = require('express');
+const http = require('http');
 const cors = require('cors');
 const passport = require('passport');
-
 const {configDB} = require('./config/database');
 const app = express();
+module.exports = server = http.createServer(app);
 const PORT = process.env.PORT || 8080;
 
 const authRoutes = require('./routes/auth.routes');
@@ -15,9 +16,10 @@ const postRoutes = require('./routes/post.routes');
 const quesansRoutes = require('./routes/askQuestion.routes');
 const courseRoutes = require('./routes/courseSell.route');
 const session = require('express-session')
-const MoreData = require('./models/moreUserData.models');
-configDB();
+// const MoreData = require('./models/moreUserData.models');
+require('./services/socketConnections');
 
+configDB();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
@@ -46,8 +48,6 @@ app.get('/', (req,res) => {
 })
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 })
-
-
