@@ -69,5 +69,9 @@ sell or buy courses and interact with each other with amazing experience and lea
 ### FRONTEND :computer:
 1. Design the other pages using antD and scss
 
+## Deployed Links
+1. Backend deployed at: https://the-coding-community.herokuapp.com/
+2. Frontend yet to be deployed
+
 ## Contact Me :speech_balloon:
 ### Mail me at: davedhruv1201@gmail.com for more details
