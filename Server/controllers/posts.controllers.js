@@ -67,7 +67,6 @@ module.exports.getPosts = async (req,res) => {
     }
 
     const posts = await Posts.find({}).populate('owner');
-   
     res.status(200).send({
         success: true,
         data: posts

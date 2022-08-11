@@ -8,6 +8,7 @@ import { Input, Button } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import "./sign-in.styles.scss";
 
+
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,18 +21,19 @@ const SignIn = () => {
 
   let navigate = useNavigate();
   const handleSubmit = async () => {
-      setLoading(true);
+    setLoading(true);
     const response = await axios.post(
-      "https://the-coding-community.herokuapp.com/login",
+      "http://localhost:8080/login",
       {
         password: password,
         email: email,
       }
-    );
-    localStorage.setItem("token", response.data.token);
-    setUserValue(response.data.user);
-    setLoading(false);
-    navigate("/profile");
+      );
+      // socket.emit("STORE_SOCKET_ID", email);
+      localStorage.setItem("token", response.data.token);
+      setUserValue(response.data.user);
+      setLoading(false);
+      navigate("/profile");
   };
 
   return (

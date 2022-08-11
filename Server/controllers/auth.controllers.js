@@ -4,14 +4,18 @@ const userLevel = require('../models/userLevel.model');
 
 const jwt = require('jsonwebtoken');
 const { hashSync, compareSync } = require('bcrypt');
-
+// const {initalUserSocketConn} = require('../services/socketConnections');
 
 module.exports.regUser = async (req,res) => {
+    // const newConnectionID = initalUserSocketConn();
+    // console.log("CONNECTION ID: ", newConnectionID);
+    // console.log("USER SOCKET ID: ", userSocketID);
     const user = new User({
         username: req.body.username,
         password: hashSync(req.body.password, 10),
         email: req.body.email,
         contactNumber: req.body.contactNumber,
+        // socketID: userSocketID
     })
     user.save()
     .then(user => {
@@ -41,13 +45,14 @@ module.exports.regUser = async (req,res) => {
 
 module.exports.authUser = async (req,res) => {
     const user = await User.findOne({email: req.body.email})
+    // console.log("USER: ", user);
     if (!user) {
         return res.status(401).send({
             success: false,
             msg: 'Could not find the user'
         })
     }
- 
+    
     // else we have the user
      if(!compareSync(req.body.password, user.password)){
          return res.status(401).send({
@@ -61,7 +66,8 @@ module.exports.authUser = async (req,res) => {
          username: user.username,
          id: user._id
      }
-     
+     user.online = true;
+     await user.save();
     //  req.user = user;
      const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "1h"});
      return res.status(200).send({
@@ -160,5 +166,16 @@ module.exports.getAllUsers = async(req,res) =>{
     res.status(200).send({
         success: true,
         data: users
+    })
+}
+
+module.exports.logUserOut = async(req,res) => {
+    // todo -> keep a check for USER ID
+    const user = await User.findById(req.body.userID);
+    user.online = false;
+    await user.save();
+    res.status(200).send({
+        success: true,
+        msg: "User Logged Out"
     })
 }

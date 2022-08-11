@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-const {regUser, authUser, getHome, postMoreData, getMoreData, getUser, getAllUsers} = require('../controllers/auth.controllers');
+const {regUser, authUser, getHome, postMoreData, getMoreData, getUser, getAllUsers, logUserOut} = require('../controllers/auth.controllers');
 
 // @desc Registers the user
 // @route POST
@@ -13,6 +13,11 @@ router.post('/register', regUser);
 // @route POST
 // @path "/login"
 router.post('/login', authUser);
+
+// @desc Logs the user out
+// @route POST
+// @path "/logout"
+router.post('/logout', logUserOut);
 
 // @desc Shows the profile page
 // @route GET
@@ -39,13 +44,13 @@ router.get('/user/all', passport.authenticate('jwt', {session: false}), getAllUs
 // @path "/user/:id"
 router.get('/user/:id', passport.authenticate('jwt', {session: false}), getUser);
 
-router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
+// router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: 'https://www.reddit.com/' }), (req,res) => {
-    res.redirect('https://www.youtube.com/')
-})
+// router.get('/google/callback', passport.authenticate('google', { failureRedirect: 'https://www.reddit.com/' }), (req,res) => {
+//     res.redirect('https://www.youtube.com/')
+// })
 
-router.get('/get/user/google', passport.authenticate('google', { failureRedirect: 'https://www.reddit.com/' }), (req,res) => {
-    res.send(req.user);
-})
+// router.get('/get/user/google', passport.authenticate('google', { failureRedirect: 'https://www.reddit.com/' }), (req,res) => {
+//     res.send(req.user);
+// })
 module.exports = router;
