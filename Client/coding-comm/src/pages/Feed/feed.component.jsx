@@ -4,7 +4,8 @@ import axios from "axios";
 import "./feed.styles.scss";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
-
+import ParticularPost from "../../components/particularPost/particular-post.component";
+import ShareSomething from "../../components/share-something/share_something.component";
 const Feed = () => {
   const [post, setPost] = useState([]);
 
@@ -13,8 +14,7 @@ const Feed = () => {
   const handleClick = async (id) => {
     navigate(`/profile/${id}`);
     window.location.reload(false);
-  }
-
+  };
 
   useEffect(() => {
     const getPosts = async () => {
@@ -34,37 +34,30 @@ const Feed = () => {
   console.log(post);
   return (
     <div className="feed">
-      {post.length === 0 ? (
-        <div className="final-feed">
-          <h1>Start a new post :)</h1>
-          <Link to={"/new/post"}>New Post</Link>
+      <div className="final-feed">
+        <div className="share__something__tab">
+          <div className="profile__image">
+            <img
+              src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+              alt="user"
+              className="user__image"
+            />
+          </div>
+          <ShareSomething />
         </div>
-      ) : (
-        <div className="final-feed">
-          <Link to={"/new/post"}>New Post</Link>
-          {post.map((item) => (
-            <div className="particular-post">
-              <div className="user">
-                {" "}
-                <p className="username" style={{cursor: "pointer"}} onClick={() => {handleClick(item.owner._id)}}> {item.owner.username} </p>
+        {post.length === 0 ? (
+            <h1>Start a new post :)</h1>
+        ) : (
+          <div className="feed__component__wrapper">
+            {post.map((item) => (
+              // todo -> render data dynamically now
+              <div className="feed__component">
+                <ParticularPost />
               </div>
-              <div className="post-image">
-                <img
-                  src={item.images[0].url}
-                  alt="post"
-                  className="post-image-s"
-                />
-              </div>
-              <div className="post-footer">
-                <p className="caption">{item.caption}</p>
-              </div>
-              <Link to={`/comments/${item._id}`} className="comments">
-                Comments
-              </Link>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

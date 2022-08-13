@@ -61,7 +61,7 @@ const NavBar = () => {
                         <li className="field" onClick={logOut}>Logout</li>
                         :
                         <div className="auth">
-                            <Link className="field" to={'/login'}>Login</Link>
+                            <Link className="field" to={'/login'}>Login</Link> /
                             <Link className="field" to={'/register'}>Signup</Link>
                         </div>
                     }
