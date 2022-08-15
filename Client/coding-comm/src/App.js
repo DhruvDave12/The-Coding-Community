@@ -10,7 +10,7 @@ import TellUsMoreForm from './pages/tell-us-more/tell-us-more.component';
 import Profile from './pages/Profile/profile.component';
 import Feed from './pages/Feed/feed.component';
 import Comments from './pages/comments/comments.component';
-import NewPost from './pages/new-post/new-post.compoent';
+// import NewPost from './pages/new-post/new-post.compoent';
 import OtherProfile from './pages/others-profile/others-profile.component';
 import ListOfFollows from './components/listoffollows/list-of-follows.component';
 import Course from './pages/course/course.component';
@@ -40,7 +40,7 @@ function App() {
         <Route path='/social/:id' element={<ListOfFollows />}/>
         <Route path='/feed' element={<Feed />}/>
         <Route path='/comments/:id' element={<Comments />}/>
-        <Route path='/new/post' element={<NewPost />}/>
+        {/* <Route path='/new/post' element={<NewPost />}/> */}
         <Route path='/profile/:id' element={<OtherProfile />}/>
         <Route path='/course' element={<Course />} />
         <Route path='/course/sell' element={<SellCourse />}/>

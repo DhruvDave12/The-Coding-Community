@@ -1,19 +1,54 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import "./feed.styles.scss";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router";
 import ParticularPost from "../../components/particularPost/particular-post.component";
 import ShareSomething from "../../components/share-something/share_something.component";
+import { Modal } from "antd";
+import NewPostModal from "../../components/newPostModal/newPostModal.component";
+import LazyLoader from "../../components/lazy-loader/lazy-loader.component";
+
 const Feed = () => {
   const [post, setPost] = useState([]);
+  const [caption, setCaption] = useState("");
+  const [file, setFile] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [newPostLoading, setNewPostLoading] = useState(false);
 
-  const navigate = useNavigate();
+  const showModal = () => {
+    setVisible(true);
+  };
 
-  const handleClick = async (id) => {
-    navigate(`/profile/${id}`);
-    window.location.reload(false);
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setVisible(false);
+  };
+
+  const handleSubmit = async () => {
+    setConfirmLoading(true);
+    setNewPostLoading(true);
+    const formData = new FormData();
+    console.log("FILE: ", file);
+    console.log("CAPTION: ",caption);
+
+    formData.append("image", file);
+    formData.append("captions", caption);
+
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+        Authorization: localStorage.getItem("token"),
+      },
+    };
+
+    await axios.post(
+      "https://the-coding-community.herokuapp.com/new/post",
+      formData,
+      config
+    );
+    setNewPostLoading(false);
+    setVisible(false);
+    setConfirmLoading(false);
   };
 
   useEffect(() => {
@@ -29,10 +64,11 @@ const Feed = () => {
       setPost(posts.data.data);
     };
     getPosts();
-  }, []);
+  }, [newPostLoading]);
 
-  console.log(post);
+  console.log(file);
   return (
+    !newPostLoading ? 
     <div className="feed">
       <div className="final-feed">
         <div className="share__something__tab">
@@ -43,22 +79,33 @@ const Feed = () => {
               className="user__image"
             />
           </div>
-          <ShareSomething />
+          <ShareSomething handleOpen={showModal} />
         </div>
         {post.length === 0 ? (
-            <h1>Start a new post :)</h1>
+          <h1>Start a new post :)</h1>
         ) : (
           <div className="feed__component__wrapper">
             {post.map((item) => (
               // todo -> render data dynamically now
               <div className="feed__component">
-                <ParticularPost />
+                <ParticularPost post={item}/>
               </div>
             ))}
           </div>
         )}
       </div>
+      <Modal
+        title="New Post"
+        visible={visible}
+        onOk={handleSubmit}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <NewPostModal setCaption={setCaption} handleSubmit={handleSubmit} setFile={setFile}/>
+      </Modal>
     </div>
+    :
+      <LazyLoader />
   );
 };
 
