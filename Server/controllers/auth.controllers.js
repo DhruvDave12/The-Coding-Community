@@ -130,7 +130,6 @@ module.exports.postMoreData = async (req,res) => {
 module.exports.getMoreData = async (req,res) => {
     const data = await MoreData.findOne({owner: req.user._id}).populate('allFollowers allFollowing');
     
-
     await data.save();
     
      res.status(200).send({
