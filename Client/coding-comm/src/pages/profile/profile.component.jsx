@@ -14,6 +14,12 @@ import FollowDetails from "../../components/follow-details-component/follow-deta
 import TechStack from "../../components/tech-stacks-component/tech-stack.component";
 import YourPosts from "../../components/user-posts-component/user-posts.component";
 import CustomNewButton from "../../components/button/newCustomButton.component";
+import ProfileSection from "../../components/profile-sections/profile-section.component";
+import ProfileRightSection from "../../components/profile-right-section/profile-right-section.component";
+import PostCard from "../../components/postcard/postcard.component";
+import PostModal from "../../components/post-modal/post-modal.component";
+import { Modal } from "antd";
+// TODO -> Integration of the profile page with the backend
 
 const Profile = () => {
   const { user, data } = useContext(myContext);
@@ -22,6 +28,8 @@ const Profile = () => {
   const [dataValue, setDataValue] = data;
 
   const [post, setPost] = useState();
+  const [postModal, setPostModal] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
 
   var currUser, currData;
   if (userValue) {
@@ -46,6 +54,12 @@ const Profile = () => {
     getPosts();
   }, [userValue]);
 
+  //TODO -> Handle the post modal
+  const handlePostClick = (postE) => {
+    setSelectedPost(postE);
+    console.log(postE);
+    setPostModal(true);
+  }
   return (
     // <div className="profile">
     //   {currUser !== undefined &&
@@ -129,22 +143,67 @@ const Profile = () => {
       <div className="profile__lower__part">
         <div className="profile__left__section">
           <div className="left__sec__1">
-
+            <ProfileSection header={"Github Repos"}>
+              <h1>hehe</h1>
+            </ProfileSection>
           </div>
           <div className="left__sec__2">
-
+            <ProfileSection header={"Skills"} >
+              <h1>hehe</h1>
+            </ProfileSection>
           </div>
           <div className="left__sec__3">
-
+            <ProfileSection header={"CP Profile"}>
+              <h1>hehe</h1>
+            </ProfileSection>
           </div>
           <div className="left__sec__4">
-
+            <ProfileSection header={"Social Links"}>
+              <h1>hehe</h1>
+            </ProfileSection>
           </div>
         </div>
-        <div className="profile__right__section">
-
+        <div className="profile__right__section__wrapper">
+          <ProfileRightSection header={"About me"}>
+            <p className="about__me__text">I have a very good command in Photoshop, Illustrator and Web Design. I have,
+              in the past, worked with many clients and have delivered projects on time. I am a very hard working person
+              and I am very passionate about my work. I am a very good team player and I am always ready to learn new things.
+            </p>
+          </ProfileRightSection>
+          <div className="profile__right__divider"/>
+          <ProfileRightSection header={"Your Posts"}>
+            <div className="post__grid">
+              {
+                post && post.length > 0 ? 
+                post.map((postEle) => {
+                  return (
+                    <PostCard
+                      key={postEle._id}
+                      post={postEle}
+                      handleClick={() => handlePostClick(postEle)}
+                    />
+                  );
+                }) :
+                  <div className="no__post__wrapper">
+                    <p className="no__post__text">No Posts Yet</p>
+                  </div>
+              }
+            </div>
+          </ProfileRightSection>
         </div>
       </div>
+        {
+          postModal && (
+            <Modal 
+              title={"Post"}
+              onOk={() => setPostModal(false)}
+              visible={postModal}
+              onCancel={() => setPostModal(false)}
+            >
+              <PostModal post={selectedPost} />
+            </Modal>
+          ) 
+        }
     </div>
   );
 };
