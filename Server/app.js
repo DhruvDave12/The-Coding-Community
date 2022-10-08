@@ -16,8 +16,6 @@ const postRoutes = require('./routes/post.routes');
 const quesansRoutes = require('./routes/askQuestion.routes');
 const courseRoutes = require('./routes/courseSell.route');
 const session = require('express-session')
-// const MoreData = require('./models/moreUserData.models');
-require('./services/socketConnections');
 
 configDB();
 app.use(express.json());
@@ -33,7 +31,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport')
-require('./config/passport_google.js')
 
 // using routes
 app.use('/', authRoutes);

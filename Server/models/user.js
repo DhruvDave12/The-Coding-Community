@@ -29,14 +29,6 @@ const userSchema = new Schema({
             type: String,
         }
     ],
-    googleId: {
-        type: String
-    },
-    online: {
-        type: Boolean,
-        required: true,
-        default: false,
-    }
 })
 
 

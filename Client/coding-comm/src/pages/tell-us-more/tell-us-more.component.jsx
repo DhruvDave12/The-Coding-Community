@@ -12,11 +12,13 @@ const TellUsMoreForm = () => {
     const [github, setGithub] = useState('');
     const [linkedIn, setLinkedIn] = useState('');
     const [aboutYou, setAboutYou] = useState('');
+    const [skillSt, setSkillSt] = useState('');
 
     let navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const skills = skillSt.split(', ');
         await axios.post('https://the-coding-community.herokuapp.com/tell-us-more', {
                 firstName: firstName,
                 lastName: lastName,
@@ -27,6 +29,7 @@ const TellUsMoreForm = () => {
                 github,
                 linkedInUrl: linkedIn,
                 bio: aboutYou,
+                skills: skills
             },
             {
                 headers:{
@@ -80,6 +83,11 @@ const TellUsMoreForm = () => {
                     <label htmlFor="bio" className="lab">About You</label>
                     <input type="text" id="bio" onChange = {e => setAboutYou(e.target.value)} placeholder="About You"/>
                 </div>
+                <div className="fields">
+                    <label htmlFor="skills" className="lab">Skills (Eg. Developer, Data Structures)</label>
+                    <input type="text" id="skills" onChange = {e => setSkillSt(e.target.value)} placeholder="Skills"/>
+                </div>
+
 
                 <button>Submit</button>
             </form>

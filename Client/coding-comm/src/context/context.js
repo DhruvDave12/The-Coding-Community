@@ -24,7 +24,7 @@ export const myContext = createContext({});
   
     useEffect(() => {
         const getCurrData = async () => {
-            const response = await axios.get('https://the-coding-community.herokuapp.com/tell-us-more', {
+            const response = await axios.get('http://localhost:8080/tell-us-more', {
                 headers:{
                     Authorization: localStorage.getItem('token')
                 }
