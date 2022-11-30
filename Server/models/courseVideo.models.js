@@ -47,7 +47,20 @@ const courseSchema = new Schema({
     title: {
         type: String,
         required: true,
+    },
+    overview: {
+        type: [String],
+        required: true,
+    },
+    language: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
     }
+    
 })
 
 module.exports = mongoose.model('Course', courseSchema);

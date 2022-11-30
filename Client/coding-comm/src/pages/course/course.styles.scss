@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+.course__page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 2%;
+  .course__upper__container {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 20px;
+    .course__upper__container__left {
+      height: 90%;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .course__landing__title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #000;
+        font-family: "Poppins", sans-serif;
+      }
+      .course__tagline {
+        border-left: 4px solid #a4508b;
+        border-radius: 2px;
+        padding-left: 1%;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #000;
+        font-family: "Poppins", sans-serif;
+      }
+      .button__cover {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        column-gap: 10%;
+        .course__button__container {
+          width: 30%;
+          margin-top: 5%;
+        }
+      }
+    }
+    .course__upper__container__right {
+      width: 50%;
+      .landing__image {
+        width: 100%;
+        height: 80%;
+      }
+    }
+  }
+
+  .search__courses {
+    width: 80%;
+    .search__text{
+        width: 100%;
+        height: 100%;
+        font-size: 2rem;
+        font-weight: 600;
+        color: #000;
+        font-family: "Poppins", sans-serif;
+        margin-bottom: 2%;
+    }
+    .search__bar {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #000;
+      font-family: "Poppins", sans-serif;
+    }
+  }
+  .my__learning__section {
+    margin-top: 5%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .my__learning__upper {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      .title__left {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #000;
+        font-family: "Poppins", sans-serif;
+      }
+      .title__right {
+        font-size: 1rem;
+        font-weight: 400;
+        font-family: "Poppins", sans-serif;
+        color: #a4508b;
+        text-decoration: underline;
+      }
+    }
+
+    .my__learning__lower {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 2%;
+    }
+  }
+}

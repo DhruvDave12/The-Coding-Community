@@ -26,7 +26,7 @@ const beforeUpload = (file) => {
   return isJpgOrPng && isLt2M;
 };
 
-const FileInput = ({ loading, setLoading, imageUrl, setImageUrl, setFile }) => {
+const FileInput = ({ loading, setLoading, imageUrl, setImageUrl, setFile, multiple}) => {
   const handleChange = (info) => {
     console.log("INFO FILE: ", info.file);
 
@@ -41,7 +41,11 @@ const FileInput = ({ loading, setLoading, imageUrl, setImageUrl, setFile }) => {
         setImageUrl(url);
       });
     }
-    setFile(info.file.originFileObj);
+    if(!multiple){
+      setFile(info.file.originFileObj);
+    } else {
+      setFile(info.fileList);
+    }
   };
   const uploadButton = (
     <div>
@@ -77,27 +81,6 @@ const FileInput = ({ loading, setLoading, imageUrl, setImageUrl, setFile }) => {
       Upload as many files as you want in this draggable area.
     </p>
   </Dragger>
-    // <Upload
-    //   name="avatar"
-    //   listType="picture-card"
-    //   className="avatar-uploader"
-    //   showUploadList={false}
-    //   customRequest={dummyRequest}
-    //   beforeUpload={beforeUpload}
-    //   onChange={handleChange}
-    // >
-    //   {imageUrl ? (
-    //     <img
-    //       src={imageUrl}
-    //       alt="avatar"
-    //       style={{
-    //         width: "100%",
-    //       }}
-    //     />
-    //   ) : (
-    //     uploadButton
-    //   )}
-    // </Upload>
   );
 };
 

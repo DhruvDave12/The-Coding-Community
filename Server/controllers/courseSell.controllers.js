@@ -12,13 +12,16 @@ module.exports.postVideo = async (req,res) => {
         })
     }
 
-    const { price, title } = req.body;
+    const { price, title, overview, description, language} = req.body;
     const date = new Date();
     
     const newCourse = new Course({
         upload: date.toLocaleString(),
         price,
-        title
+        title,
+        overview,
+        description,
+        language
     })
     newCourse.instructor = req.user._id;
     newCourse.videos = req.files.map(f => ({ url: f.path, fileName: f.filename }));
@@ -90,8 +93,7 @@ module.exports.getCourse = async(req,res) => {
   }
 
   const { id } = req.params;
-
-  const course =  await Course.findById(id).populate('instructor customersWhoBought');
+  const course = await Course.findById(id).populate('instructor customersWhoBought');
 
   res.status(200).send({
     success: true,

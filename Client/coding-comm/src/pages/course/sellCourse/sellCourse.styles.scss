@@ -1,0 +1,70 @@
+.sell__course {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .sell__course__upper {
+    margin-top: 2%;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 20px;
+    .sell__course__upper__container__left {
+      height: 100%;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .sell__course__landing__title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #000;
+        font-family: "Poppins", sans-serif;
+      }
+      .sell__course__tagline {
+        border-left: 4px solid #a4508b;
+        border-radius: 2px;
+        padding-left: 1%;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #000;
+        font-family: "Poppins", sans-serif;
+      }
+    }
+    .sell__course__upper__container__right {
+      width: 50%;
+      .landing__image {
+        width: 100%;
+        height: 65%;
+      }
+    }
+  }
+  .sell__course__form {
+    width: 80%;
+    .form__heading{
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #000;
+        font-family: "Poppins", sans-serif;
+        text-align: center;
+    }
+    form {
+        .input__field{
+            margin-bottom: 2%;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #000;
+            font-family: "Poppins", sans-serif;
+            .label{
+                margin-bottom: 1%;
+            }
+        }
+        .custom__button{
+            width: 100%;
+            margin-bottom: 2%;
+        }
+    }
+  }
+}

@@ -39,8 +39,8 @@ function App() {
         <Route path='/feed' element={<Feed />}/>
         <Route path='/comments/:id' element={<Comments />}/>
         <Route path='/course' element={<Course />} />
-        <Route path='/course/sell' element={<SellCourse />}/>
         <Route path='/course/:id' element={<ParticularCourse />}/>
+        <Route path='/course/sell' element={<SellCourse />}/>
         <Route path='/course/:id/bought' element={<BoughtCourse />}/>
         <Route path='/chat' element={<ChatPage />}/>
       </Routes>

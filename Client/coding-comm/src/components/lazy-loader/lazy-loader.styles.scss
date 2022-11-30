@@ -1,9 +1,17 @@
 .lazy__loader{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 80vh;
+    .loading__text{
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #000;
+        font-family: "Poppins", sans-serif;
+        margin-bottom: 2%;
+    }
     .lazy__loader__center{
         width: 100px;
         height: 100px;
