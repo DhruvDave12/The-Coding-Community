@@ -1,33 +1,46 @@
-const moreData = require('../models/moreUserData.models')
-const GitData = require('../models/userGithubData.models');
-
 const axios = require('axios');
+const MoreData = require('../models/moreUserData.models');
 
-module.exports.getUserGitData = async (req,res) => {
-    const {id} = req.params;
-    const userData = await moreData.find({owner: id});
-
-    axios.get(`https://api.github.com/users/${userData.github}`)
-    .then(async (resp) => {
-        const data = new GitData({
-            username: resp.data.login,
-            followers: resp.data.followers,
-            following: resp.data.following,
-            totalPublicRepos: resp.data.public_repos,
-            profilePic: resp.data.avatar_url,
-        })
-
-        await data.save();
-        res.status(200).send({
-            success: true,
-            data: data
-        })
-    })
-    .catch(err => {
-        res.status(404).send({
+module.exports.getReposSorted = async (req,res) => {
+    if(!req.user){
+        res.status(403).send({
             success: false,
-            data: err
+            data: {
+                isLoggedIn: false,
+                user: null
+            }
         })
+    }
+    const userID = req.user._id;
+    const data = await MoreData.findOne({owner: userID}).populate('allFollowers allFollowing');
+    if(!data){
+        res.status(403).send({
+            success: false,
+            msg: "No data found"
+        })
+    }
+
+    const githubUserName = data.github;
+
+    const githubData = await axios.get(`https://api.github.com/users/${githubUserName}/repos`);
+    const githubRepos = githubData.data;
+
+    const sortedRepos = githubRepos.sort((a,b) => {
+        return b.stargazers_count - a.stargazers_count;
     })
-}   
+
+    const reqData = sortedRepos.map((repo) => (
+        {
+            name: repo.name,
+            url: repo.html_url,
+            avatar: repo.owner.avatar_url
+        }
+    ) )
+
+    res.status(200).send({
+        success: true,
+        data: reqData
+    })
+}
+
 

@@ -22,7 +22,8 @@ const SignUp = () => {
   const handleSubmit = async () => {
     setLoading(true);
     const response = await axios.post(
-      "https://the-coding-community.herokuapp.com/register",
+      //https://the-coding-community.herokuapp.com/register
+      "http://localhost:8080/register",
       {
         username: username,
         password: password,

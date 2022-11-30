@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+.course__outlook {
+  height: 100%;
+  border-radius: 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  &:hover{
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+  }
+  .thumbnail__container {
+    height: 50%;
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    .course__image {
+      width: 100%;
+      height: 100%;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+  }
+  .course__text {
+    height: 20%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 100%;
+    .course__title__text {
+      height: 50%;
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #2f2f2f;
+      font-family: "Poppins", sans-serif;
+      line-height: 20px;
+    }
+    .course__author__text {
+      height: 50%;
+      margin-bottom: 0;
+      margin-top: 5%;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: #2f2f2f;
+      font-family: "Poppins", sans-serif;
+    }
+  }
+  .course__price__container {
+    height: 10%;
+    width: 100%;
+    .course__price__text {
+      height: 100%;
+      margin-bottom: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #2f2f2f;
+      font-family: "Poppins", sans-serif;
+    }
+  }
+  .rating__container {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .rating__text {
+      height: 100%;
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 300;
+      color: #2f2f2f;
+      font-family: "Poppins", sans-serif;
+    }
+    .rating__cont {
+      height: 100%;
+      font-size: 1rem;
+      margin-left: 2%;
+      margin-bottom: 1%;
+    }
+  }
+  .course__lessons {
+    width: 100%;
+    .course__lessons__text {
+        margin: 0;
+      height: 100%;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #2f2f2f;
+      font-family: "Poppins", sans-serif;
+    }
+  }
+}

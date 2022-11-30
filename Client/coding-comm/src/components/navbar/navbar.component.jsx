@@ -5,6 +5,8 @@ import { myContext } from '../../context/context';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import SearchBar from "../search/search.component";
+import axios from 'axios';
+import Logo from "../../assets/images/logo.svg";
 
 const NavBar = () => {
     const {user} = useContext(myContext);
@@ -16,40 +18,50 @@ const NavBar = () => {
         currUser = userValue;
     }
 
-    // console.log(userValue);
     let navigate = useNavigate();
 
     const logOut = async () => {
-        // console.log("Hello World");
-        // localStorage.removeItem('token');
+        const res = await axios.post('http://localhost:8080/logout', {
+            userID: currUser._id
+        })
         localStorage.removeItem('token');
         setUserValue(null);
-        // console.log(user, res);
+        console.log("USER", res.data);
         navigate('/login');
         window.location.reload(false);
     }
+
     return (
         <div className="navbar">
             <div className="logo">
-                <p className="title" onClick={() => {navigate('/')}} >The Coding Community</p>
-                {
-                    currUser  ?
-                    <SearchBar/>
-                    : null
-                }
+                <div className="logo-container">
+                    <div className="logo--cont1">
+                        <img src={Logo} className="logo-svg"/>   
+                    </div>
+                    <div className="logo--cont2">
+                        <p className="title" onClick={() => {navigate('/')}} > The Coding Community</p>
+                    </div>
+                </div>
+                <div className="search-field">
+                    {
+                        currUser  ?
+                        <SearchBar/>
+                        : null
+                    }
+                </div>
             </div>
             <div className="other-fields">
                 <ul>
                     <Link className="field" to={currUser ? '/profile' : '/home'}>Home</Link>
                     <Link className="field" to={'/feed'}>Feed</Link>
-                    <Link className="field" to={'/course'}>Our Courses</Link>
+                    <Link className="field" to={'/course'}>Courses</Link>
                     <Link className="field" to={'/about'}>About</Link>
                     {
                         currUser ? 
                         <li className="field" onClick={logOut}>Logout</li>
                         :
                         <div className="auth">
-                            <Link className="field" to={'/login'}>Login</Link>
+                            <Link className="field" to={'/login'}>Login</Link> /
                             <Link className="field" to={'/register'}>Signup</Link>
                         </div>
                     }

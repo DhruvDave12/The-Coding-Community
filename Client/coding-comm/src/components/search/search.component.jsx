@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { Input } from 'antd';
+import { useNavigate } from "react-router";
 import SearchList from "../search-drop-list/search-drop-list.component";
 import "./search.styles.scss";
 
+const { Search } = Input;
+
+
 const SearchBar = () => {
+  const navigate = useNavigate();
+
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
   const [sendArray, setArray] = useState([]);
 
+  
   useEffect(() => {
     const getUsers = async () => {
       const res = await axios.get(
@@ -48,15 +54,27 @@ const SearchBar = () => {
     searchResults();
   }, [search]);
 
+  const onSearch = () => {
+    navigate(`/search/results`);
+  };
+
   return (
     <div className="search-bar">
-      <input
-        type="text"
-        placeholder="Search"
+      <div className="search-comp">
+        <Search
+        placeholder="Search..."
+        onSearch={onSearch}
+        autoComplete
         onChange={(e) => setSearch(e.target.value)}
+        style={{
+          display:"flex",
+          justifyContent:"center",
+          alignItems:"center",
+          width: '100%',
+          alignSelf:'center',
+        }}
       />
-      <Link to={"/search/results"}>Search</Link>
-
+      </div>
       {sendArray.length === 0 ? null : <SearchList listOfUsers={sendArray} />}
     </div>
   );

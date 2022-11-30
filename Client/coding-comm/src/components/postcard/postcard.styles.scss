@@ -1,0 +1,16 @@
+.post__card{
+    width: 100%;
+    .post__card{
+        width: 100%;
+        border-radius: 15px;
+        padding: 10px;
+    }
+    &:hover{
+        .post__card{
+            // get a bit dark background and image scaling up
+            transform: scale(1.05);
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+    }
+}

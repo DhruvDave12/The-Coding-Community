@@ -1,0 +1,50 @@
+.post__modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  .post__image {
+    width: 70%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .post__modal__content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .post__caption {
+      font-family: "Poppins", sans-serif;
+      font-size: 1rem;
+      color: grey;
+    }
+  }
+  .reach__section {
+    margin-top: 3%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .reach__left__section {
+      width: 20%;
+      display: flex;
+      justify-content: space-between;
+      //   align-items: center;
+      .likes__count {
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        color: grey;
+      }
+      .comments__count {
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+
+        color: grey;
+      }
+    }
+    .reach__right__section {
+      width: 10%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

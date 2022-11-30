@@ -1,0 +1,183 @@
+.particular__course{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    .upper__section{
+        background-color: black;
+        width: 100%;
+        padding: 3% 0;
+        .upper__cover{
+            width: 80%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            .left__section{
+                width: 60%;
+                .course__descripts{
+                    .course__title{
+                        font-size: 2rem;
+                        font-weight: 600;
+                        color: #fff;
+                        font-family: "Poppins", sans-serif;
+                        margin-bottom: 2%;
+                    }
+                    .course__desc{
+                        font-size: 1rem;
+                        font-weight: 400;
+                        color: #fff;
+                        font-family: "Poppins", sans-serif;
+                        margin-bottom: 2%;
+                    }
+                }
+                .rating__container{
+                    width: 100%;
+                    display: flex;
+                    column-gap: 2%;
+                    .rating__text{
+                        font-size: 1rem;
+                        font-weight: 400;
+                        color: #fff;
+                        font-family: "Poppins", sans-serif;
+                        // margin-bottom: 2%;
+                    }
+                    .rating__cont{
+                        font-size: 1rem;
+                        font-weight: 400;
+                        font-family: "Poppins", sans-serif;
+                        // margin-bottom: 2%;
+                    }
+                }
+                .created__by{
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    .created__by__text{
+                        font-size: 0.8rem;
+                        font-weight: 400;
+                        color: #fff;
+                        font-family: "Poppins", sans-serif;
+                        margin-bottom: 2%;
+                    }
+                }
+                .updated__at{
+                    display: flex;
+                    column-gap: 5%;
+                    width: 100%;
+                    .updated__at__text{
+                        font-size: 0.8rem;
+                        font-weight: 400;
+                        color: #fff;
+                        font-family: "Poppins", sans-serif;
+                        margin-bottom: 2%;
+                    }
+                    .language{
+                        font-size: 0.8rem;
+                        font-weight: 400;
+                        color: #fff;
+                        font-family: "Poppins", sans-serif;
+                        margin-bottom: 2%;
+                    }
+                }
+            }
+            .right__section{
+                width: 30%;
+                z-index: 1;
+                position: absolute;
+                right: 8%;
+            }
+        }
+
+    }
+
+    .lower__section{
+        margin-top: 5%;
+        width: 80%;
+        .course__overview{
+            .course__overview__title{
+                font-size: 2rem;
+                font-weight: 700;
+                color: #000;
+                font-family: "Poppins", sans-serif;
+                margin: 0;
+                margin-bottom: 2%;
+            }
+            .course__list{
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                    .course__overview__list__text{
+                        font-size: 1rem;
+                        font-weight: 400;
+                        color: #000;
+                        font-family: "Poppins", sans-serif;
+                    }
+                
+            }
+        }
+
+        .about__instructor{
+            width: 60%;
+            .about__instructor__title{
+                font-size: 2rem;
+                font-weight: 700;
+                color: #000;
+                font-family: "Poppins", sans-serif;
+                margin: 0;
+                margin-bottom: 2%;
+            }
+            .instructor__info{
+                .instructor__name{
+                    font-size: 1.5rem;
+                    font-weight: 500;
+                    color: #000;
+                    font-family: "Poppins", sans-serif;
+                    margin-bottom: 2%;
+                }
+                .instructor__detail{
+                    font-size: 1rem;
+                    font-weight: 400;
+                    color: #000;
+                    font-family: "Poppins", sans-serif;
+                    margin-bottom: 2%;
+                }
+            }
+            
+        }
+        .my__learning__section {
+            margin-top: 5%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            .my__learning__upper {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              .title__left {
+                font-size: 2rem;
+                font-weight: 700;
+                color: #000;
+                font-family: "Poppins", sans-serif;
+                margin: 0;
+                margin-bottom: 2%;
+              }
+              .title__right {
+                font-size: 1rem;
+                font-weight: 400;
+                font-family: "Poppins", sans-serif;
+                color: #a4508b;
+                text-decoration: underline;
+              }
+            }
+        
+            .my__learning__lower {
+              display: grid;
+              grid-template-columns: repeat(4, 1fr);
+              grid-gap: 2%;
+            }
+          }
+    }
+}

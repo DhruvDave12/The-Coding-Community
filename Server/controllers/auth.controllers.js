@@ -5,13 +5,14 @@ const userLevel = require('../models/userLevel.model');
 const jwt = require('jsonwebtoken');
 const { hashSync, compareSync } = require('bcrypt');
 
-
 module.exports.regUser = async (req,res) => {
+    const { username, email, contactNumber, password } = req.body;
+
     const user = new User({
-        username: req.body.username,
-        password: hashSync(req.body.password, 10),
-        email: req.body.email,
-        contactNumber: req.body.contactNumber,
+        username: username,
+        password: hashSync(password, 10),
+        email: email,
+        contactNumber: contactNumber,
     })
     user.save()
     .then(user => {
@@ -40,37 +41,42 @@ module.exports.regUser = async (req,res) => {
 }
 
 module.exports.authUser = async (req,res) => {
-    const user = await User.findOne({email: req.body.email})
-    if (!user) {
-        return res.status(401).send({
-            success: false,
-            msg: 'Could not find the user'
-        })
-    }
- 
-    // else we have the user
-     if(!compareSync(req.body.password, user.password)){
-         return res.status(401).send({
-             success: false,
-             msg: 'Invalid username/password'
-         })
-     }
- 
-     // Now if we get here then auth success we send a jwt token
-     const payload = {
-         username: user.username,
-         id: user._id
-     }
+    try{
+        const user = await User.findOne({email: req.body.email})
+        if (!user) {
+            return res.status(401).send({
+                success: false,
+                msg: 'Could not find the user'
+            })
+        }
+        
+        // else we have the user
+         if(!compareSync(req.body.password, user.password)){
+             return res.status(401).send({
+                 success: false,
+                 msg: 'Invalid username/password'
+             })
+         }
      
-    //  req.user = user;
-     const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "1h"});
-     return res.status(200).send({
-         success: true,
-         msg: 'Logged In Successfully',
-         token: "Bearer " + token,
-         user: user
-     })
- 
+         const payload = {
+             username: user.username,
+             id: user._id
+         }
+         const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "1h"});
+    
+         return res.status(200).send({
+             success: true,
+             msg: 'Logged In Successfully',
+             token: "Bearer " + token,
+             user: user
+         })
+    } catch(err){
+        return res.status(500).send({
+            success: false,
+            msg: 'Something went wrong',
+            error: err
+        })
+    } 
 }
 
 module.exports.getHome = (req,res) => {
@@ -83,7 +89,6 @@ module.exports.getHome = (req,res) => {
             }
         })
     }
-    // console.log("REQ.USER: ", req.user);
     res.status(200).send({
         success: true,
         data: {
@@ -94,7 +99,7 @@ module.exports.getHome = (req,res) => {
 }
 
 module.exports.postMoreData = async (req,res) => {
-    const { firstName, lastName, education, country, codeChefRating, codeforcesRating, github, linkedInUrl, bio } = req.body;
+    const { firstName, lastName, education, country, codeChefRating, codeforcesRating, github, linkedInUrl, bio, skills} = req.body;
 
     const moreData = new MoreData({
         firstName,
@@ -105,7 +110,8 @@ module.exports.postMoreData = async (req,res) => {
         codeforcesRating,
         github,
         linkedInUrl,
-        bio
+        bio,
+        skills
     })
 
     moreData.owner = req.user._id;
@@ -123,10 +129,7 @@ module.exports.postMoreData = async (req,res) => {
 
 module.exports.getMoreData = async (req,res) => {
     const data = await MoreData.findOne({owner: req.user._id}).populate('allFollowers allFollowing');
-    
 
-    await data.save();
-    
      res.status(200).send({
         success: true,
         data: data
@@ -147,7 +150,6 @@ module.exports.getUser = async (req,res) => {
     const { id } = req.params;
     const user = await MoreData.find({owner: id}).populate('owner allFollowers allFollowing');
 
-    // await user.save();
     res.status(200).send({
         success: true,
         data: user
@@ -160,5 +162,16 @@ module.exports.getAllUsers = async(req,res) =>{
     res.status(200).send({
         success: true,
         data: users
+    })
+}
+
+module.exports.logUserOut = async(req,res) => {
+    // todo -> keep a check for USER ID
+    const user = await User.findById(req.body.userID);
+    user.online = false;
+    await user.save();
+    res.status(200).send({
+        success: true,
+        msg: "User Logged Out"
     })
 }

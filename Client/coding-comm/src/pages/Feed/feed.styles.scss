@@ -1,0 +1,45 @@
+.feed{
+    background-color: rgb(247, 246, 243);
+    margin: 0 10px;
+    border-radius: 10px;
+    .final-feed{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .share__something__tab{
+            margin-top: 2%;
+            margin-bottom: 1%;
+            width: 45%;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: white;
+            border-radius: 20px;
+            .profile__image {
+                width: 3.4rem;
+                height: 3.4rem;
+                .user__image {
+                  width: 100%;
+                  height: 100%;
+                  border-radius: 50%;
+                }
+              }
+        }
+        .feed__component__wrapper{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .feed__component{
+                margin-top: 1%;
+                width: 45%;
+                &:last-child{
+                    margin-bottom: 4%;
+                }
+            }
+        }
+    }
+}

@@ -1,23 +1,28 @@
 import React from "react";
 import "./search-drop-list.styles.scss";
 import { useNavigate } from "react-router";
-const SearchList = ({ listOfUsers }) => {
-    const navigate = useNavigate();
+import { Avatar, List } from "antd";
 
-    const handleClick = (id) =>{
-        navigate(`/profile/${id}`);
-        window.location.reload(false);
-    }
+// todo -> Make a limit for mapping searched users and then create a new result page for different users
+const SearchList = ({ listOfUsers }) => {
+  
   return (
     <div className="search-drop-list">
       {listOfUsers.length === 0 ? (
         <p>No Users Found :(</p>
       ) : (
-        listOfUsers.map((user) => (
-          <div className="search-user" onClick={() => {handleClick(user._id)}}>
-            {user.username}
-          </div>
-        ))
+        <List
+          itemLayout="horizontal"
+          dataSource={listOfUsers}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={<Avatar src={`/profile/${item._id}`} />}
+                title={<a href={`/profile/${item._id}`}>{item.username}</a>}
+              />
+            </List.Item>
+          )}
+        />
       )}
     </div>
   );

@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+.share__something{
+    background-color: rgba(247, 246, 243,1);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;   
+    width: 85%;
+    border-radius: 25px;
+    .share__something__text{
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+    }
+    &:hover{
+        cursor: pointer;
+        background-color: rgba(247, 246, 243,0.5);
+    }
+}

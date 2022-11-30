@@ -57,6 +57,15 @@ const moreDataSchema = Schema({
             type: Schema.Types.ObjectId,
             ref: 'User'
         }
+    ],
+    bio: {
+        type: String,
+        required: true,
+    },
+    skills: [
+        {
+            type: String,
+        }
     ]
 })
 

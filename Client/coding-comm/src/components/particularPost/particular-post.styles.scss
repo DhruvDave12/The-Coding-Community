@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+.particular__post {
+  width: 100%;
+  background-color: white;
+  padding-top: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 25px;
+  height: 100%;
+  .user__section {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    .user__section--image {
+      width: 3.4rem;
+      height: 3.4rem;
+      .user__image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+    }
+    .user__section--name {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      line-height: 10px;
+      margin-top: 10px;
+      .user__name__text {
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+      }
+      .user__date__text {
+        font-family: "Poppins", sans-serif;
+        font-size: 0.6rem;
+        color: grey;
+      }
+    }
+  }
+
+  .post__section {
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90%;
+    .post__section__caption {
+      .post__section__caption__text {
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        color: black;
+      }
+    }
+    .post__section__image {
+      width: 100%;
+      height: 80%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .post__image {
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+      }
+    }
+  }
+
+  .reach__section {
+    margin-top: 3%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .reach__left__section {
+      width: 20%;
+      display: flex;
+      justify-content: space-between;
+    //   align-items: center;
+      .likes__count {
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        color: grey;
+      }
+      .comments__count {
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+
+        color: grey;
+      }
+    }
+    .reach__right__section {
+      width: 10%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

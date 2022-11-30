@@ -1,5 +1,6 @@
 const JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt;
+const { application } = require('express');
 const passport = require('passport');
 const User = require('../models/user');
 
@@ -22,3 +23,4 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
         }
     });
 }));
+

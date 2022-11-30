@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
-const {getUserGitData} = require('../controllers/project.controllers');
+const {getReposSorted} = require('../controllers/project.controllers');
 
-// @desc USER PROJECTS DATA
-// @route GET
-// @path /user/id/git
-router.get('/user/:id/git', getUserGitData);
+router.get('/project/repos', passport.authenticate('jwt', {session: false}), getReposSorted);
+
 
 module.exports = router;

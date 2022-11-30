@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+.new__post__modal{
+    display: flex;
+    flex-direction: column;
+    .input__label{
+        font-family: "Poppins", sans-serif;
+        font-size: 0.8rem;
+        color: grey;
+    }
+    .new__post__image{
+        margin-top: 20px;
+    }
+    .customUpload{
+        margin-top: 10%;
+    }
+}
