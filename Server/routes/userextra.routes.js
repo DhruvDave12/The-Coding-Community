@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-const {getLeaderboard, updateFoll, unfollowMech} = require('../controllers/extraFunctions.controllers')
+const {getLeaderboard, updateFoll, unfollowMech, getOtherData} = require('../controllers/extraFunctions.controllers')
 
 // @desc GET LeaderBoard
 // @route GET
@@ -19,5 +19,6 @@ router.get('/user/update/:otherID', passport.authenticate('jwt', {session: false
 // @path /user/unfollow/:otherID
 router.get('/user/unfollow/:otherID', passport.authenticate('jwt', {session: false}), unfollowMech)
 
+router.get('/user/data/:id', passport.authenticate('jwt', {session: false}), getOtherData)
 
 module.exports = router;

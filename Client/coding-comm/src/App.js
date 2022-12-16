@@ -15,14 +15,17 @@ import Course from './pages/course/course.component';
 import SellCourse from './pages/course/sellCourse/sellCourse.component';
 import BoughtCourse from './pages/course/boughtCourse/boughtCourse.component';
 import ParticularCourse from './pages/particular-course/particular-course.component';
-
+import Footer from './components/footer/footer.component';
 import NavBar from './components/navbar/navbar.component';
 import ChatPage from './pages/chatting/chatting.component';
+import { useLocation } from 'react-router-dom'
 function App() {
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <>
     {
-      localStorage.getItem('token') ? 
+      localStorage.getItem('token') && !(location.pathname === "/register" || location.pathname === "/login") ? 
       <NavBar />
       :
       null
@@ -34,7 +37,7 @@ function App() {
         <Route path='/login' element={<SignIn />} />
         <Route path='/edit' element={<Edit />} />
         <Route path='/tell-us-more' element={<TellUsMoreForm />}/>
-        <Route path='/profile' element={<Profile />}/>
+        <Route path='/profile/:id' element={<Profile />}/>
         <Route path='/social/:id' element={<ListOfFollows />}/>
         <Route path='/feed' element={<Feed />}/>
         <Route path='/comments/:id' element={<Comments />}/>
@@ -44,6 +47,8 @@ function App() {
         <Route path='/course/:id/bought' element={<BoughtCourse />}/>
         <Route path='/chat' element={<ChatPage />}/>
       </Routes>
+
+      <Footer />
     </>
   );
 }

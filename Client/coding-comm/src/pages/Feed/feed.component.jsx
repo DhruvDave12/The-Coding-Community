@@ -42,7 +42,7 @@ const Feed = () => {
     };
 
     await axios.post(
-      "https://the-coding-community.herokuapp.com/new/post",
+      "http://localhost:8080/new/post",
       formData,
       config
     );
@@ -54,7 +54,7 @@ const Feed = () => {
   useEffect(() => {
     const getPosts = async () => {
       const posts = await axios.get(
-        "https://the-coding-community.herokuapp.com/post/all",
+        "http://localhost:8080/post/all",
         {
           headers: {
             Authorization: localStorage.getItem("token"),

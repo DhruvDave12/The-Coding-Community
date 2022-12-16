@@ -29,11 +29,10 @@ const SignIn = () => {
         email: email,
       }
       );
-      // socket.emit("STORE_SOCKET_ID", email);
       localStorage.setItem("token", response.data.token);
       setUserValue(response.data.user);
       setLoading(false);
-      navigate("/profile");
+      navigate(`/profile/${response.data.user._id}`);
   };
 
   return (

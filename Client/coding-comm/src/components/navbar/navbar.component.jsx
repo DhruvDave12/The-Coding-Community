@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import SearchBar from "../search/search.component";
 import axios from 'axios';
 import Logo from "../../assets/images/logo.svg";
+import CustomLandingButton from "../button/customLandingButton.component.jsx";
 
 const NavBar = () => {
     const {user} = useContext(myContext);
@@ -52,7 +53,8 @@ const NavBar = () => {
             </div>
             <div className="other-fields">
                 <ul>
-                    <Link className="field" to={currUser ? '/profile' : '/home'}>Home</Link>
+
+                    <Link className="field" to={currUser ? `/profile/${currUser._id}` : '/'}>Home</Link>
                     <Link className="field" to={'/feed'}>Feed</Link>
                     <Link className="field" to={'/course'}>Courses</Link>
                     <Link className="field" to={'/about'}>About</Link>
@@ -61,8 +63,7 @@ const NavBar = () => {
                         <li className="field" onClick={logOut}>Logout</li>
                         :
                         <div className="auth">
-                            <Link className="field" to={'/login'}>Login</Link> /
-                            <Link className="field" to={'/register'}>Signup</Link>
+                            <CustomLandingButton title="Get Started" onClick={() => navigate('/register')}/>
                         </div>
                     }
                 </ul>

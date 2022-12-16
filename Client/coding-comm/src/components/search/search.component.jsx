@@ -19,7 +19,7 @@ const SearchBar = () => {
   useEffect(() => {
     const getUsers = async () => {
       const res = await axios.get(
-        "https://the-coding-community.herokuapp.com/user/all",
+        "http://localhost:8080/user/all",
         {
           headers: {
             Authorization: localStorage.getItem("token"),

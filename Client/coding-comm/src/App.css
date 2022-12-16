@@ -3,7 +3,13 @@
   padding: 0;
   box-sizing: border-box;
   user-select: none;
+  
 }
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 
 /* @font-face {
   font-family: Poppins-Medium;

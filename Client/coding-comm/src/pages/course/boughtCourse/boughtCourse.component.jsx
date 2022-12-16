@@ -22,7 +22,7 @@ const BoughtCourse = () => {
     const securelyCheck = async () => {
       setLoading(true);
       const res = await axios.post(
-        "https://the-coding-community.herokuapp.com/course/check",
+        "http://localhost:8080/course/check",
         {
           key: hashKey,
         },

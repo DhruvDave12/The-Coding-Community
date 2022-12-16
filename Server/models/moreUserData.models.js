@@ -60,7 +60,7 @@ const moreDataSchema = Schema({
     ],
     bio: {
         type: String,
-        required: true,
+        // required: true,
     },
     skills: [
         {

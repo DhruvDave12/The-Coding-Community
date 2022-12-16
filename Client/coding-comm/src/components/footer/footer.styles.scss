@@ -1,0 +1,31 @@
+.footer__main{
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem  1.5rem;
+    .footer__left__container{
+        display:flex;
+        justify-content:center;
+        align-items: center;
+        // padding: 1rem;
+        font-size: 1.2rem;
+    }
+    .more__links {
+        text-align:center;
+        .more__links__text{
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .more__links__inner__wrapper {
+            list-style: none;
+            a{
+                text-decoration: none;
+                color: white;
+                font-size: 1rem;
+            }
+        }
+
+    }
+
+}
