@@ -66,7 +66,7 @@ const NavBar = () => {
                         <li className="field" onClick={logOut}>Logout</li>
                         :
                         <div className="auth">
-                            <CustomLandingButton title="Get Started" onClick={() => navigate('/register')}/>
+                            <CustomLandingButton title="Get Started" onClick={() => navigate('/login')}/>
                         </div>
                     }
                 </ul>

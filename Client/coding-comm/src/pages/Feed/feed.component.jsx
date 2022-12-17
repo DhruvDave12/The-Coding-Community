@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState, useContext} from "react";
 import "./feed.styles.scss";
 import ParticularPost from "../../components/particularPost/particular-post.component";
 import ShareSomething from "../../components/share-something/share_something.component";
@@ -7,21 +6,37 @@ import { Modal } from "antd";
 import NewPostModal from "../../components/newPostModal/newPostModal.component";
 import LazyLoader from "../../components/lazy-loader/lazy-loader.component";
 import axiosInstance from "../../services/axiosInstance";
+import CommentModal from "../../components/comment-modal/commentModal.component";
+import { PostContext } from "../../context/postContext";
+import {myContext} from "../../context/context";
+import userIcon from "../../assets/images/user.svg";
 
 const Feed = () => {
+  const {getComments} = useContext(PostContext);
+  const {user} = useContext(myContext);
+  let currUser;
+  if(user){
+    currUser = user[0];
+  }
+  console.log("USER: ", user);
+
   const [post, setPost] = useState([]);
   const [caption, setCaption] = useState("");
   const [file, setFile] = useState(null);
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [newPostLoading, setNewPostLoading] = useState(false);
-
+  const [commentVis, setCommentVis] = useState(false);
+  const [commentLoading, setCommentLoading] = useState(false);
+  const [selectedComment, setSelectedComment] = useState();
+  const [comment, setComment] = useState('');
+  const [currPost, setCurrPost] = useState();
+  
   const showModal = () => {
     setVisible(true);
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setVisible(false);
   };
 
@@ -29,29 +44,14 @@ const Feed = () => {
     setConfirmLoading(true);
     setNewPostLoading(true);
     const formData = new FormData();
-    console.log("FILE: ", file);
-    console.log("CAPTION: ",caption);
-
     formData.append("image", file);
     formData.append("captions", caption);
-
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-        Authorization: localStorage.getItem("token"),
-      },
-    };
 
     await axiosInstance.post('/new/post',formData,{
       headers: {
         "content-type": "multipart/form-data"
       }
     })
-    // await axios.post(
-    //   "http://localhost:8080/new/post",
-    //   formData,
-    //   config
-    // );
     setNewPostLoading(false);
     setVisible(false);
     setConfirmLoading(false);
@@ -60,28 +60,40 @@ const Feed = () => {
   useEffect(() => {
     const getPosts = async () => {
       const posts = await axiosInstance.get('/post/all');
-      // const posts = await axios.get(
-      //   "http://localhost:8080/post/all",
-      //   {
-      //     headers: {
-      //       Authorization: localStorage.getItem("token"),
-      //     },
-      //   }
-      // );
       setPost(posts.data.data);
     };
     getPosts();
-  }, [newPostLoading]);
+  }, [newPostLoading, commentLoading]);
 
-  console.log(file);
+
+  const showCommentModal = async (post) => {
+    setCommentVis(true);
+    setCurrPost(post);
+    const res = await getComments(post);
+    setSelectedComment(res);
+  }
+
+  const handleCancelComment = () => {
+    setCommentVis(false);
+  }
+
+  const handleAddComment = async () => {
+    setCommentLoading(true);
+    await axiosInstance.post(`/new/comment/${currPost._id}`,{
+      comment_body: comment
+    })
+    setCommentLoading(false);
+    setCommentVis(false);
+  }
+
   return (
-    !newPostLoading ? 
+    !newPostLoading && currUser ? 
     <div className="feed">
       <div className="final-feed">
         <div className="share__something__tab">
           <div className="profile__image">
             <img
-              src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+              src={currUser?.picture ? currUser.picture : userIcon}
               alt="user"
               className="user__image"
             />
@@ -95,7 +107,7 @@ const Feed = () => {
             {post.map((item) => (
               // todo -> render data dynamically now
               <div className="feed__component">
-                <ParticularPost post={item}/>
+                <ParticularPost post={item} showComments={showCommentModal}/>
               </div>
             ))}
           </div>
@@ -109,6 +121,15 @@ const Feed = () => {
         onCancel={handleCancel}
       >
         <NewPostModal setCaption={setCaption} handleSubmit={handleSubmit} setFile={setFile}/>
+      </Modal>
+
+      <Modal
+        title="Comments"
+        visible={commentVis}
+        onOk={() => setCommentVis(false)}
+        onCancel={handleCancelComment}
+      >
+        <CommentModal comments={selectedComment} setComment={setComment} handleAddComment={handleAddComment}/>
       </Modal>
     </div>
     :

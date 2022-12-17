@@ -7,26 +7,24 @@ import {
 } from "@ant-design/icons";
 import "./particular-post.styles.scss";
 import {PostContext} from "../../context/postContext";
+import userIcon from "../../assets/images/user.svg";
 
-const ParticularPost = ({post}) => {
+const ParticularPost = ({post, showComments}) => {
   const {likePost, unlikePost, getPostLikes, hasUserLikedPost} = useContext(PostContext);
   const hasLiked = hasUserLikedPost(post._id);
 
-  console.log("POST: ", post);
   return (
     <div className="particular__post">
-      {/* User section */}
       <div className="user__section">
         <div className="user__section--image">
           <img
-            src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+            src={post?.owner?.picture ? post?.owner?.picture : userIcon}
             alt="user"
             className="user__image"
           />
         </div>
         <div className="user__section--name">
           <p className="user__name__text">{post.owner.username}</p>
-          <p className="user__date__text">2 hours ago</p>
         </div>
       </div>
       {/* Post image carousel section */}
@@ -58,7 +56,7 @@ const ParticularPost = ({post}) => {
               }}/>
             }
             <p className="likes__count">{!getPostLikes(post._id) ? 0 : getPostLikes(post._id)}</p>
-            <CommentOutlined style={{fontSize: '150%'}}/>
+            <CommentOutlined style={{fontSize: '150%'}} onClick={() => showComments(post)}/>
             <p className="comments__count">{post.comments.length}</p>
         </div>
 

@@ -75,21 +75,27 @@ module.exports.getPosts = async (req,res) => {
 
 module.exports.getComments = async(req,res) => {
     if(!req.user){
-        res.status(403).send({
+        res.status(403).send({ 
             success: false,
             msg: "Please login or signup"
         })
     }
 
-    const { id } = req.params;
-    const post = await Posts.findById(id).populate('comments');
-
-    await post.save();
-
-    res.status(200).send({
-        success: true,
-        data: post.comments
-    })
+    try {
+        const { id } = req.params;
+        const post = await Posts.findById(id).populate({
+            path: 'comments',
+            populate: 'owner'
+        });
+        await post.save();
+    
+        res.status(200).send({
+            success: true,
+            data: post.comments
+        })
+    } catch (err) {
+        console.log("ERROR: ", err);
+    }
 }
 
 module.exports.getPostOfUser = async (req,res) => {
@@ -102,7 +108,10 @@ module.exports.getPostOfUser = async (req,res) => {
 
     const { id } = req.params;
 
-    const post = await Posts.find({owner: id}).populate('comments');
+    const post = await Posts.find({owner: id}).populate({
+        path: 'comments',
+        populate: 'owner'
+    });
 
     res.status(200).send({
         success: true,

@@ -26,7 +26,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const id = window.location.pathname.split("/")[2];
 
-
   const [userValue, setUserValue] = user;
   const [dataValue, setDataValue] = data;
 
@@ -58,93 +57,51 @@ const Profile = () => {
     currData = dataValue;
   }
 
-  useEffect(() => { 
-    if(currUser){
-      if(currUser._id !== id){
+  useEffect(() => {
+    if (currUser) {
+      if (currUser._id !== id) {
         const getOtherData = async () => {
-          // const res = await axios.get(`http://localhost:8080/user/data/${id}`, {
-          //   headers: {
-          //     Authorization: localStorage.getItem("token"),
-          //   }
-          // });
-
           const res = await axiosInstance.get(`/user/data/${id}`);
-
-          // console.log("res: ", res);
           setOtherData(res.data.data);
-        }
+        };
 
         getOtherData();
       }
     }
-  }, [id, userValue])
+  }, [id, userValue]);
 
   useEffect(() => {
     if (currUser && currUser.moreDataPosted) {
       const getPosts = async () => {
         const res = await axiosInstance.get(`/post/${id}`);
-        // const res = await axios.get(
-        //   `http://localhost:8080/post/${id}`,
-        //   {
-        //     headers: {
-        //       Authorization: localStorage.getItem("token"),
-        //     },
-        //   }
-        // );
         setPost(res.data.data);
       };
       // todo -> change it to fetch repos from an ID
       const getRepos = async () => {
-        // const res = await axios.get(`http://localhost:8080/project/repos`, {
-        //   headers: {
-        //     Authorization: localStorage.getItem("token"),
-        //   },
-        // });
-        
-        const res = await axiosInstance.get('/project/repos');
+        const res = await axiosInstance.get("/project/repos");
         setRepos(res.data.data);
       };
 
       getPosts();
-      // getRepos();
+      getRepos();
     }
   }, [userValue]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const skills = skillSt.split(", ");
-    // await axios.post(
-    //   "http://localhost:8080/tell-us-more",
-    //   {
-    //     firstName: firstName,
-    //     lastName: lastName,
-    //     education,
-    //     country,
-    //     codeChefRating,
-    //     codeforcesRating: codeForcesRating,
-    //     github,
-    //     linkedInUrl: linkedIn,
-    //     bio: bio,
-    //     skills: skills,
-    //   },
-    //   {
-    //     headers: {
-    //       Authorization: localStorage.getItem("token"),
-    //     },
-    //   }
-    // );
-    await axiosInstance.post('/tell-us-more',{
-        firstName: firstName,
-        lastName: lastName,
-        education,
-        country,
-        codeChefRating,
-        codeforcesRating: codeForcesRating,
-        github,
-        linkedInUrl: linkedIn,
-        bio: bio,
-        skills: skills,
-    })
+    await axiosInstance.post("/tell-us-more", {
+      firstName: firstName,
+      lastName: lastName,
+      education,
+      country,
+      codeChefRating,
+      codeforcesRating: codeForcesRating,
+      github,
+      linkedInUrl: linkedIn,
+      bio: bio,
+      skills: skills,
+    });
     navigate(`/profile/${currUser._id}`);
     window.location.reload(false);
   };
@@ -156,18 +113,8 @@ const Profile = () => {
   };
 
   const handleFollowUser = async () => {
-    console.log("HELLO");
     try {
       setLoading(true);
-      // const res = await axios.get(
-      //   `http://localhost:8080/user/update/${currUser._id}`,
-      //   {
-      //     headers: {
-      //       Authorization: localStorage.getItem("token"),
-      //     },
-      //   }
-      // );
-
       const res = await axiosInstance.get(`/user/update/${currUser._id}`);
       console.log(res);
       setLoading(false);
@@ -247,59 +194,58 @@ const Profile = () => {
             <div className="profile-wrapper">
               <div className="profile__upper__part">
                 <div className="wave__image">
-                  {/* <img src={Waves} alt="waves" /> */}
                   <div className="profile__bg"></div>
                 </div>
                 <div className="profile__upper__sec">
-                  {
-                      currUser.picture ? 
-                      <img className="profile__image" src={currUser.picture}/>
-                      : <img className="profile__image__none" src={UserIcon}/>
-                  }
+                  {currUser.picture ? (
+                    <img className="profile__image" src={currUser.picture} />
+                  ) : (
+                    <img className="profile__image__none" src={UserIcon} />
+                  )}
                   <div className="profile__upper__module2">
                     <div className="profile__name">
-                      {
-                        !otherData ? 
+                      {!otherData ? (
                         <p className="username">
                           {currData.firstName} {currData.lastName}
-                        </p> :
-                        
+                        </p>
+                      ) : (
                         <p className="username">
                           {otherData.firstName} {otherData.lastName}
                         </p>
-                      }
+                      )}
                     </div>
                     <div className="profile__location">
                       <img src={Location} alt="location" className="location" />
-                      {
-                        !otherData ? 
+                      {!otherData ? (
                         <div className="location__text">{currData.country}</div>
-                        : 
-                        <div className="location__text">{otherData.country}</div>
-                      }
+                      ) : (
+                        <div className="location__text">
+                          {otherData.country}
+                        </div>
+                      )}
                     </div>
                     <div className="profile__links">
                       <div className="github__wrapper">
-                        {
-                          !otherData ? 
+                        {!otherData ? (
                           <a href={`https://github.com/${currData.github}`}>
                             <img src={Github} className="gitIcon" />
-                          </a> : 
+                          </a>
+                        ) : (
                           <a href={`https://github.com/${otherData.github}`}>
-                          <img src={Github} className="gitIcon" />
-                        </a>
-                        }
+                            <img src={Github} className="gitIcon" />
+                          </a>
+                        )}
                       </div>
                       <div className="linkedin__wrapper">
-                        {
-                          !otherData ? 
-                            <a href={currData.linkedInUrl}>
-                              <img src={Linkedin} className="linkedinIcon" />
-                            </a> :
-                            <a href={otherData.linkedInUrl}>
+                        {!otherData ? (
+                          <a href={currData.linkedInUrl}>
                             <img src={Linkedin} className="linkedinIcon" />
                           </a>
-                        }
+                        ) : (
+                          <a href={otherData.linkedInUrl}>
+                            <img src={Linkedin} className="linkedinIcon" />
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -307,22 +253,20 @@ const Profile = () => {
                     <div className="profile__followers">
                       <div className="followers__text">
                         <p className="follow__title">Followers</p>
-                        {
-                          !otherData ? 
+                        {!otherData ? (
                           <p>{currData.followers}</p>
-                          : 
+                        ) : (
                           <p>{otherData.followers}</p>
-                        }
+                        )}
                       </div>
                       <div className="divider" />
                       <div className="following__text">
                         <p className="follow__title">Following</p>
-                        {
-                          !otherData ? 
+                        {!otherData ? (
                           <p>{currData.following}</p>
-                          : 
+                        ) : (
                           <p>{otherData.following}</p>
-                        }
+                        )}
                       </div>
                       {/* <div className="divider" /> */}
                       {/* <div className="following__text">
@@ -332,13 +276,17 @@ const Profile = () => {
                     </div>
                     <div className="follow__button">
                       <div className="follow__button__1">
-                        {
-                          !(id === currUser._id) ? 
+                        {!(id === currUser._id) ? (
                           <CustomNewButton
                             title={"Follow"}
                             onClick={handleFollowUser}
-                          /> : <CustomNewButton title={"Edit Profile"} onClick={() => {}}/>
-                        }
+                          />
+                        ) : (
+                          <CustomNewButton
+                            title={"Edit Profile"}
+                            onClick={() => {}}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -347,7 +295,7 @@ const Profile = () => {
               <div className="profile__lower__part">
                 <div className="profile__left__section">
                   <div className="left__sec__1">
-                    <ProfileSection header={"Github Repos"}>
+                    <ProfileSection header={"Top Github Repos"}>
                       {repos.length === 0 ? (
                         <p className="no-repos">
                           No Repositories to display 😥
@@ -366,36 +314,36 @@ const Profile = () => {
                   <div className="left__sec__2">
                     <ProfileSection header={"Skills"}>
                       <div>
-                          {
-                            !otherData ? 
-                            <div>
-                              {currData.skills.length === 0 ? (
-                        <p className="no-repos">No Skills to display 😥</p>
-                      ) : (
-                            <div className="skill-set">
-                              {currData.skills.map((skill) => (
-                                <SkillCard skill={skill} />
-                              ))}
-                            </div>
-                      )}
-                            </div> 
-                            :
-                            <div>
-                            {otherData.skills.length === 0 ? (
-                      <p className="no-repos">No Skills to display 😥</p>
-                    ) : (
-                          <div className="skill-set">
-                            {otherData.skills.map((skill) => (
-                              <SkillCard skill={skill} />
-                            ))}
+                        {!otherData ? (
+                          <div>
+                            {currData.skills.length === 0 ? (
+                              <p className="no-repos">
+                                No Skills to display 😥
+                              </p>
+                            ) : (
+                              <div className="skill-set">
+                                {currData.skills.map((skill) => (
+                                  <SkillCard skill={skill} />
+                                ))}
+                              </div>
+                            )}
                           </div>
-                    )}
-                          </div> 
-
-                          }
-
+                        ) : (
+                          <div>
+                            {otherData.skills.length === 0 ? (
+                              <p className="no-repos">
+                                No Skills to display 😥
+                              </p>
+                            ) : (
+                              <div className="skill-set">
+                                {otherData.skills.map((skill) => (
+                                  <SkillCard skill={skill} />
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
-                      
                     </ProfileSection>
                   </div>
                   <div className="left__sec__3">
@@ -406,12 +354,11 @@ const Profile = () => {
                 </div>
                 <div className="profile__right__section__wrapper">
                   <ProfileRightSection header={"About me"}>
-                    {
-                      !otherData ? 
+                    {!otherData ? (
                       <p className="about__me__text">{currData.bio}</p>
-                      :
+                    ) : (
                       <p className="about__me__text">{otherData.bio}</p>
-                    }
+                    )}
                   </ProfileRightSection>
                   <div className="profile__right__divider" />
                   <ProfileRightSection header={"Your Posts"}>

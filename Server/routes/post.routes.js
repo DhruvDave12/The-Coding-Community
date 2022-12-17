@@ -26,7 +26,7 @@ router.get('/post/all', verifyAccessToken, getPosts);
 
 // @desc GET particular post comments
 // @route GET
-// @path /post/all
+// @path /post/comments/:id
 router.get('/post/comments/:id', verifyAccessToken, getComments)
 
 // @desc GET Particular user posts

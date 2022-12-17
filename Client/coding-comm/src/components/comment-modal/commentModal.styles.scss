@@ -1,0 +1,18 @@
+.comments__wrapper{
+    .divider{
+        border-bottom: 1px solid #d3d3d3;
+        width: 100%;
+    }
+}
+.add__comment__section{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .input__wrapper{
+        width: 75%;
+    }
+    .button__wrapper{
+        width: 20%;
+    }
+}

@@ -1,4 +1,5 @@
 import React, {useContext} from "react";
+import axiosInstance from "../services/axiosInstance";
 import myContext from "./context";
 
 export const PostContext = React.createContext();
@@ -55,8 +56,19 @@ const PostProvider = ({children}) => {
         console.log("POST LIKES: ", postLikess);
         return postLikess[postId];
     }
+
+    const getComments = async (post) => {
+        try {
+            // console.log("POST ID: ", postId);
+            const res = await axiosInstance.get(`/post/comments/${post._id}`);
+            console.log("RES: ", res.data.data);
+            return res.data.data;
+        } catch (err) {
+            console.log("ERROR: ", err);
+        }
+    }
     return (
-        <PostContext.Provider value={{likePost, unlikePost, getPostLikes,hasUserLikedPost}}>
+        <PostContext.Provider value={{likePost, unlikePost, getPostLikes,hasUserLikedPost, getComments}}>
             {children}
         </PostContext.Provider>
     )
