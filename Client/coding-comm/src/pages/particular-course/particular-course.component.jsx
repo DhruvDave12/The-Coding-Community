@@ -14,6 +14,7 @@ import { Rate } from "antd";
 import PurchaseCourse from "../../components/course_purchase/course_purchase.component";
 import CourseOutlook from "../../components/course_outlook/course_outlook.component";
 import CustomCourseButton from "../../components/button/customCourseButton.component";
+import axiosInstance from "../../services/axiosInstance";
 
 toast.configure();
 const ParticularCourse = () => {
@@ -33,11 +34,13 @@ const ParticularCourse = () => {
   useEffect(() => {
     const fetchCourseWithID = async () => {
       console.log("PARAM ID: ", params.id);
-      const res = await axios.get(`http://localhost:8080/course/${params.id}`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
+      // const res = await axios.get(`http://localhost:8080/course/${params.id}`, {
+      //   headers: {
+      //     Authorization: localStorage.getItem("token"),
+      //   },
+      // });
+
+      const res = await axiosInstance.get(`/course/${params.id}`);
       setCourse(res.data.data);
     };
     if (params?.id) {
@@ -59,18 +62,24 @@ const ParticularCourse = () => {
   }, [userValue, course]);
 
   const handleToken = async (token, addresses) => {
-    const res = await axios.post(
-      "http://localhost:8080/course/purchase",
-      {
-        token,
-        course,
-      },
-      {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    );
+    // const res = await axios.post(
+    //   "http://localhost:8080/course/purchase",
+    //   {
+    //     token,
+    //     course,
+    //   },
+    //   {
+    //     headers: {
+    //       Authorization: localStorage.getItem("token"),
+    //     },
+    //   }
+    // );
+
+    const res = await axiosInstance.post('/course/purchase',{
+      token,
+      course
+    })
+    
     if (res.data.success) {
       const uniqueKey = res.data.data.hashKey;
       navigate(`/course/${params.id}/bought?key=${uniqueKey}`, {

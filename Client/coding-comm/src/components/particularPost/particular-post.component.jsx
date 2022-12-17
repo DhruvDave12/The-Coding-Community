@@ -1,12 +1,17 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
   HeartOutlined,
   CommentOutlined,
   ShareAltOutlined,
+  HeartFilled,
 } from "@ant-design/icons";
 import "./particular-post.styles.scss";
+import {PostContext} from "../../context/postContext";
 
 const ParticularPost = ({post}) => {
+  const {likePost, unlikePost, getPostLikes, hasUserLikedPost} = useContext(PostContext);
+  const hasLiked = hasUserLikedPost(post._id);
+
   console.log("POST: ", post);
   return (
     <div className="particular__post">
@@ -42,8 +47,17 @@ const ParticularPost = ({post}) => {
       {/* Like comment share section */}
       <div className="reach__section">
         <div className="reach__left__section">
-            <HeartOutlined style={{fontSize: '150%'}}/>
-            <p className="likes__count">28</p>
+            {
+              !hasLiked ? 
+              <HeartOutlined style={{fontSize: '150%'}} onClick={() => {
+                  likePost(post._id)
+              }}/>
+              :
+              <HeartFilled style={{fontSize: '150%', color: 'red'}} onClick={() => {
+                  unlikePost(post._id)
+              }}/>
+            }
+            <p className="likes__count">{!getPostLikes(post._id) ? 0 : getPostLikes(post._id)}</p>
             <CommentOutlined style={{fontSize: '150%'}}/>
             <p className="comments__count">{post.comments.length}</p>
         </div>

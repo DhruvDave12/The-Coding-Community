@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import axiosInstance from "../../services/axiosInstance";
 
 const TellUsMoreForm = () => {
     const [firstName, setFirstName] = useState('');
@@ -19,7 +20,25 @@ const TellUsMoreForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const skills = skillSt.split(', ');
-        await axios.post('https://the-coding-community.herokuapp.com/tell-us-more', {
+        // await axios.post('https://the-coding-community.herokuapp.com/tell-us-more', {
+        //         firstName: firstName,
+        //         lastName: lastName,
+        //         education,
+        //         country,
+        //         codeChefRating,
+        //         codeforcesRating: codeForcesRating,
+        //         github,
+        //         linkedInUrl: linkedIn,
+        //         bio: aboutYou,
+        //         skills: skills
+        //     },
+        //     {
+        //         headers:{
+        //             Authorization: localStorage.getItem('token')
+        //         }
+        //     });
+
+        await axiosInstance.post('/tell-us-more',{
                 firstName: firstName,
                 lastName: lastName,
                 education,
@@ -30,12 +49,7 @@ const TellUsMoreForm = () => {
                 linkedInUrl: linkedIn,
                 bio: aboutYou,
                 skills: skills
-            },
-            {
-                headers:{
-                    Authorization: localStorage.getItem('token')
-                }
-            });
+        })
 
         navigate('/profile');
         window.location.reload(false);

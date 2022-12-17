@@ -1,0 +1,90 @@
+.course__card{
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    // transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    &:hover{
+       background-color: rgb(230, 230, 230);
+    }
+    .course__image__wrapper{
+        width: 15rem;
+        height: 15rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
+
+        .course__image{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .right__wrapper{
+        padding-left: 2rem;
+        .course__text{
+            .course__title__text{
+                font-size: 1.6rem;
+                font-weight: 600;
+                color: #333;
+            }
+            .course__author__text{
+                font-size: 1rem;
+                font-weight: 500;
+                color: #777;
+            }
+        }
+        .rating__container{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+
+            // .rating__text{
+            //     font-size: 1.2rem;
+            //     font-weight: 500;
+            //     color: #777;
+            //     margin-right: 0.5rem;
+            //     font-family: "Poppins", sans-serif;
+            // }
+            .rating__cont{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                margin-bottom: 1%;
+            }
+        }
+        .course__lessons{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            .course__lessons__text{
+                font-size: 1rem;
+                font-weight: 500;
+                color: #777;
+                margin-right: 0.5rem;
+            }
+        }
+
+        .course__price__container{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+
+            .course__price__text{
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: black;
+                margin-right: 0.5rem;
+            }
+        }
+    }
+}

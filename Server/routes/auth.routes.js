@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const {verifyAccessToken} = require('../middlewares/auth.middleware');
 
-const {regUser, authUser, getHome, postMoreData, getMoreData, getUser, getAllUsers, logUserOut} = require('../controllers/auth.controllers');
+const {regUser, authUser, getHome, postMoreData, getMoreData, getUser, getAllUsers, logUserOut, googleOAuthHandler} = require('../controllers/auth.controllers');
 
 // @desc Registers the user
 // @route POST
@@ -22,26 +23,30 @@ router.post('/logout', logUserOut);
 // @desc Shows the profile page
 // @route GET
 // @path "/profile"
-router.get('/profile', passport.authenticate('jwt', {session: false}), getHome);
+router.get('/profile', verifyAccessToken, getHome);
 
 // @desc posts more data
 // @route POST
 // @path "/tell-us-more"
-router.post('/tell-us-more', passport.authenticate('jwt', {session: false}), postMoreData);
+router.post('/tell-us-more', verifyAccessToken, postMoreData);
 
 // @desc gets more data
 // @route GET
 // @path "/tell-us-more"
-router.get('/tell-us-more', passport.authenticate('jwt', {session: false}), getMoreData);
+router.get('/tell-us-more', verifyAccessToken, getMoreData);
 
 // @desc gets all users list
 // @route GET
 // @path "/user/all"
-router.get('/user/all', passport.authenticate('jwt', {session: false}), getAllUsers);
+router.get('/user/all', verifyAccessToken, getAllUsers);
 
 // @desc gets particular user
 // @route GET
 // @path "/user/:id"
-router.get('/user/:id', passport.authenticate('jwt', {session: false}), getUser);
+router.get('/user/:id', verifyAccessToken, getUser);
 
+// @desc register or login with google
+// @route GET
+// @path "/sessions/oauth/google"
+router.get('/sessions/oauth/google', googleOAuthHandler);
 module.exports = router;

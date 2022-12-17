@@ -16,6 +16,9 @@ import { Modal, Input } from "antd";
 import LazyLoader from "../../components/lazy-loader/lazy-loader.component";
 import GithubStargazer from "../../components/github_stargazer/github_stargazer.component";
 import { useNavigate } from "react-router";
+import axiosInstance from "../../services/axiosInstance";
+import UserIcon from "../../assets/images/user.svg";
+
 const { TextArea } = Input;
 
 const Profile = () => {
@@ -59,11 +62,13 @@ const Profile = () => {
     if(currUser){
       if(currUser._id !== id){
         const getOtherData = async () => {
-          const res = await axios.get(`http://localhost:8080/user/data/${id}`, {
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            }
-          });
+          // const res = await axios.get(`http://localhost:8080/user/data/${id}`, {
+          //   headers: {
+          //     Authorization: localStorage.getItem("token"),
+          //   }
+          // });
+
+          const res = await axiosInstance.get(`/user/data/${id}`);
 
           // console.log("res: ", res);
           setOtherData(res.data.data);
@@ -77,24 +82,26 @@ const Profile = () => {
   useEffect(() => {
     if (currUser && currUser.moreDataPosted) {
       const getPosts = async () => {
-        const res = await axios.get(
-          `http://localhost:8080/post/${id}`,
-          {
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-          }
-        );
+        const res = await axiosInstance.get(`/post/${id}`);
+        // const res = await axios.get(
+        //   `http://localhost:8080/post/${id}`,
+        //   {
+        //     headers: {
+        //       Authorization: localStorage.getItem("token"),
+        //     },
+        //   }
+        // );
         setPost(res.data.data);
       };
       // todo -> change it to fetch repos from an ID
       const getRepos = async () => {
-        const res = await axios.get(`http://localhost:8080/project/repos`, {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        });
-
+        // const res = await axios.get(`http://localhost:8080/project/repos`, {
+        //   headers: {
+        //     Authorization: localStorage.getItem("token"),
+        //   },
+        // });
+        
+        const res = await axiosInstance.get('/project/repos');
         setRepos(res.data.data);
       };
 
@@ -106,9 +113,27 @@ const Profile = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const skills = skillSt.split(", ");
-    await axios.post(
-      "http://localhost:8080/tell-us-more",
-      {
+    // await axios.post(
+    //   "http://localhost:8080/tell-us-more",
+    //   {
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     education,
+    //     country,
+    //     codeChefRating,
+    //     codeforcesRating: codeForcesRating,
+    //     github,
+    //     linkedInUrl: linkedIn,
+    //     bio: bio,
+    //     skills: skills,
+    //   },
+    //   {
+    //     headers: {
+    //       Authorization: localStorage.getItem("token"),
+    //     },
+    //   }
+    // );
+    await axiosInstance.post('/tell-us-more',{
         firstName: firstName,
         lastName: lastName,
         education,
@@ -119,15 +144,8 @@ const Profile = () => {
         linkedInUrl: linkedIn,
         bio: bio,
         skills: skills,
-      },
-      {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    );
-
-    navigate("/profile");
+    })
+    navigate(`/profile/${currUser._id}`);
     window.location.reload(false);
   };
 
@@ -141,14 +159,16 @@ const Profile = () => {
     console.log("HELLO");
     try {
       setLoading(true);
-      const res = await axios.get(
-        `http://localhost:8080/user/update/${currUser._id}`,
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
+      // const res = await axios.get(
+      //   `http://localhost:8080/user/update/${currUser._id}`,
+      //   {
+      //     headers: {
+      //       Authorization: localStorage.getItem("token"),
+      //     },
+      //   }
+      // );
+
+      const res = await axiosInstance.get(`/user/update/${currUser._id}`);
       console.log(res);
       setLoading(false);
     } catch (err) {
@@ -157,7 +177,7 @@ const Profile = () => {
     }
   };
 
-  console.log("data: ", otherData);
+  // console.log("data: ", currUser);
   return (
     <div className="profile">
       {currUser && currUser.moreDataPosted == false ? (
@@ -231,7 +251,11 @@ const Profile = () => {
                   <div className="profile__bg"></div>
                 </div>
                 <div className="profile__upper__sec">
-                  <div className="profile__image"></div>
+                  {
+                      currUser.picture ? 
+                      <img className="profile__image" src={currUser.picture}/>
+                      : <img className="profile__image__none" src={UserIcon}/>
+                  }
                   <div className="profile__upper__module2">
                     <div className="profile__name">
                       {
@@ -244,7 +268,6 @@ const Profile = () => {
                           {otherData.firstName} {otherData.lastName}
                         </p>
                       }
-                      <p className="position">Product Designer @ Google</p>
                     </div>
                     <div className="profile__location">
                       <img src={Location} alt="location" className="location" />

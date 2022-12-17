@@ -8,7 +8,10 @@ import {
   EyeInvisibleOutlined,
   EyeTwoTone,
 } from "@ant-design/icons";
+import axiosInstance from "../../../services/axiosInstance";
 
+import { getGoogleOAuthURL } from "../../../utils/google.util";
+import GoogleButton from "../../../components/google-button/googleButton.component";
 const SignUp = () => {
   let navigate = useNavigate();
 
@@ -21,16 +24,21 @@ const SignUp = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    const response = await axios.post(
-      //https://the-coding-community.herokuapp.com/register
-      "http://localhost:8080/register",
-      {
+    const response = await axiosInstance.post('/register', {
         username: username,
         password: password,
-        email: email,
-        contactNumber: contactNumber,
-      }
-    );
+        email: email
+    })
+    // const response = await axios.post(
+    //   //https://the-coding-community.herokuapp.com/register
+    //   "http://localhost:8080/register",
+    //   {
+    //     username: username,
+    //     password: password,
+    //     email: email,
+    //     contactNumber: contactNumber,
+    //   }
+    // );
     setLoading(false);
     navigate("/login");
   };
@@ -83,7 +91,9 @@ const SignUp = () => {
         <p className="already__text">
           Already have an account? <Link to="/login">Sign In</Link>
         </p>
-        {/* <button>Register</button> */}
+
+        <div className="divider"/>
+        <GoogleButton />
         <Button type="primary" loading={loading} onClick={handleSubmit}>
           Register
         </Button>

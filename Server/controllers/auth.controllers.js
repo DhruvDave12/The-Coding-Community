@@ -1,28 +1,48 @@
 const User = require('../models/user');
 const MoreData = require('../models/moreUserData.models');
 const userLevel = require('../models/userLevel.model');
-
 const jwt = require('jsonwebtoken');
 const { hashSync, compareSync } = require('bcrypt');
+const {getGoogleOAuthTokens, getGoogleUser, findOrCreateUser} = require('../services/google.services');
+const {signJWT, verifyJWT} = require('../utils/jwt.utils');
+
+const accessTokenCookieOptions = {
+  maxAge: 86400000, // 24 hours
+  httpOnly: true,
+  domain: "localhost",
+  path: "/",
+  sameSite: "lax",
+  secure: false,
+};
+  
+const refreshTokenCookieOptions = {
+  ...accessTokenCookieOptions,
+  maxAge: 3.154e10, // 1 year
+};
 
 module.exports.regUser = async (req,res) => {
-    const { username, email, contactNumber, password } = req.body;
+    const { username, email, password } = req.body;
 
+    if(!username || !email || !password){
+        return res.status(400).send({
+            success: false,
+            msg: "Please enter all the fields"
+        })
+    }
     const user = new User({
         username: username,
         password: hashSync(password, 10),
         email: email,
-        contactNumber: contactNumber,
     })
     user.save()
     .then(user => {
-        res.send({
+        return res.send({
             success: true,
             msg: "User created successfully",
             user
         })
     }) .catch(err => {
-        res.send({
+        return res.send({
             success: false,
             msg: 'Something went wrong',
             error: err
@@ -62,8 +82,8 @@ module.exports.authUser = async (req,res) => {
              username: user.username,
              id: user._id
          }
-         const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "1h"});
-    
+         const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "24h"});
+         res.cookie("accessToken", token, accessTokenCookieOptions);
          return res.status(200).send({
              success: true,
              msg: 'Logged In Successfully',
@@ -166,12 +186,40 @@ module.exports.getAllUsers = async(req,res) =>{
 }
 
 module.exports.logUserOut = async(req,res) => {
-    // todo -> keep a check for USER ID
     const user = await User.findById(req.body.userID);
+    // delete the accessToken and refreshToken from the users cookie
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    console.log("HEHE");
     user.online = false;
     await user.save();
     res.status(200).send({
         success: true,
         msg: "User Logged Out"
     })
+}
+
+// GOOGLE AUTH
+module.exports.googleOAuthHandler = async (req, res) => {
+    const { code } = req.query;
+    const {id_token, access_token} = await getGoogleOAuthTokens(code);
+    const googleUser = await getGoogleUser(id_token, access_token);
+    // upsert the user
+    const user = await findOrCreateUser(googleUser);
+    // console.log("HEHE THE END");
+    if(!user) return res.status(403).send("Something went wrong while creating a user");
+    // // // create a session
+    // // const session = await createSession(user);
+    // create access and refresh tokens
+    const payload = {
+        username: user.username,
+        id: user._id
+    }
+    const accessToken = signJWT(payload, {expiresIn: '1d'});
+    const refreshToken = signJWT(payload, {expiresIn: '1y'});
+    // set cookies
+    res.cookie("accessToken", accessToken, accessTokenCookieOptions);
+    res.cookie("refreshToken", refreshToken, refreshTokenCookieOptions);
+    // redirect back to the client
+    res.redirect(`http://localhost:3000/profile/${user._id}`);
 }

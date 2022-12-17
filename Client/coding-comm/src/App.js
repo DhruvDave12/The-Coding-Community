@@ -19,13 +19,16 @@ import Footer from './components/footer/footer.component';
 import NavBar from './components/navbar/navbar.component';
 import ChatPage from './pages/chatting/chatting.component';
 import { useLocation } from 'react-router-dom'
+import ExploreCourses from './pages/course/exploreCourse/exploreCourse.component';
+// require('dotenv').config()
+
 function App() {
   const location = useLocation();
-  console.log(location.pathname);
+
   return (
     <>
     {
-      localStorage.getItem('token') && !(location.pathname === "/register" || location.pathname === "/login") ? 
+      !(location.pathname === "/register" || location.pathname === "/login") ? 
       <NavBar />
       :
       null
@@ -46,6 +49,7 @@ function App() {
         <Route path='/course/sell' element={<SellCourse />}/>
         <Route path='/course/:id/bought' element={<BoughtCourse />}/>
         <Route path='/chat' element={<ChatPage />}/>
+        <Route path='/course/explore' element={<ExploreCourses />}/>
       </Routes>
 
       <Footer />

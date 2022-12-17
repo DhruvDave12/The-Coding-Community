@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import LazyLoader from "../../../components/lazy-loader/lazy-loader.component";
 import VideoPlayer from "../../../components/video-player/video-player.component";
 import { Collapse } from "antd";
+import axiosInstance from "../../../services/axiosInstance";
 
 const { Panel } = Collapse;
 
@@ -21,17 +22,20 @@ const BoughtCourse = () => {
   useEffect(() => {
     const securelyCheck = async () => {
       setLoading(true);
-      const res = await axios.post(
-        "http://localhost:8080/course/check",
-        {
-          key: hashKey,
-        },
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
+      const res = await axiosInstance.post('/course/check', {
+        key: hashKey
+      })
+      // const res = await axios.post(
+      //   "http://localhost:8080/course/check",
+      //   {
+      //     key: hashKey,
+      //   },
+      //   {
+      //     headers: {
+      //       Authorization: localStorage.getItem("token"),
+      //     },
+      //   }
+      // );
 
       setHasBought(res.data.data);
       setActiveVideo(course.videos[1]);

@@ -7,7 +7,11 @@ import { Link } from "react-router-dom";
 import { Input, Button } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import "./sign-in.styles.scss";
+import { toast } from "react-toastify";
+import axiosInstance from "../../../services/axiosInstance";
+import GoogleButton from "../../../components/google-button/googleButton.component";
 
+toast.configure();
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -17,30 +21,41 @@ const SignIn = () => {
   const { user } = useContext(myContext);
 
   const [userValue, setUserValue] = user;
-  // const [dataValue, setDataValue] = data;
 
+  const notifyFalse = (msg) =>
+    toast.error(msg, { position: toast.POSITION.TOP_RIGHT });
   let navigate = useNavigate();
   const handleSubmit = async () => {
     setLoading(true);
-    const response = await axios.post(
-      "http://localhost:8080/login",
-      {
+    try {
+      const response = await axiosInstance.post("/login", {
         password: password,
         email: email,
-      }
-      );
+      });
+      // const response = await axios.post(
+      //   "http://localhost:8080/login",
+      //   {
+      //     password: password,
+      //     email: email,
+      //   }
+      //   );
       localStorage.setItem("token", response.data.token);
       setUserValue(response.data.user);
       setLoading(false);
       navigate(`/profile/${response.data.user._id}`);
+    } catch (error) {
+      setLoading(false);
+      // console.log(error);
+      notifyFalse("Cannot Login");
+    }
   };
 
   return (
     <div className="sign-in">
       <div className="sign__in__form">
-      <div className="start__text">
-            <p className="welcome__text">Sign In</p>
-          </div>
+        <div className="start__text">
+          <p className="welcome__text">Sign In</p>
+        </div>
         <div className="fields">
           <label htmlFor="email" className="field__label">
             Email
@@ -69,8 +84,10 @@ const SignIn = () => {
         <p className="already__text">
           Dont have an account? <Link to="/register">Register</Link>
         </p>
+        <div className="divider"/>
+        <GoogleButton />
         <Button type="primary" loading={loading} onClick={handleSubmit}>
-         Login
+          Login
         </Button>
       </div>
     </div>

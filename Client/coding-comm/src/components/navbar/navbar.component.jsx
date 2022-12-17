@@ -8,10 +8,13 @@ import SearchBar from "../search/search.component";
 import axios from 'axios';
 import Logo from "../../assets/images/logo.svg";
 import CustomLandingButton from "../button/customLandingButton.component.jsx";
+import {toast} from "react-toastify";
+import axiosInstance from "../../services/axiosInstance";
 
+toast.configure();
 const NavBar = () => {
-    const {user} = useContext(myContext);
-
+    const {user, isLoggedIn,setIsLoggedIn} = useContext(myContext);
+    const notifyFalse = (msg) => toast.error(msg, {position: toast.POSITION.TOP_RIGHT});
     const [userValue, setUserValue] = user;
 
     var currUser;
@@ -22,13 +25,13 @@ const NavBar = () => {
     let navigate = useNavigate();
 
     const logOut = async () => {
-        const res = await axios.post('http://localhost:8080/logout', {
+        const res = await axiosInstance.post('/logout', {
             userID: currUser._id
         })
         localStorage.removeItem('token');
         setUserValue(null);
-        console.log("USER", res.data);
-        navigate('/login');
+        setIsLoggedIn(false);
+        navigate('/');
         window.location.reload(false);
     }
 
@@ -40,7 +43,7 @@ const NavBar = () => {
                         <img src={Logo} className="logo-svg"/>   
                     </div>
                     <div className="logo--cont2">
-                        <p className="title" onClick={() => {navigate('/')}} > The Coding Community</p>
+                        <p className="title" onClick={() => {navigate('/')}} >Coding Community</p>
                     </div>
                 </div>
                 <div className="search-field">
@@ -54,9 +57,9 @@ const NavBar = () => {
             <div className="other-fields">
                 <ul>
 
-                    <Link className="field" to={currUser ? `/profile/${currUser._id}` : '/'}>Home</Link>
-                    <Link className="field" to={'/feed'}>Feed</Link>
-                    <Link className="field" to={'/course'}>Courses</Link>
+                    <Link className="field" to={currUser && isLoggedIn ? `/profile/${currUser._id}` : '/'} onClick={() => !isLoggedIn ? notifyFalse('Please Signup / Login to continue') : {}}>Home</Link>
+                    <Link className="field" to={isLoggedIn ? '/feed': '/'} onClick={() => !isLoggedIn ? notifyFalse('Please Signup / Login to continue') : {}}>Feed</Link>
+                    <Link className="field" to={isLoggedIn ? '/course': '/'} onClick={() => !isLoggedIn ? notifyFalse('Please Signup / Login to continue') : {}}>Courses</Link>
                     <Link className="field" to={'/about'}>About</Link>
                     {
                         currUser ? 

@@ -8,16 +8,14 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true,
     },
     email: {
         type: String,
         required: true,
         unique: true
     },
-    contactNumber: {
+    picture: {
         type: String,
-        required: true,
     },
     moreDataPosted: {
         type: Boolean,

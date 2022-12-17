@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
+const cookies = require('cookie-parser');
 const passport = require('passport');
 const {configDB} = require('./config/database');
 const app = express();
@@ -20,7 +21,13 @@ const session = require('express-session')
 configDB();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
-app.use(cors())
+const corsOptions ={
+    origin:'http://localhost:3000', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
+}
+app.use(cors(corsOptions));
+app.use(cookies());
 
 app.use(session({
     secret: "secret",
@@ -35,8 +42,8 @@ require('./config/passport')
 // using routes
 app.use('/', authRoutes);
 app.use('/', extraRoutes);
-app.use('/',projectRoutes);
-app.use('/',postRoutes);
+app.use('/', projectRoutes);
+app.use('/', postRoutes);
 app.use('/', quesansRoutes);
 app.use('/', courseRoutes);
 

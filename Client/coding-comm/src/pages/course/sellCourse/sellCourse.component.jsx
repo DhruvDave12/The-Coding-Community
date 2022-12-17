@@ -6,6 +6,7 @@ import sellImage from "../../../assets/images/sell.svg";
 import FileInput from "../../../components/file-input/file-input.component";
 import CustomCourseButton from "../../../components/button/customCourseButton.component";
 import LazyLoader from "../../../components/lazy-loader/lazy-loader.component";
+import axiosInstance from "../../../services/axiosInstance";
 import { Input } from "antd";
 const { TextArea } = Input;
 
@@ -52,7 +53,12 @@ const SellCourse = () => {
       },
     };
     try{
-      await axios.post("http://localhost:8080/course/new", formData, config);
+      await axiosInstance.post('/course/new',formData,{
+        headers: {
+          "content-type": "multipart/form-data",
+        }
+      })
+      // await axios.post("http://localhost:8080/course/new", formData, config);
       setHandleSubLoading(false);
       navigate("/course");
       window.location.reload(false);
@@ -115,7 +121,7 @@ const SellCourse = () => {
               }}
             >
               <p className="label">Set overview</p>
-              <div style={{ width: "10%" }}>
+              <div style={{ width: "20%" }}>
                 <CustomCourseButton title={"Add Overview"} onClick={addField} />
               </div>
             </div>

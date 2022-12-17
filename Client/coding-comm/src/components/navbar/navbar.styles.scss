@@ -7,7 +7,7 @@
   justify-content: space-between;
   align-items: center;
   font-family: "Poppins", sans-serif;
-  padding: 20px;
+  padding: 2rem 1rem;
   .logo {
     cursor: pointer;
     width: 45%;
@@ -33,9 +33,9 @@
       .logo--cont2{
           width: 50%;
           .title {
-            padding-top: 18px;
+            padding-top: 1rem;
             text-align: center;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             color: black;
             text-transform: uppercase;
@@ -76,7 +76,7 @@
       display: flex;
       justify-content: space-evenly;
       .auth {
-        width: 20%;
+        width: 30%;
         display: flex;
         justify-content: space-between;
       }

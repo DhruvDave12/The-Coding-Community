@@ -6,6 +6,7 @@ import ShareSomething from "../../components/share-something/share_something.com
 import { Modal } from "antd";
 import NewPostModal from "../../components/newPostModal/newPostModal.component";
 import LazyLoader from "../../components/lazy-loader/lazy-loader.component";
+import axiosInstance from "../../services/axiosInstance";
 
 const Feed = () => {
   const [post, setPost] = useState([]);
@@ -41,11 +42,16 @@ const Feed = () => {
       },
     };
 
-    await axios.post(
-      "http://localhost:8080/new/post",
-      formData,
-      config
-    );
+    await axiosInstance.post('/new/post',formData,{
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    })
+    // await axios.post(
+    //   "http://localhost:8080/new/post",
+    //   formData,
+    //   config
+    // );
     setNewPostLoading(false);
     setVisible(false);
     setConfirmLoading(false);
@@ -53,14 +59,15 @@ const Feed = () => {
 
   useEffect(() => {
     const getPosts = async () => {
-      const posts = await axios.get(
-        "http://localhost:8080/post/all",
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
+      const posts = await axiosInstance.get('/post/all');
+      // const posts = await axios.get(
+      //   "http://localhost:8080/post/all",
+      //   {
+      //     headers: {
+      //       Authorization: localStorage.getItem("token"),
+      //     },
+      //   }
+      // );
       setPost(posts.data.data);
     };
     getPosts();

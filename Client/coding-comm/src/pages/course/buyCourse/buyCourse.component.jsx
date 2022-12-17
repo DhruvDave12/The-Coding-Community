@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./buyCourse.styles.scss";
 import { useNavigate } from "react-router";
+import axiosInstance from "../../../services/axiosInstance";
 
 const BuyCourse = () => {
   const navigate = useNavigate();
@@ -12,14 +13,15 @@ const BuyCourse = () => {
 
   useEffect(() => {
     const fetchAllCourses = async () => {
-      const res = await axios.get(
-        "https://the-coding-community.herokuapp.com/courses/all",
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
+      const res = await axiosInstance.get('/courses/all');
+      // const res = await axios.get(
+      //   "https://the-coding-community.herokuapp.com/courses/all",
+      //   {
+      //     headers: {
+      //       Authorization: localStorage.getItem("token"),
+      //     },
+      //   }
+      // );
       setallCourses(res.data.data);
     };
     fetchAllCourses();
