@@ -215,3 +215,31 @@ module.exports.checkCourse = async (req,res) => {
 //   .catch(err => console.log(err));
 
 // }
+
+module.exports.getMyLearnings = async (req,res) => {
+  if(!req.user) {
+      res.status(400).json({
+        success: false,
+        message: "Please login to continue"
+      })
+  }
+  // console.log("REQ.USER: ", req.user);
+  const user = await User.findById(req.user.id);
+  const allCourses = await Course.find({}).populate('instructor');
+  console.log("USER: ", user);
+  console.log("ALL COURSES: ", allCourses);
+  let myLearnings = [];
+  for(let i=0; i<user.hashOfCourses.length; i++){
+    for(let j=0; j<allCourses.length; j++){
+      var editedTitle = allCourses[j].title.replace(/ /g, "");
+      if(user.hashOfCourses[i].split(' ')[0] === editedTitle){
+        myLearnings.push(allCourses[j]);
+      }
+    }
+  }
+
+  res.status(200).send({
+    success: true,
+    data: myLearnings
+  })
+}

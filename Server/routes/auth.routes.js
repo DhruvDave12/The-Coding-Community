@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const {verifyAccessToken} = require('../middlewares/auth.middleware');
 
-const {regUser, authUser, getHome, postMoreData, getMoreData, getUser, getAllUsers, logUserOut, googleOAuthHandler} = require('../controllers/auth.controllers');
+const {regUser, authUser, getHome, postMoreData, getMoreData, getUser, getAllUsers, logUserOut, googleOAuthHandler,getUserById} = require('../controllers/auth.controllers');
 
 // @desc Registers the user
 // @route POST
@@ -39,6 +39,11 @@ router.get('/tell-us-more', verifyAccessToken, getMoreData);
 // @route GET
 // @path "/user/all"
 router.get('/user/all', verifyAccessToken, getAllUsers);
+
+// @desc gets particular user
+// @route GET
+// @path "/user/normal/:id"
+router.get('/user/normal/:id', verifyAccessToken, getUserById);
 
 // @desc gets particular user
 // @route GET

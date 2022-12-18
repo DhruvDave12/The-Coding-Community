@@ -4,7 +4,7 @@ const passport = require('passport');
 const {verifyAccessToken} = require('../middlewares/auth.middleware');
 const {getReposSorted} = require('../controllers/project.controllers');
 
-router.get('/project/repos', verifyAccessToken, getReposSorted);
+router.get('/project/repos/:id', verifyAccessToken, getReposSorted);
 
 
 module.exports = router;

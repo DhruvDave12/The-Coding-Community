@@ -1,0 +1,28 @@
+.my__learnings{
+    .my__learnings__title{
+        margin-top: 1rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 2rem;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+    }
+    .my__learnings__container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        .no__learning__text{
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #000;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        .learning__wrapper{
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+    }
+}

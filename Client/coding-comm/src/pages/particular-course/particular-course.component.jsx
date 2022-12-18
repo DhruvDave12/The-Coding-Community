@@ -8,7 +8,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { myContext } from "../../context/context";
+import { myContext } from "../../context/auth.context";
 import LazyLoader from "../../components/lazy-loader/lazy-loader.component";
 import { Rate } from "antd";
 import PurchaseCourse from "../../components/course_purchase/course_purchase.component";

@@ -20,6 +20,8 @@ import NavBar from './components/navbar/navbar.component';
 import ChatPage from './pages/chatting/chatting.component';
 import { useLocation } from 'react-router-dom'
 import ExploreCourses from './pages/course/exploreCourse/exploreCourse.component';
+import MyLearnings from './pages/course/MyLearnings/myLearnings.component';
+import About from './pages/about/about.page';
 // require('dotenv').config()
 
 function App() {
@@ -36,6 +38,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/search' element={<Home />}/>
+        <Route path='/about' element={<About />}/>
         <Route path='/register' element={<SignUp />} />
         <Route path='/login' element={<SignIn />} />
         <Route path='/edit' element={<Edit />} />
@@ -50,6 +53,7 @@ function App() {
         <Route path='/course/:id/bought' element={<BoughtCourse />}/>
         <Route path='/chat' element={<ChatPage />}/>
         <Route path='/course/explore' element={<ExploreCourses />}/>
+        <Route path='/course/learnings' element={<MyLearnings />}/>
       </Routes>
 
       <Footer />

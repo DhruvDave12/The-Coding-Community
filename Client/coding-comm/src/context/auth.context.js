@@ -17,6 +17,7 @@ const Context = props => {
         setIsLoggedIn(false);
       }
       setUser (currUser.data.data.user);
+      localStorage.setItem('userID', currUser.data.data.user._id);
     };
     getCurrUser ();
   }, []);
@@ -36,7 +37,6 @@ const Context = props => {
   
   useEffect(() => {
     if(localStorage.getItem('token')) {
-      console.log("WE ARE HERE");
       setIsLoggedIn(true);
     }
   }, []);

@@ -34,6 +34,8 @@ router.post('/course/purchase',verifyAccessToken,CourseRoutes.purchaseCourse )
 // @desc securely check if the user has the course
 router.post('/course/check', verifyAccessToken, CourseRoutes.checkCourse);
 
-router.get('/course/:id',verifyAccessToken,CourseRoutes.getCourse )
+router.get('/course/learnings', verifyAccessToken, CourseRoutes.getMyLearnings)
+
+router.get('/course/:id',verifyAccessToken,CourseRoutes.getCourse)
 
 module.exports = router;

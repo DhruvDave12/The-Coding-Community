@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 // import Context from "../../context/context";
 import { useContext } from "react";
-import { myContext } from "../../context/context";
+import { myContext } from "../../context/auth.context";
 
 const socket = io.connect("http://localhost:8080");
 

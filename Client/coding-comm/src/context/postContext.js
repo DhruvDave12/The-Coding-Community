@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import axiosInstance from "../services/axiosInstance";
-import myContext from "./context";
+import myContext from "./auth.context";
 
 export const PostContext = React.createContext();
 

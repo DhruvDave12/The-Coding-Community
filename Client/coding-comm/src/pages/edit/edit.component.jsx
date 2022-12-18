@@ -3,7 +3,7 @@ import './edit.styles.scss';
 
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { myContext } from '../../context/context';
+import { myContext } from '../../context/auth.context';
 
 const Edit = () => {
     const {user, data} = useContext(myContext);

@@ -1,7 +1,7 @@
 import React from "react";
 import './navbar.styles.scss';
 import { useContext } from "react";
-import { myContext } from '../../context/context';
+import { myContext } from '../../context/auth.context';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import SearchBar from "../search/search.component";

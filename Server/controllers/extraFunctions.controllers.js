@@ -1,6 +1,7 @@
 const User = require ('../models/user');
 const MoreData = require ('../models/moreUserData.models');
 const UserLevel = require ('../models/userLevel.model');
+const mongoose = require('mongoose');
 
 module.exports.getLeaderboard = async (req, res) => {
   const users = await User.find ({});
@@ -23,73 +24,102 @@ module.exports.getLeaderboard = async (req, res) => {
 };
 
 module.exports.updateFoll = async (req, res) => {
-  if (!req.user) {
-    res.status (403).send ({
-      success: false,
-      msg: 'Please login to follow',
-    });
+  try {
+
+      if (!req.user) {
+        res.status (403).send ({
+          success: false,
+          msg: 'Please login to follow',
+        });
+      }
+    
+      const {otherID} = req.params;
+      
+      var validID = mongoose.Types.ObjectId(otherID);
+      // remember that user 1 is the current active user
+      const user1 = await MoreData.findOne ({owner: mongoose.Types.ObjectId(req.user._id)});
+      const user2 = await MoreData.findOne ({owner: validID});
+      // check if user1 is already following user2 or not
+      if (user1.allFollowing.includes (otherID)) {
+        console.log("HEHE WE CAUGHT YA");
+        return res.status (403).send ({
+          success: false,
+          msg: 'Already following',
+        });
+      }
+      user1.following++;
+      user2.followers++;
+    
+      user1.allFollowing.push (otherID);
+      user2.allFollowers.push (req.user._id);
+    
+      await user1.save ();
+      await user2.save ();
+    
+      console.log (user1, user2);
+      // returning the current user as user1
+      res.status (200).send ({
+        success: true,
+        data: [user1, user2],
+      });
+  } catch (err) {
+    console.log("ERROR: ", err);
   }
-
-  const {otherID} = req.params;
-
-  // remember that user 1 is the current active user
-  const user1 = await MoreData.findOne ({owner: req.user._id});
-  const user2 = await MoreData.findOne ({owner: otherID});
-  user1.following++;
-  user2.followers++;
-
-  user1.allFollowing.push (otherID);
-  user2.allFollowers.push (req.user._id);
-
-  await user1.save ();
-  await user2.save ();
-
-  console.log (user1, user2);
-  // returning the current user as user1
-  res.status (200).send ({
-    success: true,
-    data: [user1, user2],
-  });
 };
 
 module.exports.unfollowMech = async (req, res) => {
-  const {otherID} = req.params;
+  try {
+      // console.log("REQ.USER: ",req.user);
+      if(!req.user){
+        res.status(403).send({
+          success: false,
+          msg: 'Please login to unfollow'
+        })
+      }
+      const {otherID} = req.params;
+      // find the data where owner is otherID
+      const validID = mongoose.Types.ObjectId(otherID);
+    
+      const otherUserData = await MoreData.findOne ({owner: validID}).populate (
+        'allFollowers allFollowing owner'
+      );
 
-  const otherUserData = await MoreData.findOne ({owner: otherID}).populate (
-    'allFollowers allFollowing owner'
-  );
-  const currUserData = await MoreData.findOne ({owner: req.user._id}).populate (
-    'allFollowers allFollowing owner'
-  );
-
-  currUserData.following--;
-  otherUserData.followers--;
-
-  for (let i = 0; i < otherUserData.allFollowers.length; i++) {
-    if (
-      otherUserData.allFollowers[i].username === currUserData.owner.username
-    ) {
-      otherUserData.allFollowers.splice (i, 1);
-      break;
-    }
+      const currUserData = await MoreData.findOne ({owner: mongoose.Types.ObjectId(req.user._id)}).populate (
+        'allFollowers allFollowing owner'
+      );
+    
+    
+      currUserData.following--;
+      otherUserData.followers--;
+    
+      for (let i = 0; i < otherUserData.allFollowers.length; i++) {
+        if (
+          otherUserData.allFollowers[i].username === currUserData.owner.username
+        ) {
+          otherUserData.allFollowers.splice (i, 1);
+          break;
+        }
+      }
+    
+      for (let i = 0; i < currUserData.allFollowing.length; i++) {
+        if (
+          currUserData.allFollowing[i].username === otherUserData.owner.username
+        ) {
+          currUserData.allFollowing.splice (i, 1);
+          break;
+        }
+      }
+    
+      await otherUserData.save ();
+      await currUserData.save ();
+    
+      res.status (200).send ({
+        success: true,
+        data: [currUserData, otherUserData],
+      });
+  } catch (err) {
+    console.log("ERROR: ", err);
   }
-
-  for (let i = 0; i < currUserData.allFollowing.length; i++) {
-    if (
-      currUserData.allFollowing[i].username === otherUserData.owner.username
-    ) {
-      currUserData.allFollowing.splice (i, 1);
-      break;
-    }
-  }
-
-  await otherUserData.save ();
-  await currUserData.save ();
-
-  res.status (200).send ({
-    success: true,
-    data: [currUserData, otherUserData],
-  });
 };
 
 module.exports.getOtherData = async (req, res) => {

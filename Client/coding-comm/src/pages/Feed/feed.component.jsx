@@ -8,7 +8,7 @@ import LazyLoader from "../../components/lazy-loader/lazy-loader.component";
 import axiosInstance from "../../services/axiosInstance";
 import CommentModal from "../../components/comment-modal/commentModal.component";
 import { PostContext } from "../../context/postContext";
-import {myContext} from "../../context/context";
+import {myContext} from "../../context/auth.context";
 import userIcon from "../../assets/images/user.svg";
 
 const Feed = () => {

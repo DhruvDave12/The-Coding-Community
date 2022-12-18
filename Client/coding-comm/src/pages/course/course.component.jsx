@@ -14,13 +14,22 @@ const { Search } = Input;
 const Course = () => {
   const navigate = useNavigate()
   const [courses, setCourses] = useState();
+  const [myLearnings, setMyLearnings] = useState();
 
   useEffect(() => {
     const fetchCourses = async () => {
       const response = await axiosInstance.get('/courses/all');
       setCourses(response.data.data);
     };
+
+    const fetchMyLearnings = async () => {
+      const response = await axiosInstance.get('/course/learnings');
+      console.log("RES: ", response.data);
+      setMyLearnings(response.data.data);
+    }
+
     fetchCourses();
+    fetchMyLearnings();
   }, []);
 
   return (
@@ -53,11 +62,11 @@ const Course = () => {
       <div className="my__learning__section">
         <div className="my__learning__upper">
             <p className="title__left">Let's Start Learning, Dhruv</p>
-            <a className="title__right" href="#">My Learnings</a>
+            <a className="title__right" href="/course/learnings">My Learnings</a>
         </div>
         <div className="my__learning__lower">
           {
-            courses && courses.map(course => (
+            myLearnings && myLearnings.filter((item,index) => index<4).map(course => (
               <div style={{height: '18rem'}}>
                 <CourseOutlook key={course.id} course={course} />
               </div>
@@ -72,7 +81,7 @@ const Course = () => {
         </div>
         <div className="my__learning__lower">
         {
-            courses && courses.map(course => (
+            courses && courses.filter((item,index) => index<4).map(course => (
               <div style={{height: '18rem'}}>
                 <CourseOutlook key={course.id} course={course} />
               </div>
@@ -87,7 +96,7 @@ const Course = () => {
         </div>
         <div className="my__learning__lower">
         {
-            courses && courses.map(course => (
+            courses && courses.filter((item,index) => index<4).map(course => (
               <div style={{height: '18rem'}}>
                 <CourseOutlook key={course.id} course={course} />
               </div>

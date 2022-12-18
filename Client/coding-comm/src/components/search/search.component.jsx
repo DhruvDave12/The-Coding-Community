@@ -4,6 +4,7 @@ import { Input } from 'antd';
 import { useNavigate } from "react-router";
 import SearchList from "../search-drop-list/search-drop-list.component";
 import "./search.styles.scss";
+import axiosInstance from "../../services/axiosInstance";
 
 const { Search } = Input;
 
@@ -18,14 +19,7 @@ const SearchBar = () => {
   
   useEffect(() => {
     const getUsers = async () => {
-      const res = await axios.get(
-        "http://localhost:8080/user/all",
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
+      const res = await axiosInstance.get('/user/all');
       setData(res.data.data);
     };
 

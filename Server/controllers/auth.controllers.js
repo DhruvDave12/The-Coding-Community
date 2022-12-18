@@ -149,10 +149,18 @@ module.exports.postMoreData = async (req,res) => {
 
 module.exports.getMoreData = async (req,res) => {
     const data = await MoreData.findOne({owner: req.user._id}).populate('allFollowers allFollowing');
-
      res.status(200).send({
         success: true,
         data: data
+    })
+}
+
+module.exports.getUserById = async (req,res) => {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    res.status(200).send({
+        success: true,
+        data: user
     })
 }
 
