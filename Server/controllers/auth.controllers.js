@@ -10,7 +10,7 @@ const accessTokenCookieOptions = {
   maxAge: 86400000, 
   domain: "the-coding-community-production.up.railway.app",
   path: "/",
-  sameSite: "lax",
+  sameSite: "none",
   secure: true,
 };
   
