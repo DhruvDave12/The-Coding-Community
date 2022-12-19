@@ -7,12 +7,11 @@ const {getGoogleOAuthTokens, getGoogleUser, findOrCreateUser} = require('../serv
 const {signJWT, verifyJWT} = require('../utils/jwt.utils');
 
 const accessTokenCookieOptions = {
-  maxAge: 86400000, // 24 hours
-  httpOnly: true,
+  maxAge: 86400000, 
   domain: "the-coding-community-production.up.railway.app",
   path: "/",
   sameSite: "lax",
-  secure: false,
+  secure: true,
 };
   
 const refreshTokenCookieOptions = {
