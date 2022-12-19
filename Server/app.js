@@ -21,6 +21,7 @@ const session = require('express-session')
 configDB();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
+
 const corsOptions ={
     origin:'http://localhost:3000', 
     credentials:true,            //access-control-allow-credentials:true
@@ -32,7 +33,7 @@ app.use(cookies());
 app.use(session({
     secret: "secret",
     resave: false ,
-    saveUninitialized: true ,
+    saveUninitialized: true
 }))
 
 app.use(passport.initialize());

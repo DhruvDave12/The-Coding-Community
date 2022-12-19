@@ -1,7 +1,7 @@
 export const getGoogleOAuthURL = () => {
     const rootURL = 'https://accounts.google.com/o/oauth2/v2/auth';
     const options = {
-        redirect_uri: 'http://localhost:8080/sessions/oauth/google',
+        redirect_uri: 'https://the-coding-community-production.up.railway.app/sessions/oauth/google',
         client_id: '697070237521-f0uoshu5v3kfffk93pdjch5kd746eei0.apps.googleusercontent.com',
         access_type: "offline",
         response_type: "code",

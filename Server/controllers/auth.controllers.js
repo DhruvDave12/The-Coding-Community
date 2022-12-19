@@ -9,7 +9,7 @@ const {signJWT, verifyJWT} = require('../utils/jwt.utils');
 const accessTokenCookieOptions = {
   maxAge: 86400000, // 24 hours
   httpOnly: true,
-  domain: "localhost",
+  domain: "the-coding-community-production.up.railway.app",
   path: "/",
   sameSite: "lax",
   secure: false,
