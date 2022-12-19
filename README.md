@@ -64,13 +64,9 @@ sell or buy courses and interact with each other with amazing experience and lea
 ### BACKEND :computer:
 1. Setup socket IO api's to enable chatting system
 2. Setup level and achievements api's
-3. Security left
-
-### FRONTEND :computer:
-1. Design the other pages using antD and scss
 
 ## Deployed Links
-1. Backend deployed at: https://the-coding-community.herokuapp.com/
+1. Backend deployed at: https://the-coding-community-production.up.railway.app/
 2. Frontend yet to be deployed
 
 ## Contact Me :speech_balloon:
