@@ -2,3 +2,8 @@
   from = "/*"
   to = "/"
   status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/profile/*"
+  status = 200
