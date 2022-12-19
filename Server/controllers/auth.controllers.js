@@ -290,5 +290,5 @@ module.exports.googleOAuthHandler = async (req, res) => {
     res.cookie("accessToken", accessToken, accessTokenCookieOptions);
     res.cookie("refreshToken", refreshToken, refreshTokenCookieOptions);
     // redirect back to the client
-    res.redirect(`http://localhost:3000/profile/${user._id}`); 
+    res.redirect(`https://the-coding-community.netlify.app/profile/${user._id}`); 
 }
