@@ -26,7 +26,6 @@ import QuestionAnswer from './pages/question-answer/questionAnswer.page';
 
 function App() {
   const location = useLocation();
-
   return (
     <>
     {

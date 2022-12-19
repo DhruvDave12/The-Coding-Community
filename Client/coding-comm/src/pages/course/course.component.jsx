@@ -24,7 +24,6 @@ const Course = () => {
 
     const fetchMyLearnings = async () => {
       const response = await axiosInstance.get('/course/learnings');
-      console.log("RES: ", response.data);
       setMyLearnings(response.data.data);
     }
 

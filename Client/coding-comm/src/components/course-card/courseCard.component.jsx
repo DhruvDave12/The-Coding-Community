@@ -3,7 +3,6 @@ import { Rate } from "antd";
 import "./courseCard.styles.scss";
 
 const CourseCard = ({ course }) => {
-    console.log("Course: ", course);
 
   return (
     <div className="course__card">

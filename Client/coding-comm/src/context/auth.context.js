@@ -28,7 +28,6 @@ const Context = props => {
         const response = await axiosInstance.get('/tell-us-more');
         if (response.data.data) {
           setUserData (response.data.data);
-          console.log("response.data.data: ", response.data.data);
           localStorage.setItem('@firstLogin', 'false');
         } else {
           localStorage.setItem('@firstLogin', 'true');

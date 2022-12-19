@@ -17,7 +17,6 @@ const Feed = () => {
   if(user){
     currUser = user[0];
   }
-  console.log("USER: ", user);
 
   const [post, setPost] = useState([]);
   const [caption, setCaption] = useState("");

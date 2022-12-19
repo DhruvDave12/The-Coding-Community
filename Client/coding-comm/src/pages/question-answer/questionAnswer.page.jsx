@@ -49,7 +49,6 @@ const QuestionAnswer = () => {
   };
 
   const handleSearch = (searchText) => {
-    console.log(questions);
     setQuestionToRender(
       questions.filter((ques) => ques.keywords.includes(searchText))
     );

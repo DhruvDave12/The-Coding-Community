@@ -14,7 +14,6 @@ const ParticularQuestionModal = ({
   setAnswer,
 }) => {
     if(!question) return null;
-  console.log("QUES INSIDE: ", question);
   const title = `#${question?._id.slice(5, 20).toUpperCase()}`;
   return (
     <>

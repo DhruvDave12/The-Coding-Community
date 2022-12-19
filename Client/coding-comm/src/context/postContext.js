@@ -53,7 +53,6 @@ const PostProvider = ({children}) => {
 
     const getPostLikes = (postId) =>{
         const postLikess = JSON.parse(localStorage.getItem("postLikes")) || {};
-        console.log("POST LIKES: ", postLikess);
         return postLikess[postId];
     }
 
@@ -61,7 +60,6 @@ const PostProvider = ({children}) => {
         try {
             // console.log("POST ID: ", postId);
             const res = await axiosInstance.get(`/post/comments/${post._id}`);
-            console.log("RES: ", res.data.data);
             return res.data.data;
         } catch (err) {
             console.log("ERROR: ", err);

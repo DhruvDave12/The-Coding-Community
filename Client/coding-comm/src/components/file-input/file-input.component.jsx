@@ -28,7 +28,6 @@ const beforeUpload = (file) => {
 
 const FileInput = ({ loading, setLoading, imageUrl, setImageUrl, setFile, multiple}) => {
   const handleChange = (info) => {
-    console.log("INFO FILE: ", info.file);
 
     if (info.file.status === "uploading") {
       setLoading(true);

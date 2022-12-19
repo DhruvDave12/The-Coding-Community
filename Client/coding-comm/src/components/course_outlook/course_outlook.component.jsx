@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import "./course_outlook.styles.scss";
 
 const CourseOutlook = ({ course }) => {
-  console.log(course);
   return (
     <Link to={`/course/${course._id}`}>
       <div className="course__outlook">

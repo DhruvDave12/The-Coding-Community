@@ -13,7 +13,6 @@ import Comment from "../comment/comment.component";
 
 const PostModal = ({ post }) => {
   const {getPostLikes} = useContext(PostContext);
-  console.log('POST COMMENTS: ', post.comments);
   return (
     post ? 
     <div className="post__modal">

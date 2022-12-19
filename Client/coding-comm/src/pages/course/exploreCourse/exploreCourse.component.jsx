@@ -20,7 +20,6 @@ const ExploreCourses = () => {
   }, []);
 
   const onSearch = (value) => {
-    console.log("VALUE: ", value);
     const filteredCourses = courses.filter((course) => {
       return course.title.toLowerCase().includes(value.toLowerCase());
     });

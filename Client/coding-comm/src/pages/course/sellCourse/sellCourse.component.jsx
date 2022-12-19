@@ -40,7 +40,6 @@ const SellCourse = () => {
     for (let i = 0; i < file.length; i++) {
       formData.append("image", file[i].originFileObj);
     }
-    console.log("DESC: ", description);
     formData.append("price", price);
     formData.append("title", title);
     formData.append("language", language);

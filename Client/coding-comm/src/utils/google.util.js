@@ -1,8 +1,8 @@
 export const getGoogleOAuthURL = () => {
     const rootURL = 'https://accounts.google.com/o/oauth2/v2/auth';
     const options = {
-        redirect_uri: 'https://the-coding-community-production.up.railway.app/sessions/oauth/google',
-        client_id: '697070237521-f0uoshu5v3kfffk93pdjch5kd746eei0.apps.googleusercontent.com',
+        redirect_uri: process.env.REACT_APP_GOOGLE_OAUTH_REDIRECT_URL,
+        client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
         access_type: "offline",
         response_type: "code",
         prompt: "consent",
@@ -13,6 +13,5 @@ export const getGoogleOAuthURL = () => {
     };
     
     const qs = new URLSearchParams(options);
-    console.log("QS: ", qs);
     return `${rootURL}?${qs.toString()}`;
 }

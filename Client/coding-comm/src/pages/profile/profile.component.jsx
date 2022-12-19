@@ -58,14 +58,12 @@ const Profile = () => {
   const [skillSt, setSkillSt] = useState("");
   const [bio, setBio] = useState("");
 
-    console.log(localStorage.getItem('@firstLogin'));
   useEffect(() => {
     const bootstrap = async () => {
       await getUserDetails(id);
       await getUserExtraData(id);
       await getUserPosts(id);
       if(localStorage.getItem('@firstLogin') === 'false'){
-        console.log("WE CAME IN");
         await getUserRepos(id);
         await getUserCodeForcesData(id);
       }
@@ -95,11 +93,9 @@ const Profile = () => {
 
   const handlePostClick = (postE) => {
     setSelectedPost(postE);
-    console.log(postE);
     setPostModal(true);
   };
 
-  console.log("CODEFORCES DATA: ", codeforcesData);
   return (
     !loading && !diffLoading? 
     <div className="profile">
