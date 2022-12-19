@@ -9,7 +9,7 @@ const TellUsMoreForm = () => {
     const [education, setEducation] = useState('');
     const [country, setCountry] = useState('');
     const [codeChefRating, setCodeChef] = useState('');
-    const [codeForcesRating, setCodeForcesRating] = useState('');
+    const [codeforcesUsername, setCodeforcesUsername] = useState('');
     const [github, setGithub] = useState('');
     const [linkedIn, setLinkedIn] = useState('');
     const [aboutYou, setAboutYou] = useState('');
@@ -44,7 +44,7 @@ const TellUsMoreForm = () => {
                 education,
                 country,
                 codeChefRating,
-                codeforcesRating: codeForcesRating,
+                codeforcesUsername: codeforcesUsername,
                 github,
                 linkedInUrl: linkedIn,
                 bio: aboutYou,
@@ -82,8 +82,8 @@ const TellUsMoreForm = () => {
                     <input type="text" id="cc" onChange={e => setCodeChef(e.target.value)} placeholder="Codechef Rating"/>
                 </div>
                 <div className="fields">
-                    <label htmlFor="cf" className="lab">Codeforces Rating</label>
-                    <input type="text" id="cf" onChange={e => setCodeForcesRating(e.target.value)} placeholder="Codeforces Rating"/>
+                    <label htmlFor="cf" className="lab">Codeforces Username</label>
+                    <input type="text" id="cf" onChange={e => setCodeforcesUsername(e.target.value)} placeholder="Codeforces Username"/>
                 </div>
                 <div className="fields">
                     <label htmlFor="git" className="lab">Github Username</label>

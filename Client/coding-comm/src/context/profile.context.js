@@ -10,6 +10,7 @@ const ProfileProvider = ({children}) => {
     const [userRepos, setUserRepos] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
     const [diffLoading, setDiffLoading] = React.useState(false);
+    const [codeforcesData, setCodeForcesData] = React.useState(null);
 
     const getUserDetails = async (id) => {
         try{
@@ -26,7 +27,6 @@ const ProfileProvider = ({children}) => {
         try {
             setLoading(true);
             const res = await axiosInstance.get(`/user/${id}`);
-            console.log("RES: ", res.data.data[0]);
             setUserData(res.data.data[0]);
             setLoading(false);
         } catch (err) {
@@ -46,14 +46,26 @@ const ProfileProvider = ({children}) => {
     }
 
     const getUserRepos = async (id) => {
-        try {
-            setLoading(true);
-            const res = await axiosInstance.get(`/project/repos/${id}`);
-            setUserRepos(res.data.data);
-            setLoading(false);
+        try { 
+            // setLoading(true);
+            // const res = await axiosInstance.get(`/project/repos/${id}`);
+            // setUserRepos(res.data.data);
+            // setLoading(false);
         } catch (err){
             setLoading(false);
             console.log("GET USER REPOS: ", err);
+        }
+    }
+
+    const getUserCodeForcesData = async (id) => {
+        try {
+            setLoading(true);
+            const res = await axiosInstance.get(`/user/codeforces/${id}`);
+            setCodeForcesData(res.data.data);
+            setLoading(false);
+        } catch (err) {
+            setLoading(false);
+            console.log("GET USER CODEFORCES DATA: ", err);
         }
     }
 
@@ -99,7 +111,9 @@ const ProfileProvider = ({children}) => {
             handleFollow,
             handleUnfollow,
             isFollowing,
-            diffLoading
+            diffLoading,
+            getUserCodeForcesData,
+            codeforcesData
         }}>
             {children}
         </ProfileContext.Provider>

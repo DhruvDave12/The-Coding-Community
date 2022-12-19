@@ -34,7 +34,10 @@ const Profile = () => {
     getUserPosts,
     getUserRepos,
     handleFollow,
-    handleUnfollow,isFollowing} = useContext(ProfileContext);
+    handleUnfollow,
+    isFollowing,
+    getUserCodeForcesData,
+    codeforcesData} = useContext(ProfileContext);
 
   const navigate = useNavigate();
   const id = window.location.pathname.split("/")[2];
@@ -48,20 +51,24 @@ const Profile = () => {
   const [education, setEducation] = useState("");
   const [country, setCountry] = useState("");
   const [codeChefRating, setCodeChef] = useState("");
-  const [codeForcesRating, setCodeForcesRating] = useState("");
+  const [codeforcesUsername, setCodeforcesUsername] = useState("");
   const [github, setGithub] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
   const [aboutYou, setAboutYou] = useState("");
   const [skillSt, setSkillSt] = useState("");
   const [bio, setBio] = useState("");
 
-
+    console.log(localStorage.getItem('@firstLogin'));
   useEffect(() => {
     const bootstrap = async () => {
       await getUserDetails(id);
       await getUserExtraData(id);
       await getUserPosts(id);
-      await getUserRepos(id);
+      if(localStorage.getItem('@firstLogin') === 'false'){
+        console.log("WE CAME IN");
+        await getUserRepos(id);
+        await getUserCodeForcesData(id);
+      }
     }
 
     bootstrap();
@@ -76,7 +83,7 @@ const Profile = () => {
       education,
       country,
       codeChefRating,
-      codeforcesRating: codeForcesRating,
+      codeforcesUsername: codeforcesUsername,
       github,
       linkedInUrl: linkedIn,
       bio: bio,
@@ -92,7 +99,7 @@ const Profile = () => {
     setPostModal(true);
   };
 
-
+  console.log("CODEFORCES DATA: ", codeforcesData);
   return (
     !loading && !diffLoading? 
     <div className="profile">
@@ -130,8 +137,8 @@ const Profile = () => {
               style={{ marginBottom: 15 }}
             />
             <Input
-              placeholder="Code Forces Rating"
-              onChange={(e) => setCodeForcesRating(e.target.value)}
+              placeholder="Code Forces Username"
+              onChange={(e) => setCodeforcesUsername(e.target.value)}
               style={{ marginBottom: 15 }}
             />
             <Input
@@ -266,7 +273,17 @@ const Profile = () => {
                   </div>
                   <div className="left__sec__3">
                     <ProfileSection header={"CP Profile"}>
-                      <p className="no-repos">Yet to design 😥</p>
+                      {
+                        codeforcesData ? 
+                        <div>
+                          <p className="cp">Max Codeforces Rating: {codeforcesData.maxRating}</p>
+                          <p className="cp">Max Codeforces Rank: {codeforcesData.maxRank}</p>
+    
+                          <p className="cp">Current Rating: {codeforcesData.rating}</p>
+                          <p className="cp">Current Rank: {codeforcesData.rank}</p>
+                        </div>
+                        : <p className="no-repos">No Data can be fetched 😢</p>
+                      }
                     </ProfileSection>
                   </div>
                 </div>

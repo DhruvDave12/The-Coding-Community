@@ -43,6 +43,7 @@ const SignIn = () => {
       setUserValue(response.data.user);
       setLoading(false);
       navigate(`/profile/${response.data.user._id}`);
+      window.location.reload();
     } catch (error) {
       setLoading(false);
       // console.log(error);

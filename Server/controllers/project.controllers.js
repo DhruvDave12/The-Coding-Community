@@ -5,7 +5,7 @@ module.exports.getReposSorted = async (req,res) => {
     try {
         const {id} = req.params;
         if(!req.user){
-            res.status(403).send({
+            return res.status(403).send({
                 success: false,
                 data: {
                     isLoggedIn: false,

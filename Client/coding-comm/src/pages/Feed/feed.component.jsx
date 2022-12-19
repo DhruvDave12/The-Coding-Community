@@ -10,7 +10,6 @@ import CommentModal from "../../components/comment-modal/commentModal.component"
 import { PostContext } from "../../context/postContext";
 import {myContext} from "../../context/auth.context";
 import userIcon from "../../assets/images/user.svg";
-
 const Feed = () => {
   const {getComments} = useContext(PostContext);
   const {user} = useContext(myContext);

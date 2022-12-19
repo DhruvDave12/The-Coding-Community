@@ -36,7 +36,7 @@ const moreDataSchema = Schema({
         type: String,
         required: true,
     },
-    codeforcesRating: {
+    codeforcesUsername: {
         type: String,
         required: true,
     },

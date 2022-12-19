@@ -5,7 +5,7 @@ const Comments = require('../models/comments.models');
 // Like system of post will be stored in database   
 module.exports.postPost = async (req,res) => {
     if(!req.user){
-        res.status(403).send({
+        return res.status(403).send({
             success: false,
             msg: "Please Login/Signup"
         })
@@ -31,7 +31,7 @@ module.exports.postPost = async (req,res) => {
 module.exports.postComments = async(req,res) => {
 
     if(!req.user){
-        res.status(403).send({
+        return res.status(403).send({
             success: false,
             msg: "Please login or signup"
         })
@@ -60,7 +60,7 @@ module.exports.postComments = async(req,res) => {
 
 module.exports.getPosts = async (req,res) => {
     if(!req.user){
-        res.status(403).send({
+        return res.status(403).send({
             success: false,
             msg: "Please login or signup"
         })
@@ -75,7 +75,7 @@ module.exports.getPosts = async (req,res) => {
 
 module.exports.getComments = async(req,res) => {
     if(!req.user){
-        res.status(403).send({ 
+        return res.status(403).send({ 
             success: false,
             msg: "Please login or signup"
         })
@@ -100,7 +100,7 @@ module.exports.getComments = async(req,res) => {
 
 module.exports.getPostOfUser = async (req,res) => {
     if(!req.user){
-        res.status(403).send({
+        return res.status(403).send({
             success: false,
             msg: "Please login or signup"
         })

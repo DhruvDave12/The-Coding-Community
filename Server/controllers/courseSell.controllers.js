@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 
 module.exports.postVideo = async (req,res) => {
     if(!req.user){
-        res.status(403).send({
+        return res.status(403).send({
             success: false,
             msg: "Please log in"
         })
@@ -49,7 +49,7 @@ module.exports.postVideo = async (req,res) => {
 
 module.exports.rateCourse = async (req,res) => {
   if(!req.user){
-    res.status(403).send({
+    return res.status(403).send({
       success: false,
       msg: "Please log in to rate the course"
     })
@@ -86,7 +86,7 @@ module.exports.getAllCourses = async(req,res) => {
 
 module.exports.getCourse = async(req,res) => {
   if(!req.user){
-    res.status(403).send({
+    return res.status(403).send({
       success: false,
       msg: "Please log in to check out the course"
     })
@@ -218,7 +218,7 @@ module.exports.checkCourse = async (req,res) => {
 
 module.exports.getMyLearnings = async (req,res) => {
   if(!req.user) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "Please login to continue"
       })

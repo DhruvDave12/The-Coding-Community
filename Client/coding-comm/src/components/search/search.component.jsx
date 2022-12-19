@@ -69,7 +69,7 @@ const SearchBar = () => {
         }}
       />
       </div>
-      {sendArray.length === 0 ? null : <SearchList listOfUsers={sendArray} />}
+      {sendArray.length === 0 ? null : <SearchList listOfUsers={sendArray.filter((item,index) => index < 5)} />}
     </div>
   );
 };

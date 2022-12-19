@@ -43,7 +43,7 @@ const Edit = () => {
                                                 <li>{userData.country}</li>
                                                 <li>{userData.github}</li>
                                                 <li>{userData.codeChefRating}</li>
-                                                <li>{userData.codeforcesRating}</li>
+                                                <li>{userData?.codeforcesUsername ? userData.codeforcesUsername : "Dhruv"}</li>
                                                 <li>{userData.linkedInUrl}</li>
                                                 <li>{userData.bio}</li>
                                             </ul>

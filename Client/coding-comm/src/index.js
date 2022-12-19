@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Context from './context/auth.context';
 import PostProvider from './context/postContext';
 import ProfileProvider from './context/profile.context';
+import QuestionProvider from './context/question.context';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -14,7 +15,9 @@ ReactDOM.render(
         <Context>
           <ProfileProvider>
             <PostProvider>
-              <App />
+              <QuestionProvider>
+                <App />
+              </QuestionProvider>
             </PostProvider>
           </ProfileProvider>
         </Context>

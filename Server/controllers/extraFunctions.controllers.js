@@ -2,6 +2,7 @@ const User = require ('../models/user');
 const MoreData = require ('../models/moreUserData.models');
 const UserLevel = require ('../models/userLevel.model');
 const mongoose = require('mongoose');
+const axios = require('axios');
 
 module.exports.getLeaderboard = async (req, res) => {
   const users = await User.find ({});
@@ -25,14 +26,13 @@ module.exports.getLeaderboard = async (req, res) => {
 
 module.exports.updateFoll = async (req, res) => {
   try {
-
       if (!req.user) {
-        res.status (403).send ({
+        return res.status (403).send ({
           success: false,
           msg: 'Please login to follow',
         });
       }
-    
+      
       const {otherID} = req.params;
       
       var validID = mongoose.Types.ObjectId(otherID);
@@ -40,23 +40,24 @@ module.exports.updateFoll = async (req, res) => {
       const user1 = await MoreData.findOne ({owner: mongoose.Types.ObjectId(req.user._id)});
       const user2 = await MoreData.findOne ({owner: validID});
       // check if user1 is already following user2 or not
-      if (user1.allFollowing.includes (otherID)) {
-        console.log("HEHE WE CAUGHT YA");
-        return res.status (403).send ({
-          success: false,
-          msg: 'Already following',
-        });
-      }
+      // if (user1.allFollowing.includes (otherID)) {
+      //   console.log("HEHE WE CAUGHT YA");
+      //   return res.status (403).send ({
+      //     success: false,
+      //     msg: 'Already following',
+      //   });
+      // }
       user1.following++;
       user2.followers++;
     
       user1.allFollowing.push (otherID);
       user2.allFollowers.push (req.user._id);
-    
+      
+      console.log("USER 1: ", user1);
       await user1.save ();
       await user2.save ();
-    
-      console.log (user1, user2);
+      
+
       // returning the current user as user1
       res.status (200).send ({
         success: true,
@@ -71,7 +72,7 @@ module.exports.unfollowMech = async (req, res) => {
   try {
       // console.log("REQ.USER: ",req.user);
       if(!req.user){
-        res.status(403).send({
+        return res.status(403).send({
           success: false,
           msg: 'Please login to unfollow'
         })
@@ -138,3 +139,29 @@ module.exports.getOtherData = async (req, res) => {
     });
   }
 };
+
+module.exports.getCodeForcesData = async (req,res) => {
+    try {
+      if(!req.user) {
+          return res.status(403).send({
+              success: false,
+              msg: 'Please login to get CodeForces Data'
+          })
+      }
+
+      const {id} = req.params;
+      const userData = await MoreData.findOne({owner
+      : id});
+      
+      const handle = userData.codeforcesUsername;
+      
+      const url = `https://codeforces.com/api/user.info?handles=${handle}`;
+      const response = await axios.get(url);
+      res.status(200).send({
+          success: true,
+          data: response.data.result[0]
+      })
+    } catch (err) {
+      console.log("ERROR FETCHING CODEFORCES DATA: ", err);
+    }
+}

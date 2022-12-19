@@ -1,0 +1,12 @@
+.custom__card{
+    cursor: pointer;
+    &:hover{
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;
+    }
+    .tags__grid{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 0.2rem;
+    }
+}

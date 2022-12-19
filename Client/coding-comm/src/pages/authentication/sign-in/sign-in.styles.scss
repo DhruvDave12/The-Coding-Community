@@ -10,7 +10,6 @@
         width: 50%;
         padding-top: 20px;
         padding-bottom: 20px;
-        height: 70%;
         border-radius: 20px;
         background-color: white;
         display: flex;
@@ -32,6 +31,7 @@
             }
         }
         .fields{
+            margin-bottom: 1rem;
             // margin-top: 6px;
             // margin-bottom: 6px;
             width: 50%;
@@ -50,6 +50,7 @@
             font-weight: 400;
         }
         .divider{
+            margin: 1rem 0;
             border-bottom: 1px solid black;
             width:50%;
         }

@@ -5,7 +5,7 @@ const Answer = require('../models/answers.models')
 module.exports.postQuestion = async (req,res) => {
 
     if(!req.user){
-        res.status(403).send({
+        return res.status(403).send({
             success: false,
             msg: "Please login to post the question"
         })
@@ -22,9 +22,9 @@ module.exports.postQuestion = async (req,res) => {
     await newQues.save();
 
     // increasing 5 points on asking a question
-    const moreData = await MoreData.findOne({owner: req.user._id});
-    moreData.level = moreData.level + 5;
-    await moreData.save();
+    // const moreData = await MoreData.findOne({owner: req.user._id});
+    // moreData.level = moreData.level + 5;
+    // await moreData.save();
     res.status(200).send({
         success: true,
         data: newQues
@@ -33,7 +33,7 @@ module.exports.postQuestion = async (req,res) => {
 
 module.exports.postAnswerToQuestion = async(req,res) => {
     if(!req.user){
-        res.status(403).send({
+        return res.status(403).send({
             success: false,
             msg: "Please login to answer the question"
         })
@@ -48,16 +48,53 @@ module.exports.postAnswerToQuestion = async(req,res) => {
     ans.owner = req.user._id;
     await ans.save();
 
-    ques.answer = ans._id;
+    ques.answer.push(ans._id);
     await ques.save();
 
     // 20 points on solving a question
-    const moreData = await MoreData.findOne({owner: req.user._id});
-    moreData.level = moreData.level + 20;
-    await moreData.save();
+    // const moreData = await MoreData.findOne({owner: req.user._id});
+    // moreData.level = moreData.level + 20;
+    // await moreData.save();
 
     res.status(200).send({
         success: true,
         data: ques
     })
+}
+
+module.exports.getQuestions = async (req,res) => {
+    try {
+        const questions = await Question.find().populate('owner').populate({
+            path: 'answer',
+            populate: 'owner'
+        });
+        res.status(200).send({
+            success: true,
+            data: questions
+        })
+    } catch (err) {
+        console.log("ERROR IN QUESTION: ", err);
+    }
+}
+
+module.exports.getQuestionsAnswer = async (req,res) => {
+    try {
+        if(!req.user) {
+            return res.status(403).send({
+                success: false,
+                msg: "Please login to get the answer"
+            })
+        }
+        const { questionID } = req.params;
+        const ques = await Question.findById(questionID).populate('owner').populate({
+            path: 'answer',
+            populate: 'owner'
+        });
+        res.status(200).send({
+            success: true,
+            data: ques
+        })
+    } catch (err) { 
+        console.log("ERROR IN QUESTION's ANSWER: ", err);
+    }
 }

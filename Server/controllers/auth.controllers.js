@@ -101,7 +101,7 @@ module.exports.authUser = async (req,res) => {
 
 module.exports.getHome = (req,res) => {
     if(!req.user){
-        res.status(403).send({
+        return res.status(403).send({
             success: false,
             data: {
                 isLoggedIn: false,
@@ -119,43 +119,86 @@ module.exports.getHome = (req,res) => {
 }
 
 module.exports.postMoreData = async (req,res) => {
-    const { firstName, lastName, education, country, codeChefRating, codeforcesRating, github, linkedInUrl, bio, skills} = req.body;
-
-    const moreData = new MoreData({
-        firstName,
-        lastName,
-        education,
-        country,
-        codeChefRating,
-        codeforcesRating,
-        github,
-        linkedInUrl,
-        bio,
-        skills
-    })
-
-    moreData.owner = req.user._id;
-    await moreData.save();
+    try  {
+        if(!req.user){
+            return res.status(403).send({
+                success: false,
+                data: {
+                    isLoggedIn: false,
+                    user: null
+                }
+            })
+        }
+        const { firstName, lastName, education, country, codeChefRating, codeforcesUsername, github, linkedInUrl, bio, skills} = req.body;
     
-    const user = await User.findById(req.user._id);
-    user.moreDataPosted = true;
-    await user.save();
+        const moreData = new MoreData({
+            firstName,
+            lastName,
+            education,
+            country,
+            codeChefRating,
+            codeforcesUsername,
+            github,
+            linkedInUrl,
+            bio,
+            skills
+        })
     
-    res.status(200).send({
-        success: true,
-        msg: "More data posted"
-    })
+        moreData.owner = req.user._id;
+        await moreData.save();
+        
+        const user = await User.findById(req.user._id);
+        user.moreDataPosted = true;
+        await user.save();
+        
+        res.status(200).send({
+            success: true,
+            msg: "More data posted"
+        })
+    } catch(err){
+        res.status(500).send({
+            success: false,
+            msg: "Something went wrong",
+            error: err
+        })
+    }
 }
 
 module.exports.getMoreData = async (req,res) => {
-    const data = await MoreData.findOne({owner: req.user._id}).populate('allFollowers allFollowing');
-     res.status(200).send({
-        success: true,
-        data: data
-    })
+    try {
+        if(!req.user){
+            return res.status(403).send({
+                success: false,
+                data: {
+                    isLoggedIn: false,
+                    user: null
+                }
+            })
+        }
+        const data = await MoreData.findOne({owner: req.user._id}).populate('allFollowers allFollowing');
+         res.status(200).send({
+            success: true,
+            data: data
+        })
+    } catch (Err) {
+        res.status(500).send({
+            success: false,
+            msg: "Something went wrong",
+            error: Err
+        })
+    }
 }
 
 module.exports.getUserById = async (req,res) => {
+    if(!req.user){
+        return res.status(403).send({
+            success: false,
+            data: {
+                isLoggedIn: false,
+                user: null
+            }
+        })
+    }
     const { id } = req.params;
     const user = await User.findById(id);
     res.status(200).send({
@@ -166,7 +209,7 @@ module.exports.getUserById = async (req,res) => {
 
 module.exports.getUser = async (req,res) => {
     if(!req.user){
-        res.status(403).send({
+        return res.status(403).send({
             success: false,
             data: {
                 isLoggedIn: false,
@@ -186,6 +229,15 @@ module.exports.getUser = async (req,res) => {
 }
 
 module.exports.getAllUsers = async(req,res) =>{
+    if(!req.user){
+        return res.status(403).send({
+            success: false,
+            data: {
+                isLoggedIn: false,
+                user: null
+            }
+        })
+    }
     const users = await User.find({});
     res.status(200).send({
         success: true,
@@ -194,7 +246,17 @@ module.exports.getAllUsers = async(req,res) =>{
 }
 
 module.exports.logUserOut = async(req,res) => {
-    const user = await User.findById(req.body.userID);
+    console.log("IN LOGOUT: ", req.user);
+    if(!req.user){
+        return res.status(403).send({
+            success: false,
+            data: {
+                isLoggedIn: false,
+                user: null
+            }
+        })
+    }
+    const user = await User.findById(req.user._id);
     // delete the accessToken and refreshToken from the users cookie
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
@@ -229,5 +291,5 @@ module.exports.googleOAuthHandler = async (req, res) => {
     res.cookie("accessToken", accessToken, accessTokenCookieOptions);
     res.cookie("refreshToken", refreshToken, refreshTokenCookieOptions);
     // redirect back to the client
-    res.redirect(`http://localhost:3000/profile/${user._id}`);
+    res.redirect(`http://localhost:3000/profile/${user._id}`); 
 }

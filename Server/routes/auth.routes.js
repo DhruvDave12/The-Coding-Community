@@ -18,7 +18,7 @@ router.post('/login', authUser);
 // @desc Logs the user out
 // @route POST
 // @path "/logout"
-router.post('/logout', logUserOut);
+router.post('/logout', verifyAccessToken ,logUserOut);
 
 // @desc Shows the profile page
 // @route GET

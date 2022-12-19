@@ -17,11 +17,11 @@ import BoughtCourse from './pages/course/boughtCourse/boughtCourse.component';
 import ParticularCourse from './pages/particular-course/particular-course.component';
 import Footer from './components/footer/footer.component';
 import NavBar from './components/navbar/navbar.component';
-import ChatPage from './pages/chatting/chatting.component';
 import { useLocation } from 'react-router-dom'
 import ExploreCourses from './pages/course/exploreCourse/exploreCourse.component';
 import MyLearnings from './pages/course/MyLearnings/myLearnings.component';
 import About from './pages/about/about.page';
+import QuestionAnswer from './pages/question-answer/questionAnswer.page';
 // require('dotenv').config()
 
 function App() {
@@ -51,9 +51,9 @@ function App() {
         <Route path='/course/:id' element={<ParticularCourse />}/>
         <Route path='/course/sell' element={<SellCourse />}/>
         <Route path='/course/:id/bought' element={<BoughtCourse />}/>
-        <Route path='/chat' element={<ChatPage />}/>
         <Route path='/course/explore' element={<ExploreCourses />}/>
         <Route path='/course/learnings' element={<MyLearnings />}/>
+        <Route path='/question-answer' element={<QuestionAnswer />}/>
       </Routes>
 
       <Footer />

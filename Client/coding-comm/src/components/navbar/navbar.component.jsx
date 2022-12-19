@@ -58,6 +58,7 @@ const NavBar = () => {
                 <ul>
 
                     <Link className="field" to={currUser && isLoggedIn ? `/profile/${currUser._id}` : '/'} onClick={() => !isLoggedIn ? notifyFalse('Please Signup / Login to continue') : {}}>Home</Link>
+                    <Link className="field" to={currUser && isLoggedIn ? `/question-answer` : '/'} onClick={() => !isLoggedIn ? notifyFalse('Please Signup / Login to continue') : {}}>Ask Query</Link>
                     <Link className="field" to={isLoggedIn ? '/feed': '/'} onClick={() => !isLoggedIn ? notifyFalse('Please Signup / Login to continue') : {}}>Feed</Link>
                     <Link className="field" to={isLoggedIn ? '/course': '/'} onClick={() => !isLoggedIn ? notifyFalse('Please Signup / Login to continue') : {}}>Courses</Link>
                     <Link className="field" to={'/about'}>About</Link>
